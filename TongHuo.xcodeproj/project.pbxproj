@@ -1,0 +1,695 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3C8E0718E6AA4B33A631A4BC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0964EA7F1E4C77B6DE033F /* libPods.a */; };
+		532D60B71931DF2200537D4C /* THNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D60B61931DF2200537D4C /* THNetwork.m */; };
+		532D60B91931DF7600537D4C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 532D60B81931DF7600537D4C /* Config.xcconfig */; };
+		532D60BB1931DFD200537D4C /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 532D60BA1931DFD200537D4C /* Settings.plist */; };
+		532D60BE1931DFF900537D4C /* THSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D60BD1931DFF900537D4C /* THSettings.m */; };
+		532D60C41931E0A800537D4C /* THAuthorizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D60C31931E0A800537D4C /* THAuthorizer.m */; };
+		532D60D11932268900537D4C /* THAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D60D01932268900537D4C /* THAPI.m */; };
+		532D60D3193232B300537D4C /* Common.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 532D60D2193232B300537D4C /* Common.xcassets */; };
+		532DC933192ED83600C07757 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC932192ED83600C07757 /* Foundation.framework */; };
+		532DC935192ED83600C07757 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC934192ED83600C07757 /* CoreGraphics.framework */; };
+		532DC937192ED83600C07757 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC936192ED83600C07757 /* UIKit.framework */; };
+		532DC93D192ED83600C07757 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 532DC93B192ED83600C07757 /* InfoPlist.strings */; };
+		532DC93F192ED83600C07757 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 532DC93E192ED83600C07757 /* main.m */; };
+		532DC943192ED83600C07757 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 532DC942192ED83600C07757 /* AppDelegate.m */; };
+		532DC945192ED83600C07757 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 532DC944192ED83600C07757 /* Images.xcassets */; };
+		532DC94C192ED83700C07757 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC94B192ED83600C07757 /* XCTest.framework */; };
+		532DC94D192ED83700C07757 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC932192ED83600C07757 /* Foundation.framework */; };
+		532DC94E192ED83700C07757 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC936192ED83600C07757 /* UIKit.framework */; };
+		532DC956192ED83700C07757 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 532DC954192ED83700C07757 /* InfoPlist.strings */; };
+		532DC958192ED83700C07757 /* TongHuoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 532DC957192ED83700C07757 /* TongHuoTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		532DC94F192ED83700C07757 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 532DC927192ED83600C07757 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 532DC92E192ED83600C07757;
+			remoteInfo = TongHuo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4A0964EA7F1E4C77B6DE033F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		532D60B51931DF2200537D4C /* THNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THNetwork.h; sourceTree = "<group>"; };
+		532D60B61931DF2200537D4C /* THNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THNetwork.m; sourceTree = "<group>"; };
+		532D60B81931DF7600537D4C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		532D60BA1931DFD200537D4C /* Settings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
+		532D60BC1931DFF900537D4C /* THSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THSettings.h; sourceTree = "<group>"; };
+		532D60BD1931DFF900537D4C /* THSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THSettings.m; sourceTree = "<group>"; };
+		532D60C21931E0A800537D4C /* THAuthorizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THAuthorizer.h; sourceTree = "<group>"; };
+		532D60C31931E0A800537D4C /* THAuthorizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THAuthorizer.m; sourceTree = "<group>"; };
+		532D60CF1932268900537D4C /* THAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THAPI.h; sourceTree = "<group>"; };
+		532D60D01932268900537D4C /* THAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THAPI.m; sourceTree = "<group>"; };
+		532D60D2193232B300537D4C /* Common.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Common.xcassets; sourceTree = "<group>"; };
+		532DC92F192ED83600C07757 /* TongHuo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TongHuo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		532DC932192ED83600C07757 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		532DC934192ED83600C07757 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		532DC936192ED83600C07757 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		532DC93A192ED83600C07757 /* TongHuo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TongHuo-Info.plist"; sourceTree = "<group>"; };
+		532DC93C192ED83600C07757 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		532DC93E192ED83600C07757 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		532DC940192ED83600C07757 /* TongHuo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TongHuo-Prefix.pch"; sourceTree = "<group>"; };
+		532DC941192ED83600C07757 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		532DC942192ED83600C07757 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		532DC944192ED83600C07757 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		532DC94A192ED83600C07757 /* TongHuoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TongHuoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		532DC94B192ED83600C07757 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		532DC953192ED83700C07757 /* TongHuoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TongHuoTests-Info.plist"; sourceTree = "<group>"; };
+		532DC955192ED83700C07757 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		532DC957192ED83700C07757 /* TongHuoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TongHuoTests.m; sourceTree = "<group>"; };
+		638043956007457687CF6C2B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		532DC92C192ED83600C07757 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532DC935192ED83600C07757 /* CoreGraphics.framework in Frameworks */,
+				532DC937192ED83600C07757 /* UIKit.framework in Frameworks */,
+				532DC933192ED83600C07757 /* Foundation.framework in Frameworks */,
+				3C8E0718E6AA4B33A631A4BC /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		532DC947192ED83600C07757 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532DC94C192ED83700C07757 /* XCTest.framework in Frameworks */,
+				532DC94E192ED83700C07757 /* UIKit.framework in Frameworks */,
+				532DC94D192ED83700C07757 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		532D60AA1931DCD700537D4C /* Authorization */ = {
+			isa = PBXGroup;
+			children = (
+				532D60C21931E0A800537D4C /* THAuthorizer.h */,
+				532D60C31931E0A800537D4C /* THAuthorizer.m */,
+			);
+			path = Authorization;
+			sourceTree = "<group>";
+		};
+		532D60AB1931DCD700537D4C /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				532D60B81931DF7600537D4C /* Config.xcconfig */,
+				532D60BA1931DFD200537D4C /* Settings.plist */,
+				532D60BC1931DFF900537D4C /* THSettings.h */,
+				532D60BD1931DFF900537D4C /* THSettings.m */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		532D60AC1931DCD700537D4C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				532D60C51931E43800537D4C /* Account */,
+				532D60C61931E43800537D4C /* Customer */,
+				532D60C71931E43800537D4C /* Goods */,
+				532D60C81931E43800537D4C /* Market */,
+				532D60C91931E43800537D4C /* Order */,
+				532D60CA1931E43800537D4C /* Product */,
+				532D60CB1931E43800537D4C /* Seller */,
+				532D60CC1931E43800537D4C /* Shop */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		532D60AD1931DCD700537D4C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				532D60CE1931FAE900537D4C /* TongHuo-API */,
+				532D60B51931DF2200537D4C /* THNetwork.h */,
+				532D60B61931DF2200537D4C /* THNetwork.m */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		532D60AE1931DCD700537D4C /* Synchronization */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Synchronization;
+			sourceTree = "<group>";
+		};
+		532D60AF1931DCD700537D4C /* UserInterface */ = {
+			isa = PBXGroup;
+			children = (
+				532D60B01931DCD700537D4C /* iPhone */,
+				532D60B21931DCD700537D4C /* ViewModel */,
+			);
+			path = UserInterface;
+			sourceTree = "<group>";
+		};
+		532D60B01931DCD700537D4C /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				532D60B11931DCD700537D4C /* View */,
+			);
+			path = iPhone;
+			sourceTree = "<group>";
+		};
+		532D60B11931DCD700537D4C /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		532D60B21931DCD700537D4C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		532D60B31931DEC000537D4C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				532D60B41931DEC000537D4C /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		532D60B41931DEC000537D4C /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				532D60D2193232B300537D4C /* Common.xcassets */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		532D60C51931E43800537D4C /* Account */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		532D60C61931E43800537D4C /* Customer */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Customer;
+			sourceTree = "<group>";
+		};
+		532D60C71931E43800537D4C /* Goods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Goods;
+			sourceTree = "<group>";
+		};
+		532D60C81931E43800537D4C /* Market */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Market;
+			sourceTree = "<group>";
+		};
+		532D60C91931E43800537D4C /* Order */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		532D60CA1931E43800537D4C /* Product */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
+		532D60CB1931E43800537D4C /* Seller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Seller;
+			sourceTree = "<group>";
+		};
+		532D60CC1931E43800537D4C /* Shop */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Shop;
+			sourceTree = "<group>";
+		};
+		532D60CE1931FAE900537D4C /* TongHuo-API */ = {
+			isa = PBXGroup;
+			children = (
+				532D60CF1932268900537D4C /* THAPI.h */,
+				532D60D01932268900537D4C /* THAPI.m */,
+			);
+			path = "TongHuo-API";
+			sourceTree = "<group>";
+		};
+		532DC926192ED83600C07757 = {
+			isa = PBXGroup;
+			children = (
+				532DC938192ED83600C07757 /* TongHuo */,
+				532DC951192ED83700C07757 /* TongHuoTests */,
+				532DC931192ED83600C07757 /* Frameworks */,
+				532DC930192ED83600C07757 /* Products */,
+				638043956007457687CF6C2B /* Pods.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		532DC930192ED83600C07757 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				532DC92F192ED83600C07757 /* TongHuo.app */,
+				532DC94A192ED83600C07757 /* TongHuoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		532DC931192ED83600C07757 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				532DC932192ED83600C07757 /* Foundation.framework */,
+				532DC934192ED83600C07757 /* CoreGraphics.framework */,
+				532DC936192ED83600C07757 /* UIKit.framework */,
+				532DC94B192ED83600C07757 /* XCTest.framework */,
+				4A0964EA7F1E4C77B6DE033F /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		532DC938192ED83600C07757 /* TongHuo */ = {
+			isa = PBXGroup;
+			children = (
+				532DC941192ED83600C07757 /* AppDelegate.h */,
+				532DC942192ED83600C07757 /* AppDelegate.m */,
+				532D60AA1931DCD700537D4C /* Authorization */,
+				532D60AB1931DCD700537D4C /* Configuration */,
+				532DC944192ED83600C07757 /* Images.xcassets */,
+				532D60AC1931DCD700537D4C /* Model */,
+				532D60AD1931DCD700537D4C /* Network */,
+				532D60B31931DEC000537D4C /* Resources */,
+				532DC939192ED83600C07757 /* Supporting Files */,
+				532D60AE1931DCD700537D4C /* Synchronization */,
+				532D60AF1931DCD700537D4C /* UserInterface */,
+			);
+			path = TongHuo;
+			sourceTree = "<group>";
+		};
+		532DC939192ED83600C07757 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				532DC93A192ED83600C07757 /* TongHuo-Info.plist */,
+				532DC93B192ED83600C07757 /* InfoPlist.strings */,
+				532DC93E192ED83600C07757 /* main.m */,
+				532DC940192ED83600C07757 /* TongHuo-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		532DC951192ED83700C07757 /* TongHuoTests */ = {
+			isa = PBXGroup;
+			children = (
+				532DC957192ED83700C07757 /* TongHuoTests.m */,
+				532DC952192ED83700C07757 /* Supporting Files */,
+			);
+			path = TongHuoTests;
+			sourceTree = "<group>";
+		};
+		532DC952192ED83700C07757 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				532DC953192ED83700C07757 /* TongHuoTests-Info.plist */,
+				532DC954192ED83700C07757 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		532DC92E192ED83600C07757 /* TongHuo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 532DC95B192ED83700C07757 /* Build configuration list for PBXNativeTarget "TongHuo" */;
+			buildPhases = (
+				2E2034DA308D425FA0C2EE6E /* Check Pods Manifest.lock */,
+				532DC92B192ED83600C07757 /* Sources */,
+				532DC92C192ED83600C07757 /* Frameworks */,
+				532DC92D192ED83600C07757 /* Resources */,
+				63F7F26173D445E6BE4BAF37 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TongHuo;
+			productName = TongHuo;
+			productReference = 532DC92F192ED83600C07757 /* TongHuo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		532DC949192ED83600C07757 /* TongHuoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 532DC95E192ED83700C07757 /* Build configuration list for PBXNativeTarget "TongHuoTests" */;
+			buildPhases = (
+				532DC946192ED83600C07757 /* Sources */,
+				532DC947192ED83600C07757 /* Frameworks */,
+				532DC948192ED83600C07757 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				532DC950192ED83700C07757 /* PBXTargetDependency */,
+			);
+			name = TongHuoTests;
+			productName = TongHuoTests;
+			productReference = 532DC94A192ED83600C07757 /* TongHuoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		532DC927192ED83600C07757 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = 59pi;
+				TargetAttributes = {
+					532DC949192ED83600C07757 = {
+						TestTargetID = 532DC92E192ED83600C07757;
+					};
+				};
+			};
+			buildConfigurationList = 532DC92A192ED83600C07757 /* Build configuration list for PBXProject "TongHuo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 532DC926192ED83600C07757;
+			productRefGroup = 532DC930192ED83600C07757 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				532DC92E192ED83600C07757 /* TongHuo */,
+				532DC949192ED83600C07757 /* TongHuoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		532DC92D192ED83600C07757 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532D60D3193232B300537D4C /* Common.xcassets in Resources */,
+				532DC93D192ED83600C07757 /* InfoPlist.strings in Resources */,
+				532D60BB1931DFD200537D4C /* Settings.plist in Resources */,
+				532D60B91931DF7600537D4C /* Config.xcconfig in Resources */,
+				532DC945192ED83600C07757 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		532DC948192ED83600C07757 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532DC956192ED83700C07757 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2E2034DA308D425FA0C2EE6E /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		63F7F26173D445E6BE4BAF37 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		532DC92B192ED83600C07757 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532D60D11932268900537D4C /* THAPI.m in Sources */,
+				532D60BE1931DFF900537D4C /* THSettings.m in Sources */,
+				532DC943192ED83600C07757 /* AppDelegate.m in Sources */,
+				532DC93F192ED83600C07757 /* main.m in Sources */,
+				532D60C41931E0A800537D4C /* THAuthorizer.m in Sources */,
+				532D60B71931DF2200537D4C /* THNetwork.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		532DC946192ED83600C07757 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532DC958192ED83700C07757 /* TongHuoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		532DC950192ED83700C07757 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 532DC92E192ED83600C07757 /* TongHuo */;
+			targetProxy = 532DC94F192ED83700C07757 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		532DC93B192ED83600C07757 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				532DC93C192ED83600C07757 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		532DC954192ED83700C07757 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				532DC955192ED83700C07757 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		532DC959192ED83700C07757 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		532DC95A192ED83700C07757 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		532DC95C192ED83700C07757 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 638043956007457687CF6C2B /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
+				INFOPLIST_FILE = "TongHuo/TongHuo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		532DC95D192ED83700C07757 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 638043956007457687CF6C2B /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
+				INFOPLIST_FILE = "TongHuo/TongHuo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		532DC95F192ED83700C07757 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TongHuo.app/TongHuo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "TongHuoTests/TongHuoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		532DC960192ED83700C07757 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TongHuo.app/TongHuo";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
+				INFOPLIST_FILE = "TongHuoTests/TongHuoTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		532DC92A192ED83600C07757 /* Build configuration list for PBXProject "TongHuo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				532DC959192ED83700C07757 /* Debug */,
+				532DC95A192ED83700C07757 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		532DC95B192ED83700C07757 /* Build configuration list for PBXNativeTarget "TongHuo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				532DC95C192ED83700C07757 /* Debug */,
+				532DC95D192ED83700C07757 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		532DC95E192ED83700C07757 /* Build configuration list for PBXNativeTarget "TongHuoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				532DC95F192ED83700C07757 /* Debug */,
+				532DC960192ED83700C07757 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 532DC927192ED83600C07757 /* Project object */;
+}
