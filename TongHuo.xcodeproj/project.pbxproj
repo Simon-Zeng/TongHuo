@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C8E0718E6AA4B33A631A4BC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A0964EA7F1E4C77B6DE033F /* libPods.a */; };
+		53097FA71933724F00589393 /* TongHuoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 532DC957192ED83700C07757 /* TongHuoTests.m */; };
+		53097FBB1934BD0B00589393 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 53097FB91934BD0A00589393 /* Model.xcdatamodeld */; };
 		532D60B71931DF2200537D4C /* THNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D60B61931DF2200537D4C /* THNetwork.m */; };
 		532D60B91931DF7600537D4C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 532D60B81931DF7600537D4C /* Config.xcconfig */; };
 		532D60BB1931DFD200537D4C /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 532D60BA1931DFD200537D4C /* Settings.plist */; };
@@ -26,7 +27,8 @@
 		532DC94D192ED83700C07757 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC932192ED83600C07757 /* Foundation.framework */; };
 		532DC94E192ED83700C07757 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC936192ED83600C07757 /* UIKit.framework */; };
 		532DC956192ED83700C07757 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 532DC954192ED83700C07757 /* InfoPlist.strings */; };
-		532DC958192ED83700C07757 /* TongHuoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 532DC957192ED83700C07757 /* TongHuoTests.m */; };
+		DEB449EFB0ED4794A5608AED /* libPods-TongHuo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F26962D080247409958FBBD /* libPods-TongHuo.a */; };
+		DED4762164AD4A74A010EABD /* libPods-TongHuoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 57CCC640F1E5454F91A13A04 /* libPods-TongHuoTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4A0964EA7F1E4C77B6DE033F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		53097FBA1934BD0A00589393 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		532D60B51931DF2200537D4C /* THNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THNetwork.h; sourceTree = "<group>"; };
 		532D60B61931DF2200537D4C /* THNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THNetwork.m; sourceTree = "<group>"; };
 		532D60B81931DF7600537D4C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
@@ -68,7 +70,10 @@
 		532DC953192ED83700C07757 /* TongHuoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TongHuoTests-Info.plist"; sourceTree = "<group>"; };
 		532DC955192ED83700C07757 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		532DC957192ED83700C07757 /* TongHuoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TongHuoTests.m; sourceTree = "<group>"; };
-		638043956007457687CF6C2B /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		57CCC640F1E5454F91A13A04 /* libPods-TongHuoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TongHuoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F26962D080247409958FBBD /* libPods-TongHuo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TongHuo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9995BA8C9E78466BB9DCC872 /* Pods-TongHuo.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TongHuo.xcconfig"; path = "Pods/Pods-TongHuo.xcconfig"; sourceTree = "<group>"; };
+		FFD4C48BC2FE4B00A5A9889A /* Pods-TongHuoTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TongHuoTests.xcconfig"; path = "Pods/Pods-TongHuoTests.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +84,7 @@
 				532DC935192ED83600C07757 /* CoreGraphics.framework in Frameworks */,
 				532DC937192ED83600C07757 /* UIKit.framework in Frameworks */,
 				532DC933192ED83600C07757 /* Foundation.framework in Frameworks */,
-				3C8E0718E6AA4B33A631A4BC /* libPods.a in Frameworks */,
+				DEB449EFB0ED4794A5608AED /* libPods-TongHuo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,12 +95,20 @@
 				532DC94C192ED83700C07757 /* XCTest.framework in Frameworks */,
 				532DC94E192ED83700C07757 /* UIKit.framework in Frameworks */,
 				532DC94D192ED83700C07757 /* Foundation.framework in Frameworks */,
+				DED4762164AD4A74A010EABD /* libPods-TongHuoTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		53097FB81934BAAE00589393 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
 		532D60AA1931DCD700537D4C /* Authorization */ = {
 			isa = PBXGroup;
 			children = (
@@ -124,9 +137,11 @@
 				532D60C71931E43800537D4C /* Goods */,
 				532D60C81931E43800537D4C /* Market */,
 				532D60C91931E43800537D4C /* Order */,
+				53097FB81934BAAE00589393 /* Platform */,
 				532D60CA1931E43800537D4C /* Product */,
 				532D60CB1931E43800537D4C /* Seller */,
 				532D60CC1931E43800537D4C /* Shop */,
+				53097FB91934BD0A00589393 /* Model.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -267,7 +282,8 @@
 				532DC951192ED83700C07757 /* TongHuoTests */,
 				532DC931192ED83600C07757 /* Frameworks */,
 				532DC930192ED83600C07757 /* Products */,
-				638043956007457687CF6C2B /* Pods.xcconfig */,
+				9995BA8C9E78466BB9DCC872 /* Pods-TongHuo.xcconfig */,
+				FFD4C48BC2FE4B00A5A9889A /* Pods-TongHuoTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -287,7 +303,8 @@
 				532DC934192ED83600C07757 /* CoreGraphics.framework */,
 				532DC936192ED83600C07757 /* UIKit.framework */,
 				532DC94B192ED83600C07757 /* XCTest.framework */,
-				4A0964EA7F1E4C77B6DE033F /* libPods.a */,
+				8F26962D080247409958FBBD /* libPods-TongHuo.a */,
+				57CCC640F1E5454F91A13A04 /* libPods-TongHuoTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -365,9 +382,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 532DC95E192ED83700C07757 /* Build configuration list for PBXNativeTarget "TongHuoTests" */;
 			buildPhases = (
+				DE1BB9A83ECF4E789683C4CC /* Check Pods Manifest.lock */,
 				532DC946192ED83600C07757 /* Sources */,
 				532DC947192ED83600C07757 /* Frameworks */,
 				532DC948192ED83600C07757 /* Resources */,
+				C0D2A61F8E374FDF9528EE55 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -462,7 +481,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Pods-TongHuo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C0D2A61F8E374FDF9528EE55 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-TongHuoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DE1BB9A83ECF4E789683C4CC /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -475,6 +524,7 @@
 				532D60D11932268900537D4C /* THAPI.m in Sources */,
 				532D60BE1931DFF900537D4C /* THSettings.m in Sources */,
 				532DC943192ED83600C07757 /* AppDelegate.m in Sources */,
+				53097FBB1934BD0B00589393 /* Model.xcdatamodeld in Sources */,
 				532DC93F192ED83600C07757 /* main.m in Sources */,
 				532D60C41931E0A800537D4C /* THAuthorizer.m in Sources */,
 				532D60B71931DF2200537D4C /* THNetwork.m in Sources */,
@@ -485,7 +535,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				532DC958192ED83700C07757 /* TongHuoTests.m in Sources */,
+				53097FA71933724F00589393 /* TongHuoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,7 +641,7 @@
 		};
 		532DC95C192ED83700C07757 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 638043956007457687CF6C2B /* Pods.xcconfig */;
+			baseConfigurationReference = 9995BA8C9E78466BB9DCC872 /* Pods-TongHuo.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -599,6 +649,11 @@
 				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
 				INFOPLIST_FILE = "TongHuo/TongHuo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_3.3.7.1/**",
+					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/",
+					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_Extra_Frameworks/Wechat/**",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -606,7 +661,7 @@
 		};
 		532DC95D192ED83700C07757 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 638043956007457687CF6C2B /* Pods.xcconfig */;
+			baseConfigurationReference = 9995BA8C9E78466BB9DCC872 /* Pods-TongHuo.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -614,6 +669,11 @@
 				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
 				INFOPLIST_FILE = "TongHuo/TongHuo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_3.3.7.1/**",
+					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/",
+					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_Extra_Frameworks/Wechat/**",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -621,6 +681,7 @@
 		};
 		532DC95F192ED83700C07757 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFD4C48BC2FE4B00A5A9889A /* Pods-TongHuoTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TongHuo.app/TongHuo";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -633,8 +694,10 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"COCOAPODS=1",
 				);
 				INFOPLIST_FILE = "TongHuoTests/TongHuoTests-Info.plist";
+				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -643,6 +706,7 @@
 		};
 		532DC960192ED83700C07757 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFD4C48BC2FE4B00A5A9889A /* Pods-TongHuoTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TongHuo.app/TongHuo";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -652,7 +716,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					"COCOAPODS=1",
+				);
 				INFOPLIST_FILE = "TongHuoTests/TongHuoTests-Info.plist";
+				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -690,6 +759,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		53097FB91934BD0A00589393 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				53097FBA1934BD0A00589393 /* Model.xcdatamodel */,
+			);
+			currentVersion = 53097FBA1934BD0A00589393 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 532DC927192ED83600C07757 /* Project object */;
 }

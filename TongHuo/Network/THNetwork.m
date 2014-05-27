@@ -77,5 +77,14 @@
 }
 
 
+- (NSURL *)baseURL
+{
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/", kBaseURLDomain]];
+}
+
+- (NSURL *)adminURL
+{
+    return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/", kAdminURLDomain]];
+}
 
 @end

@@ -8,6 +8,8 @@
 
 #import "THAPI.h"
 
+#import "THNetwork.h"
+
 #define kSecret @"UUIJ98239JS89UJWQ3XM9I%&*ui ncd^"
 
 //    userinfo.loginname
@@ -60,6 +62,18 @@
 //    m  验证参数  MD5(uid+”/do/"+data.length()+"/"+通讯参数)
 #define kPostAndGetOrdersURI @"/msysdata.zzl"
 
+
+@interface THAPI ()
+{
+    NSNumber * _accountUserIdentifier;
+}
+
+
+@property (nonatomic, strong) AFHTTPRequestOperationManager * getManager;
+@property (nonatomic, strong) AFHTTPRequestOperationManager * postManager;
+
+@end
+
 @implementation THAPI
 
 
@@ -75,27 +89,68 @@
     return api;
 }
 
+
+#pragma mark - Instance methods
+@synthesize getManager = _getManager;
+@synthesize postManager = _postManager;
+
+- (id) init
+{
+    if (self = [super init]) {
+        _getManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[THNetwork sharedNetwork].baseURL];
+        _postManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[THNetwork sharedNetwork].adminURL];
+        
+#if DEBUG
+        _accountUserIdentifier = @0;
+#endif
+    }
+    
+    return self;
+}
+
+#pragma mark -
+
 - (RACSignal *)signInWithUsername:(NSString *)username password:(NSString *)password
 {
-    RACSignal * signal = nil;
-    
-    
-    
+    NSAssert(username, @"The method has a logic error");
+    NSAssert(password, @"The method has a logic error");
+
+    RACSignal * signal = [_postManager rac_POST:kSignInURI
+                                     parameters:(@{
+                                                   @"userinfo.loginname" : username,
+                                                   @"userinfo.password": password
+                                                   })];
     return signal;
 }
 
 - (RACSignal *)getTBAuthentication
 {
-    RACSignal * signal = nil;
+    NSAssert(_accountUserIdentifier, @"The method has a logic error");
     
+    NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%@", _accountUserIdentifier, kSecret];
+    
+    CocoaSecurityResult * encrypted = [CocoaSecurity md5:baseSecret];
+
+    NSString * m = encrypted.hexLower;
+    
+    RACSignal * signal = [_postManager rac_POST:kTBAuthenticationURI
+                                     parameters:(@{
+                                                   @"mod" : @"tbuser",
+                                                   @"uid": _accountUserIdentifier,
+                                                   @"m": m
+                                                   })];
     return signal;
 }
 
 
 - (RACSignal *)getSellerCodeFor:(NSNumber *)productIdentifier
 {
-    RACSignal * signal = nil;
+    NSAssert(productIdentifier, @"The method has a logic error");
     
+    RACSignal * signal = [_getManager rac_GET:kGetSellerCode
+                                     parameters:(@{
+                                                   @"num_iid" : productIdentifier
+                                                   })];
     return signal;
 }
 
@@ -113,8 +168,11 @@
 //    }
 - (RACSignal *)getShops
 {
-    RACSignal * signal = nil;
-    
+    RACSignal * signal = [_getManager rac_GET:kGetShopsURI
+                                   parameters:(@{
+                                                 @"m" : @"GetShop",
+                                                 @"type": @2
+                                                 })];
     return signal;
 }
 
@@ -130,29 +188,78 @@
 
 - (RACSignal *)getMarkets
 {
-    RACSignal * signal = nil;
-    
+    RACSignal * signal = [_getManager rac_GET:kGetMarketsURI
+                                   parameters:(@{
+                                                 @"m" : @"GetMarket",
+                                                 @"type": @1
+                                                 })];
     return signal;
 }
 
 - (RACSignal *)getJackpot
 {
-    RACSignal * signal = nil;
+    NSAssert(_accountUserIdentifier, @"The method has a logic error");
     
+    RACSignal * signal = [_postManager rac_POST:kGetJackpot
+                                     parameters:(@{
+                                                   @"mod" : @"doj",
+                                                   @"uid": _accountUserIdentifier
+                                                   })];
     return signal;
 }
 
 - (RACSignal *)getGoodsForShop:(NSNumber *)shopIdentifier
 {
-    RACSignal * signal = nil;
+    NSAssert(shopIdentifier, @"The method has a logic error");
     
+    RACSignal * signal = [_getManager rac_GET:kGetGoods
+                                   parameters:(@{
+                                                 @"m" : @"GetGoods",
+                                                 @"shop_id": shopIdentifier
+                                                 })];
     return signal;
 }
 
+//    mod 固定值 up
+//    uid  当前用户id
+//    tid  授权账号id
+//    num_iid  产品id
+//    title  标题（小于32个汉字字节）
+//    outid 商家编码（需要通过接口获取）
+//    price 售价
+//
+// kPostProductURI @"/sendTB.zzl"
+
 - (RACSignal *)postTBProduct:(NSDictionary *)product
 {
-    RACSignal * signal = nil;
+    NSNumber * pid = [product objectForKey:@"identifier"];
+    NSString * title = [product objectForKey:@"title"];
+    NSNumber * price = [product objectForKey:@"price"];
     
+#warning TODO: Get seller code and tid
+    NSString * sellerCode = @"";
+    NSNumber * tid = @0;
+    
+    
+    NSAssert(_accountUserIdentifier, @"The method has a logic error");
+    
+    NSAssert(pid, @"The method has a logic error");
+    NSAssert(title, @"The method has a logic error");
+    NSAssert(price, @"The method has a logic error");
+    NSAssert(sellerCode, @"The method has a logic error");
+    NSAssert(price, @"The method has a logic error");
+    
+    
+    RACSignal * signal = [_postManager rac_POST:kPostProductURI
+                                     parameters:(@{
+                                                   @"mod" : @"up",
+                                                   @"uid": _accountUserIdentifier,
+                                                   @"tid": tid,
+                                                   @"num_iid": pid,
+                                                   @"title": title,
+                                                   @"outid": sellerCode,
+                                                   @"price": price
+                                                   })];
     return signal;
 }
 
@@ -163,8 +270,24 @@
 // @return
 - (RACSignal *)postOrders:(NSArray *)orders
 {
-    RACSignal * signal = nil;
+    NSAssert(_accountUserIdentifier, @"The method has a logic error");
     
+#warning TODO: JSONValue String for orders
+    NSString * ordersJson = [orders description];
+    
+    NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%d/%@", _accountUserIdentifier, ordersJson.length, kSecret];
+    
+    CocoaSecurityResult * encrypted = [CocoaSecurity md5:baseSecret];
+    
+    NSString * m = encrypted.hexLower;
+    
+    RACSignal * signal = [_postManager rac_POST:kPostOrdersURI
+                                     parameters:(@{
+                                                   @"mod" : @"do",
+                                                   @"uid": _accountUserIdentifier,
+                                                   @"data": ordersJson,
+                                                   @"m": m
+                                                   })];
     return signal;
 }
 
@@ -174,8 +297,24 @@
 // @param products Array of Product
 - (RACSignal *)postAndGetOrders:(NSArray *)products
 {
-    RACSignal * signal = nil;
+    NSAssert(_accountUserIdentifier, @"The method has a logic error");
     
+    #warning TODO: JSONValue String for orders
+    NSString * productsJson = [products description];
+    
+    NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%d/%@", _accountUserIdentifier, productsJson.length, kSecret];
+    
+    CocoaSecurityResult * encrypted = [CocoaSecurity md5:baseSecret];
+    
+    NSString * m = encrypted.hexLower;
+    
+    RACSignal * signal = [_postManager rac_POST:kPostAndGetOrdersURI
+                                     parameters:(@{
+                                                   @"mod" : @"do",
+                                                   @"uid": _accountUserIdentifier,
+                                                   @"data": productsJson,
+                                                   @"m": m
+                                                   })];
     return signal;
 }
 

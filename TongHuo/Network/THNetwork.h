@@ -11,6 +11,9 @@
 @interface THNetwork : NSObject
 
 @property (nonatomic, readonly) AFNetworkReachabilityManager * reachabilityManager;
+@property (nonatomic, readonly) NSURL * baseURL;
+@property (nonatomic, readonly) NSURL * adminURL;
+
 @property (nonatomic, assign) BOOL isOnline;
 
 + (instancetype) sharedNetwork;
