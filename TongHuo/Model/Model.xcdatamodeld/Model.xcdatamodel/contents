@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Goods" syncable="YES">
+    <entity name="Account" representedClassName="Account" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="Goods" representedClassName="Goods" syncable="YES">
         <attribute name="addTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="categoryId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="checked" optional="YES" attributeType="Boolean" syncable="YES"/>
@@ -9,12 +14,12 @@
         <attribute name="goodsType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
         <attribute name="listTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="marketId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="numIid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="marketId" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+        <attribute name="numIid" attributeType="Integer 64" indexed="YES" syncable="YES"/>
         <attribute name="picUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="pv" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="shopId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="shopId" attributeType="Integer 64" indexed="YES" syncable="YES"/>
         <attribute name="tbPrice" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="teamUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
@@ -22,34 +27,67 @@
         <attribute name="topLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="topStartTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="updateTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="userId" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="userId" attributeType="Integer 64" syncable="YES"/>
+        <relationship name="market" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Markets" inverseName="goods" inverseEntity="Markets" syncable="YES"/>
+        <relationship name="shop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Shops" inverseName="goods" inverseEntity="Shops" syncable="YES"/>
     </entity>
-    <entity name="Markets" syncable="YES">
+    <entity name="Markets" representedClassName="Markets" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="cityId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="goods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goods" inverseName="market" inverseEntity="Goods" syncable="YES"/>
+        <relationship name="shops" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Shops" inverseName="market" inverseEntity="Shops" syncable="YES"/>
     </entity>
-    <entity name="Platforms" syncable="YES">
+    <entity name="Orders" representedClassName="Orders" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createtime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="cs" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="did" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+        <attribute name="kno" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ktype" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="no" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="sf" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="size" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="tb" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
+        <attribute name="tel" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Platforms" representedClassName="Platforms" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pid" attributeType="Integer 64" indexed="YES" syncable="YES"/>
         <attribute name="token" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Products" syncable="YES"/>
-    <entity name="Shops" syncable="YES">
+    <entity name="Sellers" representedClassName="Sellers" syncable="YES">
+        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="productId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Shops" representedClassName="Shops" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="marketId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+        <attribute name="marketId" attributeType="Integer 64" indexed="YES" syncable="YES"/>
         <attribute name="mobile" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="updateTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="goods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goods" inverseName="shop" inverseEntity="Goods" syncable="YES"/>
+        <relationship name="market" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Markets" inverseName="shops" inverseEntity="Markets" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Platforms" positionX="-369" positionY="-151" width="128" height="88"/>
-        <element name="Goods" positionX="-360" positionY="90" width="128" height="358"/>
-        <element name="Products" positionX="-369" positionY="9" width="128" height="43"/>
-        <element name="Markets" positionX="-137" positionY="-153" width="128" height="103"/>
-        <element name="Shops" positionX="-128" positionY="32" width="128" height="148"/>
+        <element name="Goods" positionX="-360" positionY="90" width="128" height="403"/>
+        <element name="Markets" positionX="-137" positionY="-153" width="128" height="133"/>
+        <element name="Platforms" positionX="-369" positionY="-151" width="128" height="103"/>
+        <element name="Products" positionX="-369" positionY="9" width="128" height="45"/>
+        <element name="Shops" positionX="-128" positionY="32" width="128" height="178"/>
+        <element name="Account" positionX="-243" positionY="0" width="128" height="88"/>
+        <element name="Orders" positionX="-234" positionY="9" width="128" height="283"/>
+        <element name="Sellers" positionX="-225" positionY="18" width="128" height="88"/>
     </elements>
 </model>

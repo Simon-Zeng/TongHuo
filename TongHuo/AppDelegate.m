@@ -14,6 +14,15 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    JASidePanelController * sidePanelController = [[JASidePanelController alloc] init];
+    
+    sidePanelController.leftPanel = [[UIViewController alloc] init];
+    sidePanelController.centerPanel = [[UIViewController alloc] init];
+    sidePanelController.rightPanel = [[UIViewController alloc] init];
+    
+    self.window.rootViewController = sidePanelController;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

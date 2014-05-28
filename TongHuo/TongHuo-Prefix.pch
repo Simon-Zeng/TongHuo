@@ -18,6 +18,7 @@
 #import "AMSmoothAlertView.h"
 #import "BlockActionSheet.h"
 #import "CocoaSecurity.h"
+#import "JASidePanelController.h"
 #import "JSONModelLib.h"
 #import "POP.h"
 #import "RACAFNetworking.h"

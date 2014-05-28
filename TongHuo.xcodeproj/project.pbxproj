@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		53097FA71933724F00589393 /* TongHuoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 532DC957192ED83700C07757 /* TongHuoTests.m */; };
 		53097FBB1934BD0B00589393 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 53097FB91934BD0A00589393 /* Model.xcdatamodeld */; };
+		5315E2F519356881001476A4 /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 5315E2F419356881001476A4 /* Account.m */; };
+		5315E2F8193568C6001476A4 /* Goods.m in Sources */ = {isa = PBXBuildFile; fileRef = 5315E2F7193568C6001476A4 /* Goods.m */; };
+		5315E2FE19356927001476A4 /* Platforms.m in Sources */ = {isa = PBXBuildFile; fileRef = 5315E2FD19356927001476A4 /* Platforms.m */; };
+		5315E3011935693D001476A4 /* Shops.m in Sources */ = {isa = PBXBuildFile; fileRef = 5315E3001935693D001476A4 /* Shops.m */; };
+		5315E30419356952001476A4 /* Orders.m in Sources */ = {isa = PBXBuildFile; fileRef = 5315E30319356952001476A4 /* Orders.m */; };
+		5315E30719356961001476A4 /* Sellers.m in Sources */ = {isa = PBXBuildFile; fileRef = 5315E30619356961001476A4 /* Sellers.m */; };
+		5315E30A19356992001476A4 /* Markets.m in Sources */ = {isa = PBXBuildFile; fileRef = 5315E30919356992001476A4 /* Markets.m */; };
 		532D60B71931DF2200537D4C /* THNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D60B61931DF2200537D4C /* THNetwork.m */; };
 		532D60B91931DF7600537D4C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 532D60B81931DF7600537D4C /* Config.xcconfig */; };
 		532D60BB1931DFD200537D4C /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 532D60BA1931DFD200537D4C /* Settings.plist */; };
@@ -43,6 +50,20 @@
 
 /* Begin PBXFileReference section */
 		53097FBA1934BD0A00589393 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		5315E2F319356881001476A4 /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
+		5315E2F419356881001476A4 /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
+		5315E2F6193568C6001476A4 /* Goods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Goods.h; sourceTree = "<group>"; };
+		5315E2F7193568C6001476A4 /* Goods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Goods.m; sourceTree = "<group>"; };
+		5315E2FC19356927001476A4 /* Platforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Platforms.h; sourceTree = "<group>"; };
+		5315E2FD19356927001476A4 /* Platforms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Platforms.m; sourceTree = "<group>"; };
+		5315E2FF1935693D001476A4 /* Shops.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shops.h; sourceTree = "<group>"; };
+		5315E3001935693D001476A4 /* Shops.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Shops.m; sourceTree = "<group>"; };
+		5315E30219356952001476A4 /* Orders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orders.h; sourceTree = "<group>"; };
+		5315E30319356952001476A4 /* Orders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Orders.m; sourceTree = "<group>"; };
+		5315E30519356961001476A4 /* Sellers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sellers.h; sourceTree = "<group>"; };
+		5315E30619356961001476A4 /* Sellers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Sellers.m; sourceTree = "<group>"; };
+		5315E30819356992001476A4 /* Markets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Markets.h; sourceTree = "<group>"; };
+		5315E30919356992001476A4 /* Markets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Markets.m; sourceTree = "<group>"; };
 		532D60B51931DF2200537D4C /* THNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THNetwork.h; sourceTree = "<group>"; };
 		532D60B61931DF2200537D4C /* THNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THNetwork.m; sourceTree = "<group>"; };
 		532D60B81931DF7600537D4C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
@@ -105,6 +126,8 @@
 		53097FB81934BAAE00589393 /* Platform */ = {
 			isa = PBXGroup;
 			children = (
+				5315E2FC19356927001476A4 /* Platforms.h */,
+				5315E2FD19356927001476A4 /* Platforms.m */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -213,6 +236,8 @@
 		532D60C51931E43800537D4C /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				5315E2F319356881001476A4 /* Account.h */,
+				5315E2F419356881001476A4 /* Account.m */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -227,6 +252,8 @@
 		532D60C71931E43800537D4C /* Goods */ = {
 			isa = PBXGroup;
 			children = (
+				5315E2F6193568C6001476A4 /* Goods.h */,
+				5315E2F7193568C6001476A4 /* Goods.m */,
 			);
 			path = Goods;
 			sourceTree = "<group>";
@@ -234,6 +261,8 @@
 		532D60C81931E43800537D4C /* Market */ = {
 			isa = PBXGroup;
 			children = (
+				5315E30819356992001476A4 /* Markets.h */,
+				5315E30919356992001476A4 /* Markets.m */,
 			);
 			path = Market;
 			sourceTree = "<group>";
@@ -241,6 +270,8 @@
 		532D60C91931E43800537D4C /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				5315E30219356952001476A4 /* Orders.h */,
+				5315E30319356952001476A4 /* Orders.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -255,6 +286,8 @@
 		532D60CB1931E43800537D4C /* Seller */ = {
 			isa = PBXGroup;
 			children = (
+				5315E30519356961001476A4 /* Sellers.h */,
+				5315E30619356961001476A4 /* Sellers.m */,
 			);
 			path = Seller;
 			sourceTree = "<group>";
@@ -262,6 +295,8 @@
 		532D60CC1931E43800537D4C /* Shop */ = {
 			isa = PBXGroup;
 			children = (
+				5315E2FF1935693D001476A4 /* Shops.h */,
+				5315E3001935693D001476A4 /* Shops.m */,
 			);
 			path = Shop;
 			sourceTree = "<group>";
@@ -522,12 +557,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				532D60D11932268900537D4C /* THAPI.m in Sources */,
+				5315E2F519356881001476A4 /* Account.m in Sources */,
 				532D60BE1931DFF900537D4C /* THSettings.m in Sources */,
 				532DC943192ED83600C07757 /* AppDelegate.m in Sources */,
 				53097FBB1934BD0B00589393 /* Model.xcdatamodeld in Sources */,
+				5315E30719356961001476A4 /* Sellers.m in Sources */,
 				532DC93F192ED83600C07757 /* main.m in Sources */,
+				5315E2F8193568C6001476A4 /* Goods.m in Sources */,
 				532D60C41931E0A800537D4C /* THAuthorizer.m in Sources */,
+				5315E2FE19356927001476A4 /* Platforms.m in Sources */,
+				5315E3011935693D001476A4 /* Shops.m in Sources */,
+				5315E30419356952001476A4 /* Orders.m in Sources */,
 				532D60B71931DF2200537D4C /* THNetwork.m in Sources */,
+				5315E30A19356992001476A4 /* Markets.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
