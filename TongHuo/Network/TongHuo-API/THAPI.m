@@ -101,7 +101,8 @@
         _postManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[THNetwork sharedNetwork].adminURL];
         
 #if DEBUG
-        _accountUserIdentifier = @0;
+//        _accountUserIdentifier = @19915; // zengconggen
+        _accountUserIdentifier = @18725; // miukoo
 #endif
     }
     
@@ -114,9 +115,12 @@
 {
     NSAssert(username, @"The method has a logic error");
     NSAssert(password, @"The method has a logic error");
+    
+    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
 
     RACSignal * signal = [_postManager rac_POST:kSignInURI
                                      parameters:(@{
+                                                   @"mod": @"login",
                                                    @"userinfo.loginname" : username,
                                                    @"userinfo.password": password
                                                    })];
@@ -127,6 +131,8 @@
 {
     NSAssert(_accountUserIdentifier, @"The method has a logic error");
     
+    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
     NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%@", _accountUserIdentifier, kSecret];
     
     CocoaSecurityResult * encrypted = [CocoaSecurity md5:baseSecret];
@@ -135,7 +141,7 @@
     
     RACSignal * signal = [_postManager rac_POST:kTBAuthenticationURI
                                      parameters:(@{
-                                                   @"mod" : @"tbuser",
+                                                   @"mod" : @"tuser",
                                                    @"uid": _accountUserIdentifier,
                                                    @"m": m
                                                    })];
@@ -146,6 +152,8 @@
 - (RACSignal *)getSellerCodeFor:(NSNumber *)productIdentifier
 {
     NSAssert(productIdentifier, @"The method has a logic error");
+    
+    _getManager.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:nil];
     
     RACSignal * signal = [_getManager rac_GET:kGetSellerCode
                                      parameters:(@{
@@ -168,6 +176,8 @@
 //    }
 - (RACSignal *)getShops
 {
+    _getManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
     RACSignal * signal = [_getManager rac_GET:kGetShopsURI
                                    parameters:(@{
                                                  @"m" : @"GetShop",
@@ -188,6 +198,8 @@
 
 - (RACSignal *)getMarkets
 {
+    _getManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
     RACSignal * signal = [_getManager rac_GET:kGetMarketsURI
                                    parameters:(@{
                                                  @"m" : @"GetMarket",
@@ -200,6 +212,10 @@
 {
     NSAssert(_accountUserIdentifier, @"The method has a logic error");
     
+    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
+    _postManager.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:nil];
+
     RACSignal * signal = [_postManager rac_POST:kGetJackpot
                                      parameters:(@{
                                                    @"mod" : @"doj",
@@ -211,6 +227,8 @@
 - (RACSignal *)getGoodsForShop:(NSNumber *)shopIdentifier
 {
     NSAssert(shopIdentifier, @"The method has a logic error");
+    
+    _getManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     RACSignal * signal = [_getManager rac_GET:kGetGoods
                                    parameters:(@{
@@ -232,6 +250,8 @@
 
 - (RACSignal *)postTBProduct:(NSDictionary *)product
 {
+    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
     NSNumber * pid = [product objectForKey:@"identifier"];
     NSString * title = [product objectForKey:@"title"];
     NSNumber * price = [product objectForKey:@"price"];
@@ -272,6 +292,8 @@
 {
     NSAssert(_accountUserIdentifier, @"The method has a logic error");
     
+    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    
 #warning TODO: JSONValue String for orders
     NSString * ordersJson = [orders description];
     
@@ -298,6 +320,8 @@
 - (RACSignal *)postAndGetOrders:(NSArray *)products
 {
     NSAssert(_accountUserIdentifier, @"The method has a logic error");
+    
+    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
     #warning TODO: JSONValue String for orders
     NSString * productsJson = [products description];

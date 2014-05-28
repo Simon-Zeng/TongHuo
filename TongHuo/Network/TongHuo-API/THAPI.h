@@ -12,8 +12,55 @@
 
 + (instancetype) apiCenter;
 
+
+//{
+//    "address":"",
+//    "aid":0,
+//    "createtime":1401003395,
+//    "domain":"",
+//    "email":"zengconggen@sina.com",
+//    "id":19915,
+//    "image_count":0,
+//    "leval":0,
+//    "levalName":"初级认证",
+//    "loginname":"zengconggen",
+//    "name":"zengconggen",
+//    "note":"",
+//    "password":"2e17ecf15bc939e43af5bac07cdb0afe",
+//    "phone_count":0,
+//    "qq":"",
+//    "recomm_count":0,
+//    "salt":"36af54",
+//    "tel":"",
+//    "template_count":0,
+//    "type":0,
+//    "typeName":"分销商",
+//    "url":"",
+//    "ww":""
+//}
+
 - (RACSignal *)signInWithUsername:(NSString *)username password:(NSString *)password;
 
+//data: array of {
+//    "uid":18725,
+//    "logo":null,
+//    "taobao_user_nick":"micoop",
+//    "updatetime":1401272112999,
+//    "re_expires_in":"4257866",
+//    "state":1,
+//    "expires_in":"4257866",
+//    "type":0,
+//    "r1_expires_in":"4257866",
+//    "info":{},
+//    "id"1009,
+//    "taobao_user_id":"1739664677",
+//    "w2_expires_in":"1800",
+//    "w1_expires_in":"4257866",
+//    "r2_expires_in":"259200",
+//    "token_type":null,
+//    "refresh_token":"610191951ee0e994f14aa26a6d9158e985f9f03f139ed051739664677",
+//    "access_token":"6100519d183448f345455079fd01192fb76a930bb9b1fdf1739664677"
+//}
 - (RACSignal *)getTBAuthentication;
 - (RACSignal *)getSellerCodeFor:(NSNumber *)productIdentifier;
 

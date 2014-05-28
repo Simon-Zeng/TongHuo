@@ -38,10 +38,13 @@
     
 //    RACSignal * signal = [apiCenter signInWithUsername:@"zengconggen" password:@"123456"];
 
-    RACSignal * signal = [apiCenter signInWithUsername:@"miukoo" password:@"miukoo11"];
+    RACSignal * signal = [apiCenter signInWithUsername:@"miukoo" password:@"miukoo"];
  
     [signal subscribeNext:^(RACTuple *result) {
         NSLog(@"--- Result: %@", result);
+        RACTupleUnpack(AFHTTPRequestOperation * httpRequest) = result;
+        
+        NSLog(@"------ ResponseString: %@", httpRequest.responseString);
         
         dispatch_semaphore_signal(sema);
     } error:^(NSError *error){
@@ -91,14 +94,17 @@
 {
     dispatch_semaphore_t sema = dispatch_semaphore_create(0);
     
-    NSNumber * productIdentifier = @38319773892;
+    NSNumber * productIdentifier = @36920712729;
     
     THAPI * apiCenter = [THAPI apiCenter];
     
     RACSignal * signal = [apiCenter getSellerCodeFor:productIdentifier];
     
     [signal subscribeNext:^(RACTuple *result) {
-        NSLog(@"--- Result: %@", result);
+        RACTupleUnpack(AFHTTPRequestOperation *httpRequest) = result;
+        NSLog(@"--- Result: %@", httpRequest);
+        
+        NSLog(@"--- ResponseString: %@", httpRequest.responseString);
         
         dispatch_semaphore_signal(sema);
     } error:^(NSError *error){
@@ -176,6 +182,10 @@
     
     [signal subscribeNext:^(RACTuple *result) {
         NSLog(@"--- Result: %@", result);
+        
+        RACTupleUnpack(AFHTTPRequestOperation *httpRequest) = result;
+        
+        NSLog(@"--- ResponseString: %@", httpRequest.responseString);
         
         dispatch_semaphore_signal(sema);
     } error:^(NSError *error){
