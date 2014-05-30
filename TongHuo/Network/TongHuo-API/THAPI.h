@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class Goods;
+
 @interface THAPI : NSObject
 
 + (instancetype) apiCenter;
@@ -119,7 +121,7 @@
 
 - (RACSignal *)getGoodsForShop:(NSNumber *)shopIdentifier;
 
-- (RACSignal *)postTBProduct:(NSDictionary *)product;
+- (RACSignal *)postTBProduct:(Goods *)product;
 
 
 // @brief

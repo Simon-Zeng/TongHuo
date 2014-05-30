@@ -9,6 +9,7 @@
 #import "THAPI.h"
 
 #import "THNetwork.h"
+#import "Goods.h"
 
 #define kSecret @"UUIJ98239JS89UJWQ3XM9I%&*ui ncd^"
 
@@ -248,13 +249,13 @@
 //
 // kPostProductURI @"/sendTB.zzl"
 
-- (RACSignal *)postTBProduct:(NSDictionary *)product
+- (RACSignal *)postTBProduct:(Goods *)product
 {
     _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    NSNumber * pid = [product objectForKey:@"identifier"];
-    NSString * title = [product objectForKey:@"title"];
-    NSNumber * price = [product objectForKey:@"price"];
+    NSNumber * pid = product.id;
+    NSString * title = product.title;
+    NSNumber * price = product.price;
     
 #warning TODO: Get seller code and tid
     NSString * sellerCode = @"";
@@ -294,8 +295,10 @@
     
     _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-#warning TODO: JSONValue String for orders
-    NSString * ordersJson = [orders description];
+    NSString * ordersJson = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:orders
+                                                                                           options:NSJSONWritingPrettyPrinted
+                                                                                             error:NULL]
+                                                  encoding:NSUTF8StringEncoding];
     
     NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%d/%@", _accountUserIdentifier, ordersJson.length, kSecret];
     
@@ -323,8 +326,10 @@
     
     _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    #warning TODO: JSONValue String for orders
-    NSString * productsJson = [products description];
+    NSString * productsJson = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:products
+                                                                                             options:NSJSONWritingPrettyPrinted
+                                                                                               error:NULL]
+                                                    encoding:NSUTF8StringEncoding];
     
     NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%d/%@", _accountUserIdentifier, productsJson.length, kSecret];
     

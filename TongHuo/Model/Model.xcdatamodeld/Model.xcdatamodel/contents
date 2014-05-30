@@ -2,8 +2,11 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+        <attribute name="loginname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="uid" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="typeName" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Goods" representedClassName="Goods" syncable="YES">
         <attribute name="addTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -26,8 +29,8 @@
         <attribute name="topEndTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="topLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="topStartTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="uid" attributeType="Integer 64" syncable="YES"/>
         <attribute name="updateTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <attribute name="userId" attributeType="Integer 64" syncable="YES"/>
         <relationship name="market" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Markets" inverseName="goods" inverseEntity="Markets" syncable="YES"/>
         <relationship name="shop" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Shops" inverseName="goods" inverseEntity="Shops" syncable="YES"/>
     </entity>
@@ -44,7 +47,6 @@
         <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createtime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="cs" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="did" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
         <attribute name="kno" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ktype" optional="YES" attributeType="String" syncable="YES"/>
@@ -52,18 +54,19 @@
         <attribute name="no" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="pid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="sf" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shopId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="size" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="tb" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="tel" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Platforms" representedClassName="Platforms" syncable="YES">
+        <attribute name="accessToken" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="pid" attributeType="Integer 64" indexed="YES" syncable="YES"/>
-        <attribute name="token" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="refreshToken" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
-    <entity name="Products" syncable="YES"/>
     <entity name="Sellers" representedClassName="Sellers" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -81,13 +84,12 @@
         <relationship name="market" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Markets" inverseName="shops" inverseEntity="Markets" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Goods" positionX="-360" positionY="90" width="128" height="403"/>
+        <element name="Account" positionX="-243" positionY="0" width="128" height="133"/>
+        <element name="Goods" positionX="-360" positionY="90" width="128" height="405"/>
         <element name="Markets" positionX="-137" positionY="-153" width="128" height="133"/>
-        <element name="Platforms" positionX="-369" positionY="-151" width="128" height="103"/>
-        <element name="Products" positionX="-369" positionY="9" width="128" height="45"/>
-        <element name="Shops" positionX="-128" positionY="32" width="128" height="178"/>
-        <element name="Account" positionX="-243" positionY="0" width="128" height="88"/>
         <element name="Orders" positionX="-234" positionY="9" width="128" height="283"/>
+        <element name="Platforms" positionX="-369" positionY="-151" width="128" height="120"/>
         <element name="Sellers" positionX="-225" positionY="18" width="128" height="88"/>
+        <element name="Shops" positionX="-128" positionY="32" width="128" height="178"/>
     </elements>
 </model>

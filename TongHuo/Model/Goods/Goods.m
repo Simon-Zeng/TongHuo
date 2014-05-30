@@ -2,11 +2,13 @@
 //  Goods.m
 //  TongHuo
 //
-//  Created by zeng songgen on 14-5-28.
+//  Created by zeng songgen on 14-5-30.
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
 #import "Goods.h"
+#import "Markets.h"
+#import "Shops.h"
 
 
 @implementation Goods
@@ -32,7 +34,7 @@
 @dynamic topLevel;
 @dynamic topStartTime;
 @dynamic updateTime;
-@dynamic userId;
+@dynamic uid;
 @dynamic market;
 @dynamic shop;
 

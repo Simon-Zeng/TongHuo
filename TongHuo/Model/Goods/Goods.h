@@ -2,13 +2,14 @@
 //  Goods.h
 //  TongHuo
 //
-//  Created by zeng songgen on 14-5-28.
+//  Created by zeng songgen on 14-5-30.
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Markets, Shops;
 
 @interface Goods : NSManagedObject
 
@@ -33,8 +34,8 @@
 @property (nonatomic, retain) NSNumber * topLevel;
 @property (nonatomic, retain) NSNumber * topStartTime;
 @property (nonatomic, retain) NSNumber * updateTime;
-@property (nonatomic, retain) NSNumber * userId;
-@property (nonatomic, retain) NSManagedObject *market;
-@property (nonatomic, retain) NSManagedObject *shop;
+@property (nonatomic, retain) NSNumber * uid;
+@property (nonatomic, retain) Markets *market;
+@property (nonatomic, retain) Shops *shop;
 
 @end
