@@ -9,6 +9,7 @@
 #import "THOrdersViewController.h"
 
 #import "OrdersViewModel.h"
+#import "THTableViewOrderCell.h"
 
 @interface THOrdersViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -34,6 +35,9 @@
     self.tableView = [[UITableView alloc] initWithFrame:windowFrame];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [view addSubview:self.tableView];
     
@@ -44,6 +48,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    [self.tableView registerClass:[THTableViewOrderCell class]
+           forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {

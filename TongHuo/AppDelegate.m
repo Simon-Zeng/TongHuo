@@ -21,12 +21,20 @@
 #import "SignInViewModel.h"
 #import "OrdersViewModel.h"
 
+@interface AppDelegate ()
+
+@end
+
 @implementation AppDelegate
+
+@synthesize sidePanelController = _sidePanelController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBackground"]
+                                       forBarMetrics:UIBarMetricsDefault];
     // Setup window
 //    self.window.tintColor = [UIColor colorWithHexString:@"9E4B10"];
 
@@ -42,18 +50,30 @@
     ordersViewController.viewModel = (OrdersViewModel *)[menuModel viewModelForIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     
     [navControlloer setViewControllers:@[ordersViewController]];
-    
+
     // Setup model
     [[THCoreDataStack defaultStack] ensureInitialLoad];
     
-    // Seup
-    JASidePanelController * sidePanelController = [[JASidePanelController alloc] init];
+    // Seup app root
+    _sidePanelController = [[JASidePanelController alloc] init];
     
-    sidePanelController.leftPanel = menuViewController;
-    sidePanelController.centerPanel = navControlloer;
-    sidePanelController.rightPanel = nil;
+    _sidePanelController.leftPanel = menuViewController;
+    _sidePanelController.centerPanel = navControlloer;
+    _sidePanelController.rightPanel = nil;
     
-    self.window.rootViewController = sidePanelController;
+    navControlloer.navigationItem.leftBarButtonItem = _sidePanelController.leftButtonForCenterPanel;
+    
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+    {
+        _sidePanelController.edgesForExtendedLayout = UIRectEdgeNone;
+        _sidePanelController.extendedLayoutIncludesOpaqueBars = NO;
+        _sidePanelController.modalPresentationCapturesStatusBarAppearance = NO;
+        _sidePanelController.automaticallyAdjustsScrollViewInsets = YES;
+    }
+#endif
+    
+    self.window.rootViewController = _sidePanelController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

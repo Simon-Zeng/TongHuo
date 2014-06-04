@@ -8,6 +8,15 @@
 
 #import "MenuViewModel.h"
 
+
+#import "AppDelegate.h"
+
+#import "THOrdersViewController.h"
+#import "THDeliveriesViewController.h"
+#import "THMarketsViewController.h"
+#import "THJackpotViewController.h"
+#import "THQRCodeViewController.h"
+
 #import "OrdersViewModel.h"
 #import "DeliveriesViewModel.h"
 #import "MarketsViewModel.h"
@@ -123,6 +132,70 @@
 -(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath
 {
     
+}
+
+- (void)presentViewControllerForIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 3 || indexPath.row == 6)
+    {
+        return;
+    }
+    
+    UIViewController * controller = nil;
+    
+    switch (indexPath.row)
+    {
+        case 0:
+        {
+            THOrdersViewController * ordersController = [[THOrdersViewController alloc] init];
+            ordersController.viewModel = (OrdersViewModel *)[self viewModelForIndexPath:indexPath];
+            
+            controller = ordersController;
+        }
+            break;
+        case 1:
+        {
+            THDeliveriesViewController * deliveriesController = [[THDeliveriesViewController alloc] init];
+            deliveriesController.viewModel = (DeliveriesViewModel *)[self viewModelForIndexPath:indexPath];
+            
+            controller = deliveriesController;
+        }
+            break;
+        case 2:
+        {
+            THMarketsViewController * marketsController = [[THMarketsViewController alloc] init];
+            marketsController.viewModel = (MarketsViewModel *)[self viewModelForIndexPath:indexPath];
+            
+            controller = marketsController;
+        }
+            break;
+            break;
+        case 4:
+        {
+            
+        }
+            break;
+        case 5:
+        {
+            THJackpotViewController * jackpotController = [[THJackpotViewController alloc] init];
+            jackpotController.viewModel = (JackpotViewModel *)[self viewModelForIndexPath:indexPath];
+            
+            controller = jackpotController;
+        }
+            break;
+        default:
+            break;
+    }
+
+    if (controller)
+    {
+        JASidePanelController * sidePanelController = [(AppDelegate *)[UIApplication sharedApplication].delegate sidePanelController];
+        
+        UINavigationController * centerPanel = (UINavigationController *)sidePanelController.centerPanel;
+        [centerPanel setViewControllers:@[controller]];
+        
+        [sidePanelController showCenterPanelAnimated:YES];
+    }
 }
 
 @end

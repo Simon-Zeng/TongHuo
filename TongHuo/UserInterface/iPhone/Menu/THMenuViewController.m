@@ -9,6 +9,7 @@
 #import "THMenuViewController.h"
 
 #import "MenuViewModel.h"
+#import "THTableViewMenuCell.h"
 
 @interface THMenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -30,10 +31,32 @@
     CGRect windowFrame = [UIScreen mainScreen].bounds;
     
     UIView * view = [[UIView alloc] initWithFrame:windowFrame];
+    view.backgroundColor = [UIColor colorWithRed:230.0/255
+                                           green:230.0/255
+                                            blue:230.0/255
+                                           alpha:1.0];
+    // Add navbar
+    UINavigationBar *nav = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 20, windowFrame.size.width, 44)];
     
-    self.tableView = [[UITableView alloc] initWithFrame:windowFrame];
+    // create navbaritem
+    UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30.0, 0, windowFrame.size.width-30.0, 44)];
+    titleLabel.font = [UIFont systemFontOfSize:20.0];
+    titleLabel.textAlignment = NSTextAlignmentLeft;
+    titleLabel.text = @"欢迎：1111111å";
+    
+    UINavigationItem *NavTitle = [[UINavigationItem alloc] init];
+    NavTitle.titleView = titleLabel;
+    
+    [nav pushNavigationItem:NavTitle animated:YES];
+    
+    [view addSubview:nav];
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, windowFrame.size.width, windowFrame.size.height-64.0f)];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [view addSubview:self.tableView];
     
@@ -44,7 +67,13 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.extendedLayoutIncludesOpaqueBars = NO;
 
+    [self.tableView registerClass:[THTableViewMenuCell class]
+           forCellReuseIdentifier:@"Cell"];
+    
     @weakify(self);
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
@@ -94,7 +123,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    [self.viewModel presentViewControllerForIndexPath:indexPath];
 }
 
 #pragma mark - Navigation

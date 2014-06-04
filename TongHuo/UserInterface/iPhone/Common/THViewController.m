@@ -1,18 +1,18 @@
 //
-//  THNavigationController.m
+//  THViewController.m
 //  TongHuo
 //
-//  Created by zeng songgen on 14-5-30.
+//  Created by zeng songgen on 14-6-4.
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
-#import "THNavigationController.h"
+#import "THViewController.h"
 
-@interface THNavigationController ()
+@interface THViewController ()
 
 @end
 
-@implementation THNavigationController
+@implementation THViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,17 +26,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     // Do any additional setup after loading the view.
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
-    {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-        self.extendedLayoutIncludesOpaqueBars = YES;
-        self.modalPresentationCapturesStatusBarAppearance = NO;
-        self.automaticallyAdjustsScrollViewInsets = YES;
-    }
-#endif
+    
+    UIImageView * backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MainBackground"]];
+    [self.view addSubview:backgroundView];
+    [self.view sendSubviewToBack:backgroundView];
 }
 
 - (void)didReceiveMemoryWarning

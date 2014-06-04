@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "THViewController.h"
+
 @class UploadViewModel;
 
-@interface THUploadGoodsViewController : UIViewController
+@interface THUploadGoodsViewController : THViewController
 
 @property (nonatomic, strong) UploadViewModel *viewModel;
 

@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "THViewController.h"
 
-@interface THQRCodeViewController : UIViewController
+
+@interface THQRCodeViewController : THViewController
 
 //@property (nonatomic, strong) DeliveriesViewModel *viewModel;
 

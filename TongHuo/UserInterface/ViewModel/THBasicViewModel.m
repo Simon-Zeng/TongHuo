@@ -44,7 +44,7 @@
 
 #pragma mark - THBasicViewModelCoreDataProtocol
 
-- (NSString *)entityName
+- (NSFetchRequest *)fetchRequest
 {
     return nil;
 }

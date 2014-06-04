@@ -26,4 +26,6 @@
 
 -(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath;
 
+- (void)presentViewControllerForIndexPath:(NSIndexPath *)indexPath;
+
 @end
