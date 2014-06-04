@@ -6,8 +6,8 @@
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
-#import "RVMViewModel.h"
+#import "THBasicViewModel.h"
 
-@interface UploadViewModel : RVMViewModel
+@interface UploadViewModel : THBasicViewModel
 
 @end

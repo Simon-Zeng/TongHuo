@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5306D002193DFECF005BD52E /* THCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306D001193DFECF005BD52E /* THCoreDataStack.m */; };
+		5306D005193E048C005BD52E /* MenuViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306D004193E048C005BD52E /* MenuViewModel.m */; };
+		5306D008193E08AC005BD52E /* THBasicViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306D007193E08AC005BD52E /* THBasicViewModel.m */; };
 		53097FA71933724F00589393 /* TongHuoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 532DC957192ED83700C07757 /* TongHuoTests.m */; };
 		53097FBB1934BD0B00589393 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 53097FB91934BD0A00589393 /* Model.xcdatamodeld */; };
 		5318244B1938C77F00AA1564 /* SignInViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318244A1938C77F00AA1564 /* SignInViewModel.m */; };
@@ -67,6 +70,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5306D000193DFECF005BD52E /* THCoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THCoreDataStack.h; sourceTree = "<group>"; };
+		5306D001193DFECF005BD52E /* THCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THCoreDataStack.m; sourceTree = "<group>"; };
+		5306D003193E048C005BD52E /* MenuViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewModel.h; sourceTree = "<group>"; };
+		5306D004193E048C005BD52E /* MenuViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewModel.m; sourceTree = "<group>"; };
+		5306D006193E08AC005BD52E /* THBasicViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THBasicViewModel.h; sourceTree = "<group>"; };
+		5306D007193E08AC005BD52E /* THBasicViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THBasicViewModel.m; sourceTree = "<group>"; };
 		53097FBA1934BD0A00589393 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		531824491938C77F00AA1564 /* SignInViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewModel.h; sourceTree = "<group>"; };
 		5318244A1938C77F00AA1564 /* SignInViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewModel.m; sourceTree = "<group>"; };
@@ -353,6 +362,8 @@
 			children = (
 				531824491938C77F00AA1564 /* SignInViewModel.h */,
 				5318244A1938C77F00AA1564 /* SignInViewModel.m */,
+				5306D003193E048C005BD52E /* MenuViewModel.h */,
+				5306D004193E048C005BD52E /* MenuViewModel.m */,
 				5318244C1938C90900AA1564 /* OrdersViewModel.h */,
 				5318244D1938C90900AA1564 /* OrdersViewModel.m */,
 				5318244F1938C98D00AA1564 /* DeliveriesViewModel.h */,
@@ -367,6 +378,8 @@
 				5318245C1938CA1500AA1564 /* UploadViewModel.m */,
 				5318245E1938CAA600AA1564 /* JackpotViewModel.h */,
 				5318245F1938CAA600AA1564 /* JackpotViewModel.m */,
+				5306D006193E08AC005BD52E /* THBasicViewModel.h */,
+				5306D007193E08AC005BD52E /* THBasicViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -426,6 +439,8 @@
 			children = (
 				532DC941192ED83600C07757 /* AppDelegate.h */,
 				532DC942192ED83600C07757 /* AppDelegate.m */,
+				5306D000193DFECF005BD52E /* THCoreDataStack.h */,
+				5306D001193DFECF005BD52E /* THCoreDataStack.m */,
 				532D60AA1931DCD700537D4C /* Authorization */,
 				532D60AB1931DCD700537D4C /* Configuration */,
 				532DC944192ED83600C07757 /* Images.xcassets */,
@@ -697,6 +712,7 @@
 			files = (
 				532D60D11932268900537D4C /* THAPI.m in Sources */,
 				53AA3D7319387E1400D9C35B /* Account.m in Sources */,
+				5306D005193E048C005BD52E /* MenuViewModel.m in Sources */,
 				531824731938D4F900AA1564 /* THMenuViewController.m in Sources */,
 				53AA3D7619387E1400D9C35B /* Orders.m in Sources */,
 				5318245D1938CA1500AA1564 /* UploadViewModel.m in Sources */,
@@ -714,12 +730,14 @@
 				532DC93F192ED83600C07757 /* main.m in Sources */,
 				531824541938C9C300AA1564 /* MarketsViewModel.m in Sources */,
 				53AA3D7419387E1400D9C35B /* Goods.m in Sources */,
+				5306D002193DFECF005BD52E /* THCoreDataStack.m in Sources */,
 				531824601938CAA600AA1564 /* JackpotViewModel.m in Sources */,
 				532D60C41931E0A800537D4C /* THAuthorizer.m in Sources */,
 				5318245A1938C9F500AA1564 /* GoodsViewModel.m in Sources */,
 				531824511938C98D00AA1564 /* DeliveriesViewModel.m in Sources */,
 				532D60B71931DF2200537D4C /* THNetwork.m in Sources */,
 				53AA3D7719387E1400D9C35B /* Platforms.m in Sources */,
+				5306D008193E08AC005BD52E /* THBasicViewModel.m in Sources */,
 				5318246D1938D4B600AA1564 /* THNavigationController.m in Sources */,
 				531824571938C9DB00AA1564 /* ShopsViewModel.m in Sources */,
 				5318244B1938C77F00AA1564 /* SignInViewModel.m in Sources */,

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class ShopsViewModel;
+
 @interface THShopsViewController : UIViewController
+
+@property (nonatomic, strong) ShopsViewModel *viewModel;
 
 @end

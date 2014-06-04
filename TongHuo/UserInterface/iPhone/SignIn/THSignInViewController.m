@@ -8,6 +8,8 @@
 
 #import "THSignInViewController.h"
 
+#import "SignInViewModel.h"
+
 @interface THSignInViewController ()
 
 @end

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class SignInViewModel;
+
 @interface THSignInViewController : UIViewController
+
+@property (nonatomic, strong) SignInViewModel * signInViewModel;
 
 @end

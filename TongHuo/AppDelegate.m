@@ -8,23 +8,56 @@
 
 #import "AppDelegate.h"
 
+#import "THCoreDataStack.h"
+#import "THNavigationController.h"
+
+// View Controllers
+#import "THMenuViewController.h"
+#import "THSignInViewController.h"
+#import "THOrdersViewController.h"
+
+// View Models
+#import "MenuViewModel.h"
+#import "SignInViewModel.h"
+#import "OrdersViewModel.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     
+    // Setup window
+//    self.window.tintColor = [UIColor colorWithHexString:@"9E4B10"];
+
+    // Setup Menu controller
+    THMenuViewController * menuViewController = [[THMenuViewController alloc] init];
+    
+    MenuViewModel * menuModel =[[MenuViewModel alloc] initWithModel:[THCoreDataStack defaultStack].managedObjectContext];
+    menuViewController.viewModel = menuModel;
+    
+    THNavigationController * navControlloer = [[THNavigationController alloc] init];
+    
+    THOrdersViewController * ordersViewController = [[THOrdersViewController alloc] init];
+    ordersViewController.viewModel = (OrdersViewModel *)[menuModel viewModelForIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    
+    [navControlloer setViewControllers:@[ordersViewController]];
+    
+    // Setup model
+    [[THCoreDataStack defaultStack] ensureInitialLoad];
+    
+    // Seup
     JASidePanelController * sidePanelController = [[JASidePanelController alloc] init];
     
-    sidePanelController.leftPanel = [[UIViewController alloc] init];
-    sidePanelController.centerPanel = [[UIViewController alloc] init];
-    sidePanelController.rightPanel = [[UIViewController alloc] init];
+    sidePanelController.leftPanel = menuViewController;
+    sidePanelController.centerPanel = navControlloer;
+    sidePanelController.rightPanel = nil;
     
     self.window.rootViewController = sidePanelController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
@@ -53,6 +86,9 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    // Saves changes in the application's managed object context before the application terminates.
+    [[THCoreDataStack defaultStack] saveContext];
 }
 
 @end

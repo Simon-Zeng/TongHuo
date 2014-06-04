@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class DeliveriesViewModel;
+
 @interface THDeliveriesViewController : UIViewController
+
+@property (nonatomic, strong) DeliveriesViewModel *viewModel;
 
 @end

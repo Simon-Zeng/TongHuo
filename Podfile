@@ -11,6 +11,7 @@ target :TongHuo do
   pod "ASProgressPopUpView"
   pod "BlockAlertsAnd-ActionSheets" 
   pod "CocoaSecurity"
+  pod 'FlatUIKit'
   pod "GPUImage"
   pod "JASidePanels"
   pod "JSONModel"
@@ -24,6 +25,7 @@ target :TongHuo do
   pod 'SLRESTfulCoreData'
   pod 'SLRESTfulCoreDataUI'
   pod "UICKeyChainStore"
+  pod 'UIColor-Utilities'
   pod "UMengSocial"
   pod "YLMoment"
 #pod "ZBarSDK"

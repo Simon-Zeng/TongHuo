@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class JackpotViewModel;
+
 @interface THJackpotViewController : UIViewController
+
+@property (nonatomic, strong) JackpotViewModel *viewModel;
 
 @end

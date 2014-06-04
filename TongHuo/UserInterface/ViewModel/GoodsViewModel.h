@@ -6,8 +6,18 @@
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
-#import "RVMViewModel.h"
+#import "THBasicViewModel.h"
 
-@interface GoodsViewModel : RVMViewModel
+#import "Goods.h"
+
+@interface GoodsViewModel : THBasicViewModel
+
+-(NSInteger)numberOfSections;
+-(NSInteger)numberOfItemsInSection:(NSInteger)section;
+-(NSString *)titleForSection:(NSInteger)section;
+-(NSString *)titleAtIndexPath:(NSIndexPath *)indexPath;
+-(NSString *)subtitleAtIndexPath:(NSIndexPath *)indexPath;
+
+-(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath;
 
 @end

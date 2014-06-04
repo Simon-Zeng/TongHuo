@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class MenuViewModel;
+
 @interface THMenuViewController : UIViewController
+
+@property (nonatomic, strong) MenuViewModel *viewModel;
 
 @end

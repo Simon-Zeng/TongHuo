@@ -8,6 +8,8 @@
 
 #import "THJackpotViewController.h"
 
+#import "JackpotViewModel.h"
+
 @interface THJackpotViewController ()
 
 @end

@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class MarketsViewModel;
+
 @interface THMarketsViewController : UIViewController
+
+@property (nonatomic, strong) MarketsViewModel *viewModel;
 
 @end
