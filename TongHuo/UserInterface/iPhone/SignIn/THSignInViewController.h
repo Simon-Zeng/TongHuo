@@ -12,6 +12,6 @@
 
 @interface THSignInViewController : UIViewController
 
-@property (nonatomic, strong) SignInViewModel * signInViewModel;
+@property (nonatomic, readonly) SignInViewModel * signInViewModel;
 
 @end

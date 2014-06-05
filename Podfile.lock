@@ -28,6 +28,7 @@ PODS:
     - BlockAlertsAnd-ActionSheets/TableAlertView
   - BlockAlertsAnd-ActionSheets/TableAlertView (1.0.6)
   - CocoaSecurity (1.2.4)
+  - FlatUIKit (1.3)
   - GPUImage (0.1.4)
   - JASidePanels (1.3.2)
   - JSONModel (0.13.0)
@@ -36,12 +37,12 @@ PODS:
   - ObjectiveSugar (1.1.0)
   - PMValidation (1.1.3)
   - pop (1.0.5)
-  - ReactiveCocoa (2.3):
+  - ReactiveCocoa (2.3.1):
     - ReactiveCocoa/UI
-  - ReactiveCocoa/Core (2.3):
+  - ReactiveCocoa/Core (2.3.1):
     - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (2.3)
-  - ReactiveCocoa/UI (2.3):
+  - ReactiveCocoa/no-arc (2.3.1)
+  - ReactiveCocoa/UI (2.3.1):
     - ReactiveCocoa/Core
   - ReactiveCoreData (0.0.2):
     - ReactiveCocoa
@@ -50,20 +51,21 @@ PODS:
   - SimpleSyncService (1.2.3):
     - ObjectiveRecord
   - SLCoreDataStack (0.5.0)
-  - SLRESTfulCoreData (1.7.1):
+  - SLRESTfulCoreData (1.8.0):
     - SLRESTfulCoreData/Complete
-  - SLRESTfulCoreData/AFRESTfulCoreDataBackgroundQueue (1.7.1):
+  - SLRESTfulCoreData/AFRESTfulCoreDataBackgroundQueue (1.8.0):
     - AFNetworking (~> 2.1)
     - SLRESTfulCoreData/Core
-  - SLRESTfulCoreData/Complete (1.7.1):
+  - SLRESTfulCoreData/Complete (1.8.0):
     - AFNetworking (~> 2.1)
     - SLCoreDataStack (>= 0.2.0)
     - SLRESTfulCoreData/AFRESTfulCoreDataBackgroundQueue
     - SLRESTfulCoreData/Core
-  - SLRESTfulCoreData/Core (1.7.1)
+  - SLRESTfulCoreData/Core (1.8.0)
   - SLRESTfulCoreDataUI (1.11.5):
     - SLRESTfulCoreData (>= 1.0.0)
   - UICKeyChainStore (1.0.5)
+  - UIColor-Utilities (1.0.1)
   - UMengSocial (3.3.7.1)
   - YLMoment (0.5.0)
   - ZXingObjC (3.0.1):
@@ -77,6 +79,7 @@ DEPENDENCIES:
   - ASProgressPopUpView
   - BlockAlertsAnd-ActionSheets
   - CocoaSecurity
+  - FlatUIKit
   - GPUImage
   - JASidePanels
   - JSONModel
@@ -90,6 +93,7 @@ DEPENDENCIES:
   - SLRESTfulCoreData
   - SLRESTfulCoreDataUI
   - UICKeyChainStore
+  - UIColor-Utilities
   - UMengSocial
   - YLMoment
   - ZXingObjC
@@ -101,6 +105,7 @@ SPEC CHECKSUMS:
   ASProgressPopUpView: 13952b834476c324573ced3124c68c0cc09bf405
   BlockAlertsAnd-ActionSheets: 2f9d02f0c57b1789b7db3406ffad72a67f01ad83
   CocoaSecurity: 7ce1b967863d4e96dcffdbad17671117900e6c6e
+  FlatUIKit: b84e5d51225bcbd8d7fe264ec15f8ffc7c94e6d1
   GPUImage: ac2bde5f4dbea02a81ced6313964cec1f2043ca9
   JASidePanels: ca943907d88a0738c80755204c6098969d43e4e9
   JSONModel: 62ea96b49ea18a8b91ef89c249dba291d8601d82
@@ -108,14 +113,15 @@ SPEC CHECKSUMS:
   ObjectiveSugar: f48793f5902c77cfc02a4ce46d2e8ecddcad4dc2
   PMValidation: 84238309af125688a34b87df303bbec9a1d5f83b
   pop: 75fa2b33934200a8a68abb449ac1726fcf7e43b9
-  ReactiveCocoa: 2066583826c17dde8e90c41e489f682048cc57c9
+  ReactiveCocoa: dca75777b9d18990c8714a3a6f2149f29b4d1462
   ReactiveCoreData: db76ace53a7ab70ba2cad54eaae32b2f960cae8c
   ReactiveViewModel: 78387196df2e7535bb2776c41df15dbb17300f8a
   SimpleSyncService: ddd84adf51a6e7d25647a63aa1a7cd0183c14141
   SLCoreDataStack: 18c6fb041fa421ac6957185732e936fea512d470
-  SLRESTfulCoreData: 57b22fbb4ae039084708d0e6aa3e7edcfe8d52e7
+  SLRESTfulCoreData: 1f34fe811de67dd30dfae9818e4ce449bb672fe5
   SLRESTfulCoreDataUI: dbd9eabe88a0a7488b1fd1aea6113511224bf2ff
   UICKeyChainStore: 4f9719600cc70025064e26f28f1210bcfc3b0c35
+  UIColor-Utilities: 3f13aebe447f5e19c8d3aa18c194c53116b23537
   UMengSocial: 32d71ac86792afdc411eccb736fd5845716b4624
   YLMoment: 9f5b8b190abf46d51e6670c2157ec7e8463e219e
   ZXingObjC: e21ba2d24fdb226d4c6c8484aa901c0381bdf633

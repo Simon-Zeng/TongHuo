@@ -10,4 +10,15 @@
 
 @interface SignInViewModel : THBasicViewModel
 
+@property (nonatomic, strong) NSString * username;
+@property (nonatomic, strong) NSString * password;
+
+@property (nonatomic, readonly) RACCommand * signInCommand;
+
+
+-(RACSignal *)forbiddenNameSignal;
+
+-(RACSignal *)modelIsValidSignal;
+
+
 @end

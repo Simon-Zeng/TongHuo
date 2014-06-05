@@ -10,4 +10,28 @@
 
 @implementation JackpotViewModel
 
+- (id)init
+{
+    if (self = [super init])
+    {
+        [self commandInit];
+    }
+    
+    return self;
+}
+
+- (id)initWithModel:(id)model
+{
+    if (self = [super initWithModel:model])
+    {
+        [self commandInit];
+    }
+    
+    return self;
+}
+
+- (void)commandInit
+{
+    
+}
 @end

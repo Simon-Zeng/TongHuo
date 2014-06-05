@@ -53,6 +53,8 @@
         
         _autoSignInEnabled = NO;
         
+        _currentAccount = nil;
+        
         [self loadAuthentication];
     }
     
@@ -96,6 +98,18 @@
 - (BOOL)isAutoSignInEnabled
 {
     return _autoSignInEnabled;
+}
+
+- (BOOL)isLoggedIn
+{
+    if (_currentAccount && _currentAccount.id.longLongValue > 0)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 #pragma mark - Private
@@ -149,7 +163,13 @@
     
     signal = [api signInWithUsername:_username password:_password];
     
-    return signal;
+    RACSignal * newSignal = [signal doNext:^(RACTuple * x) {
+        RACTupleUnpack(AFHTTPRequestOperation * operation, id responseObject) = x;
+        
+        NSLog(@"---- Reponse: %@", responseObject);
+    }];
+    
+    return newSignal;
 }
 
 @end

@@ -10,6 +10,7 @@
 
 #import "THCoreDataStack.h"
 #import "THNavigationController.h"
+#import "THAuthorizer.h"
 
 // View Controllers
 #import "THMenuViewController.h"
@@ -37,22 +38,23 @@
                                        forBarMetrics:UIBarMetricsDefault];
     // Setup window
 //    self.window.tintColor = [UIColor colorWithHexString:@"9E4B10"];
-
+    
+    // Setup model
+    [[THCoreDataStack defaultStack] ensureInitialLoad];
+    
+    // Set up view controllers
+    NSMutableArray * viewControllers = [NSMutableArray array];
+    
     // Setup Menu controller
     THMenuViewController * menuViewController = [[THMenuViewController alloc] init];
     
     MenuViewModel * menuModel =[[MenuViewModel alloc] initWithModel:[THCoreDataStack defaultStack].managedObjectContext];
     menuViewController.viewModel = menuModel;
     
-    THNavigationController * navControlloer = [[THNavigationController alloc] init];
-    
     THOrdersViewController * ordersViewController = [[THOrdersViewController alloc] init];
     ordersViewController.viewModel = (OrdersViewModel *)[menuModel viewModelForIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     
-    [navControlloer setViewControllers:@[ordersViewController]];
-
-    // Setup model
-    [[THCoreDataStack defaultStack] ensureInitialLoad];
+    THNavigationController * navControlloer = [[THNavigationController alloc] initWithRootViewController:ordersViewController];
     
     // Seup app root
     _sidePanelController = [[JASidePanelController alloc] init];
@@ -60,20 +62,21 @@
     _sidePanelController.leftPanel = menuViewController;
     _sidePanelController.centerPanel = navControlloer;
     _sidePanelController.rightPanel = nil;
+
+    [viewControllers addObject:_sidePanelController];
     
-    navControlloer.navigationItem.leftBarButtonItem = _sidePanelController.leftButtonForCenterPanel;
-    
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+    if (![THAuthorizer sharedAuthorizer].isLoggedIn)
     {
-        _sidePanelController.edgesForExtendedLayout = UIRectEdgeNone;
-        _sidePanelController.extendedLayoutIncludesOpaqueBars = NO;
-        _sidePanelController.modalPresentationCapturesStatusBarAppearance = NO;
-        _sidePanelController.automaticallyAdjustsScrollViewInsets = YES;
+        THSignInViewController *signInViewController = [[THSignInViewController alloc] init];
+        
+        [viewControllers addObject:signInViewController];
     }
-#endif
+
+    THNavigationController * rootNavController = [[THNavigationController alloc] init];
+    rootNavController.navigationBarHidden = YES;
+    [rootNavController setViewControllers:viewControllers];
     
-    self.window.rootViewController = _sidePanelController;
+    self.window.rootViewController = rootNavController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

@@ -30,6 +30,7 @@
 
 #endif
 
+#define UIDEBUG 1
 
 #define kServericeName @"com.59pi.tonghuo"
 
