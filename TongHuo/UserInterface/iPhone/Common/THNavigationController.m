@@ -8,6 +8,8 @@
 
 #import "THNavigationController.h"
 
+#import "UINavigationBar+statusBarColor.h"
+
 @interface THNavigationController ()
 
 @end
@@ -26,6 +28,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationBar.statusBarColor = [UIColor colorWithRed:230.0/255
+                                                        green:230.0/255
+                                                         blue:230.0/255
+                                                        alpha:1.0];
     
     // Do any additional setup after loading the view.
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000

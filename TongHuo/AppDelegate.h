@@ -13,4 +13,8 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, readonly) JASidePanelController *sidePanelController;
 
++ (UINavigationController *)rootNavigationController;
+
++ (void)logout;
+
 @end

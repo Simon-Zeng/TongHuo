@@ -12,6 +12,7 @@
 		5306D008193E08AC005BD52E /* THBasicViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306D007193E08AC005BD52E /* THBasicViewModel.m */; };
 		53097FA71933724F00589393 /* TongHuoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 532DC957192ED83700C07757 /* TongHuoTests.m */; };
 		53097FBB1934BD0B00589393 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 53097FB91934BD0A00589393 /* Model.xcdatamodeld */; };
+		530FC0F81941F1F3007B55F2 /* UINavigationBar+statusBarColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC0F71941F1F3007B55F2 /* UINavigationBar+statusBarColor.m */; };
 		5318244B1938C77F00AA1564 /* SignInViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318244A1938C77F00AA1564 /* SignInViewModel.m */; };
 		5318244E1938C90900AA1564 /* OrdersViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318244D1938C90900AA1564 /* OrdersViewModel.m */; };
 		531824511938C98D00AA1564 /* DeliveriesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 531824501938C98D00AA1564 /* DeliveriesViewModel.m */; };
@@ -84,6 +85,8 @@
 		5306D006193E08AC005BD52E /* THBasicViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THBasicViewModel.h; sourceTree = "<group>"; };
 		5306D007193E08AC005BD52E /* THBasicViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THBasicViewModel.m; sourceTree = "<group>"; };
 		53097FBA1934BD0A00589393 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		530FC0F61941F1F3007B55F2 /* UINavigationBar+statusBarColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+statusBarColor.h"; sourceTree = "<group>"; };
+		530FC0F71941F1F3007B55F2 /* UINavigationBar+statusBarColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+statusBarColor.m"; sourceTree = "<group>"; };
 		531824491938C77F00AA1564 /* SignInViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewModel.h; sourceTree = "<group>"; };
 		5318244A1938C77F00AA1564 /* SignInViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewModel.m; sourceTree = "<group>"; };
 		5318244C1938C90900AA1564 /* OrdersViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersViewModel.h; sourceTree = "<group>"; };
@@ -208,6 +211,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		530FC0F31941F1C5007B55F2 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				530FC0F41941F1C5007B55F2 /* Category */,
+				530FC0F51941F1C5007B55F2 /* Components */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		530FC0F41941F1C5007B55F2 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				530FC0F61941F1F3007B55F2 /* UINavigationBar+statusBarColor.h */,
+				530FC0F71941F1F3007B55F2 /* UINavigationBar+statusBarColor.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		530FC0F51941F1C5007B55F2 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		531824611938D3E700AA1564 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -377,6 +405,7 @@
 		532D60AF1931DCD700537D4C /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				530FC0F31941F1C5007B55F2 /* General */,
 				532D60B01931DCD700537D4C /* iPhone */,
 				532D60B21931DCD700537D4C /* ViewModel */,
 			);
@@ -763,6 +792,7 @@
 				5318248B1938D5AA00AA1564 /* THUploadGoodsViewController.m in Sources */,
 				532D60BE1931DFF900537D4C /* THSettings.m in Sources */,
 				531824791938D51900AA1564 /* THQRCodeViewController.m in Sources */,
+				530FC0F81941F1F3007B55F2 /* UINavigationBar+statusBarColor.m in Sources */,
 				532DC943192ED83600C07757 /* AppDelegate.m in Sources */,
 				531824821938D56900AA1564 /* THMarketsViewController.m in Sources */,
 				531824881938D58100AA1564 /* THGoodsViewController.m in Sources */,

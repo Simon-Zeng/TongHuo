@@ -20,9 +20,11 @@
 @property (nonatomic, readonly) BOOL isLoggedIn;
 @property (nonatomic, readonly) Account * currentAccount;
 
+@property (nonatomic, readonly) RACSignal * updateSignal;
 
 + (instancetype) sharedAuthorizer;
 
 - (RACSignal *)signInWithUsername:(NSString *)username password:(NSString *)password;
+- (void)logout;
 
 @end

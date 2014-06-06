@@ -64,10 +64,11 @@ PODS:
   - SLRESTfulCoreData/Core (1.8.0)
   - SLRESTfulCoreDataUI (1.11.5):
     - SLRESTfulCoreData (>= 1.0.0)
+  - SVProgressHUD (1.0)
   - UICKeyChainStore (1.0.5)
   - UIColor-Utilities (1.0.1)
   - UMengSocial (3.3.7.1)
-  - YLMoment (0.5.0)
+  - YLMoment (0.5.1)
   - ZXingObjC (3.0.1):
     - ZXingObjC/All
   - ZXingObjC/All (3.0.1)
@@ -92,6 +93,7 @@ DEPENDENCIES:
   - SLCoreDataStack
   - SLRESTfulCoreData
   - SLRESTfulCoreDataUI
+  - SVProgressHUD
   - UICKeyChainStore
   - UIColor-Utilities
   - UMengSocial
@@ -120,10 +122,11 @@ SPEC CHECKSUMS:
   SLCoreDataStack: 18c6fb041fa421ac6957185732e936fea512d470
   SLRESTfulCoreData: 1f34fe811de67dd30dfae9818e4ce449bb672fe5
   SLRESTfulCoreDataUI: dbd9eabe88a0a7488b1fd1aea6113511224bf2ff
+  SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
   UICKeyChainStore: 4f9719600cc70025064e26f28f1210bcfc3b0c35
   UIColor-Utilities: 3f13aebe447f5e19c8d3aa18c194c53116b23537
   UMengSocial: 32d71ac86792afdc411eccb736fd5845716b4624
-  YLMoment: 9f5b8b190abf46d51e6670c2157ec7e8463e219e
+  YLMoment: a5e6733c66490fd736db325f5d339cb511bdfb54
   ZXingObjC: e21ba2d24fdb226d4c6c8484aa901c0381bdf633
 
 COCOAPODS: 0.33.1

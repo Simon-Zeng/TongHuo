@@ -11,6 +11,9 @@
 
 #import "AppDelegate.h"
 
+#import "Account.h"
+#import "THAuthorizer.h"
+
 #import "THOrdersViewController.h"
 #import "THDeliveriesViewController.h"
 #import "THMarketsViewController.h"
@@ -50,8 +53,16 @@
 
 - (void)commandInit
 {
-
+    
 }
+
+- (RACSignal *)updateNameSignal
+{
+    THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
+    
+    return RACObserve(authorizer.currentAccount, loginname);
+}
+
 
 -(NSInteger)numberOfSections
 {
@@ -158,11 +169,11 @@
     
 }
 
-- (void)presentViewControllerForIndexPath:(NSIndexPath *)indexPath
+- (BOOL)presentViewControllerForIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 3 || indexPath.row == 6)
     {
-        return;
+        return NO;
     }
     
     UIViewController * controller = nil;
@@ -219,7 +230,11 @@
         [centerPanel setViewControllers:@[controller]];
         
         [sidePanelController showCenterPanelAnimated:YES];
+        
+        return YES;
     }
+    
+    return NO;
 }
 
 @end

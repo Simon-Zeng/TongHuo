@@ -19,4 +19,8 @@
 @property (nonatomic, retain) NSNumber * type;
 @property (nonatomic, retain) NSString * typeName;
 
++ (instancetype)account;
+
++ (instancetype)accountFromDictionary:(NSDictionary *)dict;
+
 @end

@@ -18,6 +18,7 @@
 #import "AMSmoothAlertView.h"
 #import "BlockActionSheet.h"
 #import "CocoaSecurity.h"
+#import "FlatUIKit.h"
 #import "JASidePanelController.h"
 #import "JSONModelLib.h"
 #import "POP.h"
@@ -26,6 +27,8 @@
 #import "ReactiveCocoa.h"
 #import "ReactiveCoreData.h"
 #import "ReactiveViewModel.h"
+#import "SVProgressHUD.h"
+#import "THCoreDataStack.h"
 #import "YLMoment.h"
 
 #endif

@@ -17,6 +17,8 @@
 
 @interface THAuthorizer ()
 
+@property (nonatomic, readwrite) Account * currentAccount;
+
 - (void) loadAuthentication;
 - (void) saveAuthentication;
 - (void) removeAuthentication;
@@ -70,7 +72,7 @@
 
 - (RACSignal *)signInWithUsername:(NSString *)username password:(NSString *)password
 {
-    RACSignal * signInSignal = nil;
+    RACSignal * signInSignal = [RACSignal empty];
     
     if (![_username isEqual:username] || ![_password isEqual:password])
     {
@@ -93,6 +95,16 @@
     }
     
     return signInSignal;
+}
+
+- (void)logout
+{
+    [self removeAuthentication];
+    
+    _username = nil;
+    _password = nil;
+    
+    _currentAccount = nil;
 }
 
 - (BOOL)isAutoSignInEnabled
@@ -163,13 +175,34 @@
     
     signal = [api signInWithUsername:_username password:_password];
     
+    @weakify(self);
     RACSignal * newSignal = [signal doNext:^(RACTuple * x) {
         RACTupleUnpack(AFHTTPRequestOperation * operation, id responseObject) = x;
         
-        NSLog(@"---- Reponse: %@", responseObject);
+        @strongify(self);
+        if ([responseObject isKindOfClass:[NSDictionary class]])
+        {
+            self.currentAccount = [Account accountFromDictionary:responseObject];
+        }
     }];
     
     return newSignal;
+}
+
+
+- (RACSignal *)updateSignal
+{
+    @weakify(self);
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        @strongify(self);
+        
+        [subscriber sendNext:self.currentAccount];
+        [subscriber sendCompleted];
+        
+        return [RACDisposable disposableWithBlock:^{
+            
+        }];
+    }];
 }
 
 @end

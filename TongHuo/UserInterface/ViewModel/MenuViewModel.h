@@ -15,6 +15,7 @@
 
 @interface MenuViewModel : THBasicViewModel
 
+@property (nonatomic, readonly) RACSignal * updateNameSignal;
 
 -(NSInteger)numberOfSections;
 -(NSInteger)numberOfItemsInSection:(NSInteger)section;
@@ -26,6 +27,6 @@
 
 -(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath;
 
-- (void)presentViewControllerForIndexPath:(NSIndexPath *)indexPath;
+- (BOOL)presentViewControllerForIndexPath:(NSIndexPath *)indexPath;
 
 @end

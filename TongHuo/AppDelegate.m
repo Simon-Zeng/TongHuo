@@ -30,6 +30,11 @@
 
 @synthesize sidePanelController = _sidePanelController;
 
++ (UINavigationController *)rootNavigationController
+{
+    return (UINavigationController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -112,6 +117,15 @@
     
     // Saves changes in the application's managed object context before the application terminates.
     [[THCoreDataStack defaultStack] saveContext];
+}
+
++ (void)logout
+{
+    [[THAuthorizer sharedAuthorizer] logout];
+    
+    THSignInViewController *signInViewController = [[THSignInViewController alloc] init];
+    
+    [[AppDelegate rootNavigationController] pushViewController:signInViewController animated:YES];
 }
 
 @end

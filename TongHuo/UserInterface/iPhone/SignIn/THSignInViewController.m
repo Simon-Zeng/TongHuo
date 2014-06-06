@@ -10,6 +10,7 @@
 
 #import "SignInViewModel.h"
 #import "THCoreDataStack.h"
+#import "THAuthorizer.h"
 
 @interface THSignInViewController ()<UITextFieldDelegate>
 
@@ -18,7 +19,7 @@
 @property (nonatomic, strong) UITextField * usernameField;
 @property (nonatomic, strong) UITextField * passwordField;
 
-@property (nonatomic, strong) UIButton * signInButton;
+@property (nonatomic, strong) FUIButton * signInButton;
 
 @property (nonatomic, readwrite) SignInViewModel * signInViewModel;
 
@@ -62,9 +63,7 @@
     usernameField.returnKeyType = UIReturnKeyNext;
     usernameField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     usernameField.delegate = self;
-#if UIDEBUG
-    usernameField.backgroundColor = [UIColor redColor];
-#endif
+
     [contentView addSubview:usernameField];
     
     self.usernameField = usernameField;
@@ -75,20 +74,29 @@
     passwordField.returnKeyType = UIReturnKeyDone;
     passwordField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     passwordField.delegate = self;
-#if UIDEBUG
-    passwordField.backgroundColor = [UIColor redColor];
-#endif
+    
     [contentView addSubview:passwordField];
     
     self.passwordField = passwordField;
     
     // Sign In button
-    UIButton * signInButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    signInButton.frame = CGRectMake(30, middleY + 80, 260, 31.0);
-#if UIDEBUG
-    [signInButton setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
-    [signInButton setTitleColor:[UIColor grayColor] forState:UIControlStateDisabled];
-#endif
+    FUIButton * signInButton = [FUIButton buttonWithType:UIButtonTypeCustom];
+    signInButton.frame = CGRectMake(15, middleY + 80, 290, 31.0);
+    signInButton.buttonColor = [UIColor colorWithRed:242.0/255
+                                               green:39.0/255
+                                                blue:131.0/255
+                                               alpha:1.0];
+    signInButton.shadowColor = [UIColor colorWithRed:175.0/255
+                                               green:179.0/255
+                                                blue:190.0/255
+                                               alpha:1.0];
+    signInButton.shadowHeight = 2.0f;
+    signInButton.highlightedColor = [UIColor colorWithRed:204.0/255
+                                                    green:205.0/255
+                                                     blue:210.0/255
+                                                    alpha:1.0];
+    signInButton.cornerRadius = 4.0f;
+
     [signInButton setTitle:NSLocalizedString(@"登   录", nil)
                   forState:UIControlStateNormal];
     [contentView addSubview:signInButton];
@@ -103,12 +111,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    RACChannelTo(self.usernameField, text) = RACChannelTo(self.signInViewModel, username);
-    RACChannelTo(self.passwordField, text) = RACChannelTo(self.signInViewModel, password);
-    
+    RAC(self.signInViewModel, username) = self.usernameField.rac_textSignal;
+    RAC(self.signInViewModel, password) = self.passwordField.rac_textSignal;
+//    RACChannelTo(self.usernameField, text) = RACChannelTo(self.signInViewModel, username);
+//    RACChannelTo(self.passwordField, text) = RACChannelTo(self.signInViewModel, password);
+    @weakify(self);
+    [self.signInViewModel.signInCommand.executing subscribeNext:^(NSNumber * x) {
+        @strongify(self);
+        if(x.boolValue)
+        {
+            [self.view endEditing:YES];
+            [SVProgressHUD showWithStatus:@"请稍候..." maskType:SVProgressHUDMaskTypeGradient];
+        }
+    }];
     [self.signInButton setRac_command:self.signInViewModel.signInCommand];
-    
-//    RAC(self.signInButton, enabled) = self.signInViewModel.modelIsValidSignal;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -121,16 +137,50 @@
     [self.signInViewModel.signInCommand.executionSignals subscribeNext:^(id signal) {
         
         [signal subscribeNext:^(RACTuple * x) {
-            @strongify(self);
-            
-            RACTupleUnpack(AFHTTPRequestOperation * operation, id response) = x;
-            NSLog(@"xxx : %@", response);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                @strongify(self);
+                [SVProgressHUD dismiss];
+                if ([THAuthorizer sharedAuthorizer].isLoggedIn)
+                {
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                }
+            });
         } error:^(NSError *error) {
             @strongify(self);
             
-            NSLog(@"---- SignIn Error: %@", error);
+            if (![THAuthorizer sharedAuthorizer].isLoggedIn)
+            {
+                [self showLoginFailedAlertWithError:error];
+            }
+
+        } completed:^{
+            @strongify(self);
+            if (![THAuthorizer sharedAuthorizer].isLoggedIn)
+            {
+                [self showLoginFailedAlertWithError:nil];
+            }
         }];
     }];
+}
+
+- (void)showLoginFailedAlertWithError:(NSError *)error
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [SVProgressHUD dismiss];
+        
+        NSString * message = @"您输入的用户名或者密码不正确，请重新输入后再试！";
+        if (error)
+        {
+            message = [NSString stringWithFormat:@"错误: %@", error];
+        }
+        
+        AMSmoothAlertView * alertView = [[AMSmoothAlertView alloc] initDropAlertWithTitle:@"登录失败"
+                                                                                  andText:message
+                                                                          andCancelButton:NO
+                                                                             forAlertType:AlertFailure];
+        [alertView show];
+    });
 }
 
 - (void)didReceiveMemoryWarning
@@ -163,7 +213,7 @@
                          self.contentView.frame = CGRectMake(0, 0, windowRect.size.width, windowRect.size.height - 216.0);
                          
                          CGRect visibleRect = textField.frame;
-                         visibleRect.origin.y += 20.0;
+                         visibleRect.origin.y += 65.0;
                          
                          [self.contentView scrollRectToVisible:visibleRect animated:NO];
 

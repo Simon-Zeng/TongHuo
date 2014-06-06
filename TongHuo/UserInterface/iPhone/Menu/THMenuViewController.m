@@ -8,11 +8,15 @@
 
 #import "THMenuViewController.h"
 
+#import "AppDelegate.h"
+
 #import "MenuViewModel.h"
 #import "THTableViewMenuCell.h"
+#import "THSignInViewController.h"
 
 @interface THMenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, strong) UILabel * titleLabel;
 @property (nonatomic, strong) UITableView * tableView;
 
 @end
@@ -42,7 +46,10 @@
     UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30.0, 0, windowFrame.size.width-30.0, 44)];
     titleLabel.font = [UIFont systemFontOfSize:20.0];
     titleLabel.textAlignment = NSTextAlignmentLeft;
-    titleLabel.text = @"欢迎：1111111å";
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.text = @"欢迎";
+    
+    self.titleLabel = titleLabel;
     
     UINavigationItem *NavTitle = [[UINavigationItem alloc] init];
     NavTitle.titleView = titleLabel;
@@ -75,6 +82,17 @@
            forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
+    [self.viewModel.updateNameSignal subscribeNext:^(NSString * x) {
+        if (x)
+        {
+            self.titleLabel.text = [NSString stringWithFormat:@"欢迎: %@", x];
+        }
+        else
+        {
+            self.titleLabel.text = @"欢迎";
+        }
+    }];
+    
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
         [self.tableView reloadData];
@@ -123,7 +141,18 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.viewModel presentViewControllerForIndexPath:indexPath];
+    if(![self.viewModel presentViewControllerForIndexPath:indexPath])
+    {
+        if (indexPath.row == 3)
+        {
+            // Share
+        }
+        else if (indexPath.row == 6)
+        {
+            // Logout
+            [AppDelegate logout];
+        }
+    }
 }
 
 #pragma mark - Navigation

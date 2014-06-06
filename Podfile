@@ -24,6 +24,7 @@ target :TongHuo do
   pod "SLCoreDataStack"
   pod 'SLRESTfulCoreData'
   pod 'SLRESTfulCoreDataUI'
+  pod 'SVProgressHUD'
   pod "UICKeyChainStore"
   pod 'UIColor-Utilities'
   pod "UMengSocial"

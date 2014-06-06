@@ -41,7 +41,8 @@
 {
     @weakify(self);
     
-    _signInCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+    _signInCommand = [[RACCommand alloc] initWithEnabled:[self modelIsValidSignal]
+                                             signalBlock:^RACSignal *(id input) {
         @strongify(self);
         RACSignal *networkSignal = [[THAuthorizer sharedAuthorizer] signInWithUsername:self.username
                                                                               password:self.password];
