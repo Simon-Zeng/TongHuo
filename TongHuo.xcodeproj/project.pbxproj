@@ -13,6 +13,9 @@
 		53097FA71933724F00589393 /* TongHuoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 532DC957192ED83700C07757 /* TongHuoTests.m */; };
 		53097FBB1934BD0B00589393 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 53097FB91934BD0A00589393 /* Model.xcdatamodeld */; };
 		530FC0F81941F1F3007B55F2 /* UINavigationBar+statusBarColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC0F71941F1F3007B55F2 /* UINavigationBar+statusBarColor.m */; };
+		530FC0FC19421266007B55F2 /* shake.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530FC0FB19421266007B55F2 /* shake.wav */; };
+		530FC0FF19421286007B55F2 /* THHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC0FE19421286007B55F2 /* THHelper.m */; };
+		530FC10119421678007B55F2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530FC10019421678007B55F2 /* QuartzCore.framework */; };
 		5318244B1938C77F00AA1564 /* SignInViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318244A1938C77F00AA1564 /* SignInViewModel.m */; };
 		5318244E1938C90900AA1564 /* OrdersViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318244D1938C90900AA1564 /* OrdersViewModel.m */; };
 		531824511938C98D00AA1564 /* DeliveriesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 531824501938C98D00AA1564 /* DeliveriesViewModel.m */; };
@@ -87,6 +90,10 @@
 		53097FBA1934BD0A00589393 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		530FC0F61941F1F3007B55F2 /* UINavigationBar+statusBarColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+statusBarColor.h"; sourceTree = "<group>"; };
 		530FC0F71941F1F3007B55F2 /* UINavigationBar+statusBarColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+statusBarColor.m"; sourceTree = "<group>"; };
+		530FC0FB19421266007B55F2 /* shake.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shake.wav; sourceTree = "<group>"; };
+		530FC0FD19421286007B55F2 /* THHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THHelper.h; sourceTree = "<group>"; };
+		530FC0FE19421286007B55F2 /* THHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THHelper.m; sourceTree = "<group>"; };
+		530FC10019421678007B55F2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		531824491938C77F00AA1564 /* SignInViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewModel.h; sourceTree = "<group>"; };
 		5318244A1938C77F00AA1564 /* SignInViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewModel.m; sourceTree = "<group>"; };
 		5318244C1938C90900AA1564 /* OrdersViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersViewModel.h; sourceTree = "<group>"; };
@@ -190,6 +197,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				530FC10119421678007B55F2 /* QuartzCore.framework in Frameworks */,
 				532DC935192ED83600C07757 /* CoreGraphics.framework in Frameworks */,
 				532DC937192ED83600C07757 /* UIKit.framework in Frameworks */,
 				532DC933192ED83600C07757 /* Foundation.framework in Frameworks */,
@@ -234,6 +242,23 @@
 			children = (
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		530FC0F919421259007B55F2 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				530FC0FD19421286007B55F2 /* THHelper.h */,
+				530FC0FE19421286007B55F2 /* THHelper.m */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		530FC0FA19421266007B55F2 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				530FC0FB19421266007B55F2 /* shake.wav */,
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 		531824611938D3E700AA1564 /* Common */ = {
@@ -459,6 +484,7 @@
 		532D60B31931DEC000537D4C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				530FC0FA19421266007B55F2 /* Audio */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -496,6 +522,7 @@
 		532DC931192ED83600C07757 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				530FC10019421678007B55F2 /* QuartzCore.framework */,
 				532DC932192ED83600C07757 /* Foundation.framework */,
 				532DC934192ED83600C07757 /* CoreGraphics.framework */,
 				532DC936192ED83600C07757 /* UIKit.framework */,
@@ -515,6 +542,7 @@
 				5306D001193DFECF005BD52E /* THCoreDataStack.m */,
 				532D60AA1931DCD700537D4C /* Authorization */,
 				532D60AB1931DCD700537D4C /* Configuration */,
+				530FC0F919421259007B55F2 /* Helper */,
 				532DC944192ED83600C07757 /* Images.xcassets */,
 				532D60AC1931DCD700537D4C /* Model */,
 				532D60AD1931DCD700537D4C /* Network */,
@@ -700,6 +728,7 @@
 				532DC93D192ED83600C07757 /* InfoPlist.strings in Resources */,
 				532D60BB1931DFD200537D4C /* Settings.plist in Resources */,
 				532D60B91931DF7600537D4C /* Config.xcconfig in Resources */,
+				530FC0FC19421266007B55F2 /* shake.wav in Resources */,
 				532DC945192ED83600C07757 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -806,6 +835,7 @@
 				532D134F193F50F900CC0399 /* THTableViewGoodCell.m in Sources */,
 				531824541938C9C300AA1564 /* MarketsViewModel.m in Sources */,
 				53AA3D7419387E1400D9C35B /* Goods.m in Sources */,
+				530FC0FF19421286007B55F2 /* THHelper.m in Sources */,
 				5306D002193DFECF005BD52E /* THCoreDataStack.m in Sources */,
 				532D1343193F50B300CC0399 /* THTableViewOrderCell.m in Sources */,
 				531824601938CAA600AA1564 /* JackpotViewModel.m in Sources */,

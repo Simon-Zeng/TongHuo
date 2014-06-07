@@ -29,6 +29,7 @@
 #import "ReactiveViewModel.h"
 #import "SVProgressHUD.h"
 #import "THCoreDataStack.h"
+#import "THHelper.h"
 #import "YLMoment.h"
 
 #endif

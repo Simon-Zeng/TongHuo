@@ -224,6 +224,8 @@
 
     if (controller)
     {
+        controller.title = [self titleAtIndexPath:indexPath];
+        
         JASidePanelController * sidePanelController = [(AppDelegate *)[UIApplication sharedApplication].delegate sidePanelController];
         
         UINavigationController * centerPanel = (UINavigationController *)sidePanelController.centerPanel;

@@ -10,4 +10,6 @@
 
 @interface JackpotViewModel : THBasicViewModel
 
+@property (nonatomic, readonly) RACCommand * shakeCommand;
+
 @end

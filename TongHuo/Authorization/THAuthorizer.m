@@ -114,11 +114,11 @@
 
 - (BOOL)isLoggedIn
 {
-    if (_currentAccount && _currentAccount.id.longLongValue > 0)
+//    if (_currentAccount && _currentAccount.id.longLongValue > 0)
     {
         return YES;
     }
-    else
+//    else
     {
         return NO;
     }

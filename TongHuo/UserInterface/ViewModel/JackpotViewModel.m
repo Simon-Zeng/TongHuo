@@ -8,7 +8,11 @@
 
 #import "JackpotViewModel.h"
 
+#import "THAPI.h"
+
 @implementation JackpotViewModel
+
+@synthesize shakeCommand = _shakeCommand;
 
 - (id)init
 {
@@ -32,6 +36,11 @@
 
 - (void)commandInit
 {
-    
+    _shakeCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        RACSignal * jackpotSignal = [[THAPI apiCenter] getJackpot];
+        
+        return jackpotSignal;
+    }];
 }
+
 @end
