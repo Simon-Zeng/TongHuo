@@ -72,6 +72,7 @@
     UITextField * passwordField = [[UITextField alloc] initWithFrame:CGRectMake(94, middleY+20.0, 180, 30)];
     passwordField.borderStyle = UITextBorderStyleNone;
     passwordField.returnKeyType = UIReturnKeyDone;
+    passwordField.secureTextEntry = YES;
     passwordField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     passwordField.delegate = self;
     
@@ -133,10 +134,14 @@
     
     @weakify(self);
     
+
     // When the load command is executed, update our view accordingly
     [self.signInViewModel.signInCommand.executionSignals subscribeNext:^(id signal) {
         
         [signal subscribeNext:^(RACTuple * x) {
+            AFHTTPRequestOperation * operation = x[0];
+            NSLog(@"----- Sign in response: %@", operation.responseString);
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 @strongify(self);
                 [SVProgressHUD dismiss];
@@ -145,21 +150,15 @@
                     [self.navigationController popToRootViewControllerAnimated:YES];
                 }
             });
-        } error:^(NSError *error) {
-            @strongify(self);
-            
-            if (![THAuthorizer sharedAuthorizer].isLoggedIn)
-            {
-                [self showLoginFailedAlertWithError:error];
-            }
-
-        } completed:^{
-            @strongify(self);
-            if (![THAuthorizer sharedAuthorizer].isLoggedIn)
-            {
-                [self showLoginFailedAlertWithError:nil];
-            }
         }];
+    }];
+    
+    [self.signInViewModel.signInCommand.errors subscribeNext:^(NSError * err) {
+        @strongify(self);
+        if (![THAuthorizer sharedAuthorizer].isLoggedIn)
+        {
+            [self showLoginFailedAlertWithError:nil];
+        }
     }];
 }
 

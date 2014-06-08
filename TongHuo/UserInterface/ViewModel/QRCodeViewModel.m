@@ -1,14 +1,14 @@
 //
-//  UploadViewModel.m
+//  QRCodeViewModel.m
 //  TongHuo
 //
-//  Created by zeng songgen on 14-5-30.
+//  Created by zeng songgen on 14-6-7.
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
-#import "UploadViewModel.h"
+#import "QRCodeViewModel.h"
 
-@implementation UploadViewModel
+@implementation QRCodeViewModel
 
 - (id)init
 {

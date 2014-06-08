@@ -8,6 +8,7 @@
 
 #import "RVMViewModel.h"
 
+#import "THAPI.h"
 #import <CoreData/CoreData.h>
 
 @protocol THBasicViewModelCoreDataProtocol <NSObject>

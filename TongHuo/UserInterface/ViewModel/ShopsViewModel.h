@@ -10,13 +10,19 @@
 
 #import "Shops.h"
 
+@class Markets;
+
 @interface ShopsViewModel : THBasicViewModel
+
+@property (nonatomic, readonly) RACSignal * refreshSignal;
+
+@property (nonatomic, strong) Markets * market;
 
 -(NSInteger)numberOfSections;
 -(NSInteger)numberOfItemsInSection:(NSInteger)section;
 -(NSString *)titleForSection:(NSInteger)section;
--(NSString *)titleAtIndexPath:(NSIndexPath *)indexPath;
--(NSString *)subtitleAtIndexPath:(NSIndexPath *)indexPath;
+
+-(Shops *)shopAtIndexPath:(NSIndexPath *)indexPath;
 
 -(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath;
 

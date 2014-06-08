@@ -24,6 +24,7 @@
 #import "DeliveriesViewModel.h"
 #import "MarketsViewModel.h"
 #import "JackpotViewModel.h"
+#import "QRCodeViewModel.h"
 
 @interface MenuViewModel ()
 
@@ -151,6 +152,11 @@
             viewModel = [[MarketsViewModel alloc] initWithModel:self.model];
         }
             break;
+        case 4:
+        {
+            viewModel = [[QRCodeViewModel alloc] initWithModel:self.model];
+        }
+            break;
         case 5:
         {
             viewModel = [[JackpotViewModel alloc] initWithModel:self.model];
@@ -207,7 +213,10 @@
             break;
         case 4:
         {
+            THQRCodeViewController * qrCodeController = [[THQRCodeViewController alloc] init];
+            qrCodeController.viewModel = (QRCodeViewModel *)[self viewModelForIndexPath:indexPath];
             
+            controller = qrCodeController;
         }
             break;
         case 5:

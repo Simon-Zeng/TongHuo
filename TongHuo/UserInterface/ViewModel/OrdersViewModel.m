@@ -42,6 +42,33 @@
 }
 
 
+- (RACSignal *)refreshSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        RACSignal * request = [[THAPI apiCenter] getMarkets];
+        
+        [request subscribeNext:^(RACTuple * x) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+            
+                NSMutableArray * markets = [[NSMutableArray alloc] init];
+                
+                [subscriber sendNext:markets];
+                [subscriber sendCompleted];
+
+//            });
+        } error:^(NSError *error) {
+            [subscriber sendError:error];
+        } completed:^{
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+        }];
+        
+        return nil;
+    }];
+}
+
+#pragma mark - UITableViewDelegate
+
 -(NSInteger)numberOfSections {
     return [[self.fetchedResultsController sections] count];
 }
@@ -94,7 +121,7 @@
 
 - (NSFetchRequest *)fetchRequest
 {
-    NSString * entityName =  NSStringFromClass([Orders class]);
+    NSString * entityName = [Orders entityName];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.

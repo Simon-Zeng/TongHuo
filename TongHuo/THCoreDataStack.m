@@ -14,6 +14,8 @@
 @property (readwrite, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readwrite, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
+@property (readwrite, strong, nonatomic) NSManagedObjectContext * writerManagerObjectContext;
+
 @end
 
 @implementation THCoreDataStack
@@ -45,15 +47,38 @@
     return stack;
 }
 
+- (id)init
+{
+    if (self = [super init])
+    {
+        NSNotificationCenter * notficationCenter = [NSNotificationCenter defaultCenter];
+        
+        [notficationCenter addObserver:self
+                              selector:@selector(managedObjectContextDidSaveNotification:)
+                                  name:NSManagedObjectContextDidSaveNotification
+                                object:self.managedObjectContext];
+    }
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 -(void)saveContext {
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-            // Replace this implementation with code to handle the error appropriately.
-            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
+    @autoreleasepool {
+        NSError *error = nil;
+        NSManagedObjectContext *managedObjectContext = self.threadManagedObjectContext;
+        if (managedObjectContext != nil) {
+            //        [managedObjectContext processPendingChanges];
+            if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+                // Replace this implementation with code to handle the error appropriately.
+                // abort() causes the application[ to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                abort();
+            }
         }
     }
 }
@@ -69,11 +94,54 @@
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        [_managedObjectContext setParentContext:[self writerManagerObjectContext]];
+        
+        [[[NSThread currentThread] threadDictionary] setObject:_managedObjectContext forKey:@"managedObjectContext"];
     }
     return _managedObjectContext;
 }
+
+
+- (NSManagedObjectContext *)threadManagedObjectContext
+{
+    NSManagedObjectContext * context = [[[NSThread currentThread] threadDictionary] objectForKey:@"managedObjectContext"];
+    
+    if (!context)
+    {
+        @synchronized(self)
+        {
+            if (!context)
+            {
+                context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+                [context setParentContext:[self managedObjectContext]];
+                
+                [[[NSThread currentThread] threadDictionary] setObject:context forKey:@"managedObjectContext"];
+            }
+        }
+    }
+    
+    return context;
+}
+
+
+- (NSManagedObjectContext *)writerManagerObjectContext
+{
+    if (_writerManagerObjectContext != nil) {
+        return _writerManagerObjectContext;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil) {
+        _writerManagerObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [_writerManagerObjectContext setPersistentStoreCoordinator:coordinator];
+        
+//        [[[NSThread currentThread] threadDictionary] setObject:_writerManagerObjectContext forKey:@"writerManagerObjectContext"];
+    }
+    return _writerManagerObjectContext;
+}
+
+
 
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.
@@ -124,6 +192,27 @@
 
         
         [[THCoreDataStack defaultStack] saveContext];
+    }
+}
+
+#pragma mark - Notification
+- (void)managedObjectContextDidSaveNotification:(NSNotification *)note
+{
+    if (note.object == self.managedObjectContext)
+    {
+        @autoreleasepool {
+            NSError *error = nil;
+            NSManagedObjectContext * managedObjectContext = [self writerManagerObjectContext];
+            
+            if (managedObjectContext != nil) {
+                if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application[ to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                    abort();
+                }
+            }
+        }
     }
 }
 

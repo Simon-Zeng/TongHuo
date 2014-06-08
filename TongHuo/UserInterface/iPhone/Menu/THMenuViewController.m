@@ -8,6 +8,8 @@
 
 #import "THMenuViewController.h"
 
+#import <CoreFoundation/CoreFoundation.h>
+
 #import "AppDelegate.h"
 
 #import "MenuViewModel.h"
@@ -66,6 +68,32 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [view addSubview:self.tableView];
+    
+    // Add addtional text
+    UILabel * descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 400, 240, 20)];
+    descriptionLabel.textAlignment = NSTextAlignmentCenter;
+    descriptionLabel.font = [UIFont systemFontOfSize:13.0];
+    descriptionLabel.text = NSLocalizedString(@"59批发网，荣誉出品", nil);
+    
+    [view addSubview:descriptionLabel];
+    
+    UILabel * urlLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 420, 240, 20)];
+    urlLabel.textAlignment = NSTextAlignmentCenter;
+    urlLabel.font = [UIFont systemFontOfSize:13.0];
+    urlLabel.text = NSLocalizedString(@"www.59pi.com", nil);
+    
+    [view addSubview:urlLabel];
+    
+    NSDictionary * infoDict = [NSBundle mainBundle].infoDictionary;
+    NSString * versionString = [infoDict objectForKey:@"CFBundleShortVersionString"];
+
+    UILabel * versionLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 440, 240, 20)];
+    versionLabel.textAlignment = NSTextAlignmentCenter;
+    versionLabel.font = [UIFont systemFontOfSize:13.0];
+    versionLabel.text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"版本", nil), versionString];
+    
+    [view addSubview:versionLabel];
+
     
     self.view = view;
 }

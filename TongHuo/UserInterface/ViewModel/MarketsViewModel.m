@@ -8,9 +8,9 @@
 
 #import "MarketsViewModel.h"
 
-@interface MarketsViewModel ()
+#import "Markets+Access.h"
 
--(Markets *)marketAtIndexPath:(NSIndexPath *)indexPath;
+@interface MarketsViewModel ()
 
 @end
 
@@ -41,6 +41,46 @@
 {
     
 }
+
+- (RACSignal *)refreshSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        RACSignal * request = [[THAPI apiCenter] getMarkets];
+        
+        [request subscribeNext:^(RACTuple * x) {
+            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+                NSMutableArray * markets = [[NSMutableArray alloc] init];
+                
+                NSArray * response = x[1];
+                
+                if (response && [response isKindOfClass:[NSArray class]])
+                {
+                    for (NSDictionary * aDict in response)
+                    {
+                        Markets * market = [Markets objectFromDictionary:aDict];
+                        
+                        [markets addObject:market];
+                    }
+                }
+                
+                [[THCoreDataStack defaultStack] saveContext];
+                
+                [subscriber sendNext:markets];
+                [subscriber sendCompleted];
+//            });
+        } error:^(NSError *error) {
+            [subscriber sendError:error];
+        } completed:^{
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+        }];
+        
+        return nil;
+    }];
+}
+
+#pragma mark - UITableViewDelegate
 
 -(NSInteger)numberOfSections {
     return [[self.fetchedResultsController sections] count];
@@ -73,17 +113,6 @@
     return representativeObject.cityId.description;
 }
 
--(NSString *)titleAtIndexPath:(NSIndexPath *)indexPath {
-    Markets *market = [self marketAtIndexPath:indexPath];
-    return [market valueForKey:@keypath(market, name)];
-}
-
--(NSString *)subtitleAtIndexPath:(NSIndexPath *)indexPath {
-    Markets *market = [self marketAtIndexPath:indexPath];
-    return [market valueForKey:@keypath(market, address)];
-}
-
-
 #pragma mark - Private Methods
 
 -(Markets *)marketAtIndexPath:(NSIndexPath *)indexPath {
@@ -94,7 +123,7 @@
 
 - (NSFetchRequest *)fetchRequest
 {
-    NSString * entityName =  NSStringFromClass([Markets class]);
+    NSString * entityName = [Markets entityName];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.

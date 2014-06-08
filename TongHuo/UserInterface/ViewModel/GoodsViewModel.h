@@ -10,13 +10,17 @@
 
 #import "Goods.h"
 
+@class Shops;
+
 @interface GoodsViewModel : THBasicViewModel
+
+@property (nonatomic, readonly) RACSignal * refreshSignal;
+@property (nonatomic, strong) Shops * shop;
 
 -(NSInteger)numberOfSections;
 -(NSInteger)numberOfItemsInSection:(NSInteger)section;
 -(NSString *)titleForSection:(NSInteger)section;
--(NSString *)titleAtIndexPath:(NSIndexPath *)indexPath;
--(NSString *)subtitleAtIndexPath:(NSIndexPath *)indexPath;
+-(Goods *)goodAtIndexPath:(NSIndexPath *)indexPath;
 
 -(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath;
 

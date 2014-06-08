@@ -12,6 +12,8 @@
 #import "THSettings.h"
 #import "UICKeyChainStore.h"
 
+#import "Account+Access.h"
+
 #define kUsernameKey @"username"
 #define kPasswordKey @"password"
 
@@ -114,11 +116,11 @@
 
 - (BOOL)isLoggedIn
 {
-//    if (_currentAccount && _currentAccount.id.longLongValue > 0)
+    if (_currentAccount && _currentAccount.id.longLongValue > 0)
     {
         return YES;
     }
-//    else
+    else
     {
         return NO;
     }
@@ -177,12 +179,12 @@
     
     @weakify(self);
     RACSignal * newSignal = [signal doNext:^(RACTuple * x) {
-        RACTupleUnpack(AFHTTPRequestOperation * operation, id responseObject) = x;
+        id responseObject = x[1];
         
         @strongify(self);
         if ([responseObject isKindOfClass:[NSDictionary class]])
         {
-            self.currentAccount = [Account accountFromDictionary:responseObject];
+            self.currentAccount = [Account objectFromDictionary:responseObject];
         }
     }];
     

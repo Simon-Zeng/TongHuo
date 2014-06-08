@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-
 @interface Orders : NSManagedObject
 
 @property (nonatomic, retain) NSString * address;

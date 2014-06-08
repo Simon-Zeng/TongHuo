@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Markets;
+
 @interface THTableViewMarketCell : UITableViewCell
+
+- (void)updateWithMarket:(Markets *)market atIndexPath:(NSIndexPath *)indexPath;
 
 @end

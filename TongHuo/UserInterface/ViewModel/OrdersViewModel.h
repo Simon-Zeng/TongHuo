@@ -13,6 +13,9 @@
 @interface OrdersViewModel : THBasicViewModel
 
 
+@property (nonatomic, readonly) RACSignal * refreshSignal;
+
+
 -(NSInteger)numberOfSections;
 -(NSInteger)numberOfItemsInSection:(NSInteger)section;
 -(NSString *)titleForSection:(NSInteger)section;

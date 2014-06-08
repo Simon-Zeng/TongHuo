@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Goods;
+
 @interface THTableViewGoodCell : UITableViewCell
+
+- (void)updateWithGood:(Goods *)good atIndexPath:(NSIndexPath *)indexPath;
 
 @end

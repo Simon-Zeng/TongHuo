@@ -53,6 +53,15 @@
            forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
+    [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
+        if (x)
+        {
+            NSLog(@"---- Orders: %@", x);
+        }
+    } error:^(NSError *error) {
+        NSLog(@"---- Refresh error: %@", error);
+    }];
+    
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
         [self.tableView reloadData];

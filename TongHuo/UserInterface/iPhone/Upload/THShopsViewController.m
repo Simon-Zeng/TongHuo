@@ -9,7 +9,9 @@
 #import "THShopsViewController.h"
 
 #import "ShopsViewModel.h"
+#import "GoodsViewModel.h"
 #import "THTableViewShopCell.h"
+#import "THGoodsViewController.h"
 
 @interface THShopsViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -53,6 +55,15 @@
            forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
+    [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
+        if (x)
+        {
+            NSLog(@"---- Shops: %@", x);
+        }
+    } error:^(NSError *error) {
+        NSLog(@"---- Refresh error: %@", error);
+    }];
+    
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
         [self.tableView reloadData];
@@ -77,7 +88,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    THTableViewShopCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -96,12 +107,25 @@
     }
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.viewModel titleForSection:section];
-}
+//-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return [self.viewModel titleForSection:section];
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    GoodsViewModel * goodsViewModel = [[GoodsViewModel alloc] initWithModel:self.viewModel.model];
+    goodsViewModel.shop = [self.viewModel shopAtIndexPath:indexPath];
     
+    THGoodsViewController * goodsViewController = [[THGoodsViewController alloc] init];
+    goodsViewController.viewModel = goodsViewModel;
+    
+    [self.navigationController pushViewController:goodsViewController animated:YES];
+}
+
+#pragma mark
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 57.0;
 }
 
 #pragma mark - Navigation
@@ -118,10 +142,11 @@
 
 #pragma mark - Private Methods
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(THTableViewShopCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.textLabel.text = [self.viewModel titleAtIndexPath:indexPath];
-    cell.detailTextLabel.text = [self.viewModel subtitleAtIndexPath:indexPath];
+    Shops * shop = [self.viewModel shopAtIndexPath:indexPath];
+    
+    [cell updateWithShop:shop atIndexPath:indexPath];
 }
 
 

@@ -9,7 +9,10 @@
 #import "THGoodsViewController.h"
 
 #import "GoodsViewModel.h"
+#import "UploadViewModel.h"
 #import "THTableViewGoodCell.h"
+
+#import "THUploadGoodsViewController.h"
 
 @interface THGoodsViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -53,6 +56,15 @@
            forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
+    [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
+        if (x)
+        {
+            NSLog(@"---- Goods: %@", x);
+        }
+    } error:^(NSError *error) {
+        NSLog(@"---- Refresh error: %@", error);
+    }];
+    
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
         [self.tableView reloadData];
@@ -77,7 +89,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    THTableViewGoodCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -96,12 +108,24 @@
     }
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.viewModel titleForSection:section];
-}
+//-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return [self.viewModel titleForSection:section];
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UploadViewModel * uploadViewModel = [[UploadViewModel alloc] initWithModel:self.viewModel.model];
+    uploadViewModel.good = [self.viewModel goodAtIndexPath:indexPath];
     
+    THUploadGoodsViewController * uploadGoodsViewController = [[THUploadGoodsViewController alloc] init];
+    uploadGoodsViewController.viewModel = uploadViewModel;
+    
+    [self.navigationController pushViewController:uploadGoodsViewController animated:YES];}
+
+#pragma mark
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 57.0;
 }
 
 #pragma mark - Navigation
@@ -118,10 +142,11 @@
 
 #pragma mark - Private Methods
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(THTableViewGoodCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.textLabel.text = [self.viewModel titleAtIndexPath:indexPath];
-    cell.detailTextLabel.text = [self.viewModel subtitleAtIndexPath:indexPath];
+    Goods * good = [self.viewModel goodAtIndexPath:indexPath];
+    
+    [cell updateWithGood:good atIndexPath:indexPath];
 }
 
 

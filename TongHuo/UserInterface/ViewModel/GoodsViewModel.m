@@ -8,9 +8,10 @@
 
 #import "GoodsViewModel.h"
 
-@interface GoodsViewModel ()
+#import "Shops+Access.h"
+#import "Goods+Access.h"
 
--(Goods *)goodAtIndexPath:(NSIndexPath *)indexPath;
+@interface GoodsViewModel ()
 
 @end
 
@@ -43,6 +44,45 @@
     
 }
 
+- (RACSignal *)refreshSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        RACSignal * request = [[THAPI apiCenter] getGoodsForShop:[self.shop id]];
+        
+        [request subscribeNext:^(RACTuple * x) {
+            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+            
+                NSMutableArray * goods = [[NSMutableArray alloc] init];
+                NSArray * response = x[1];
+                
+                if (response && [response isKindOfClass:[NSArray class]])
+                {
+                    for (NSDictionary * aDict in response)
+                    {
+                        Goods * good = [Goods objectFromDictionary:aDict];
+                        
+                        [goods addObject:good];
+                    }
+                }
+                
+                [[THCoreDataStack defaultStack] saveContext];
+                
+                [subscriber sendNext:goods];
+                [subscriber sendCompleted];
+//            });
+        } error:^(NSError *error) {
+            [subscriber sendError:error];
+        } completed:^{
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+        }];
+        
+        return nil;    }];
+}
+
+#pragma mark - UITableViewDelegate
+
 -(NSInteger)numberOfSections {
     return [[self.fetchedResultsController sections] count];
 }
@@ -74,17 +114,6 @@
     return representativeObject.categoryId.description;
 }
 
--(NSString *)titleAtIndexPath:(NSIndexPath *)indexPath {
-    Goods *good = [self goodAtIndexPath:indexPath];
-    return [good valueForKey:@keypath(good, title)];
-}
-
--(NSString *)subtitleAtIndexPath:(NSIndexPath *)indexPath {
-    Goods *good = [self goodAtIndexPath:indexPath];
-    return [good valueForKey:@keypath(good, price)];
-}
-
-
 #pragma mark - Private Methods
 
 -(Goods *)goodAtIndexPath:(NSIndexPath *)indexPath {
@@ -95,7 +124,7 @@
 
 - (NSFetchRequest *)fetchRequest
 {
-    NSString * entityName =  NSStringFromClass([Goods class]);
+    NSString * entityName = [Goods entityName];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.

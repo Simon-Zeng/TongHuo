@@ -16,6 +16,9 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"MenuCellBackground"]];
+        self.selectedBackgroundView.backgroundColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"MenuCellBackground"]] colorWithAlphaComponent:0.5];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         self.textLabel.textAlignment = NSTextAlignmentLeft;
         self.indentationWidth = 40.0;
         self.indentationLevel = 2;

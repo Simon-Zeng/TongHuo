@@ -8,6 +8,10 @@
 
 #import "THBasicViewModel.h"
 
+@class Goods;
+
 @interface UploadViewModel : THBasicViewModel
+
+@property (nonatomic, strong) Goods * good;
 
 @end

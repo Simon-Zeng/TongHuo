@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) RACSubject *updatedContentSignal;
 
+@property (nonatomic, strong) id observer;
 
 @end
 
@@ -40,6 +41,14 @@
 
     
 	return self;
+}
+
+- (void)dealloc
+{
+    if (_observer)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:_observer];
+    }
 }
 
 #pragma mark - THBasicViewModelCoreDataProtocol
@@ -86,6 +95,23 @@
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.model sectionNameKeyPath:sectionNameKey cacheName:cacheName];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
+    
+//    // Observe CoreData multithread changes
+//    self.observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification
+//                                                                      object:nil
+//                                                                       queue:[NSOperationQueue mainQueue]
+//                                                                  usingBlock:^(NSNotification *note) {
+//                                                                      NSManagedObjectContext *savedContext = [note object];
+//                                                                      
+//                                                                      // ignore change notifications for the main MOC
+//                                                                      if (aFetchedResultsController.managedObjectContext != savedContext) {
+//                                                                          [aFetchedResultsController.managedObjectContext mergeChangesFromContextDidSaveNotification:note];
+//                                                                      }
+//                                                                  }];
+//    
+
+    // Delete previous cache
+    [NSFetchedResultsController deleteCacheWithName:cacheName];
     
 	NSError *error = nil;
 	if (![self.fetchedResultsController performFetch:&error]) {

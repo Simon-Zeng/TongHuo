@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class Shops;
+
 @interface THTableViewShopCell : UITableViewCell
+
+- (void)updateWithShop:(Shops *)shop atIndexPath:(NSIndexPath *)indexPath;
 
 @end

@@ -9,7 +9,9 @@
 #import "THMarketsViewController.h"
 
 #import "MarketsViewModel.h"
+#import "ShopsViewModel.h"
 #import "THTableViewMarketCell.h"
+#import "THShopsViewController.h"
 
 @interface THMarketsViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -53,8 +55,18 @@
            forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
+    [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
+        if (x)
+        {
+            NSLog(@"---- Markets: %@", x);
+        }
+    } error:^(NSError *error) {
+        NSLog(@"---- Refresh error: %@", error);
+    }];
+    
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
+        NSLog(@"---- %@ reloadData", NSStringFromClass([self class]));
         [self.tableView reloadData];
     }];
 }
@@ -77,7 +89,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    THTableViewMarketCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -96,12 +108,25 @@
     }
 }
 
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.viewModel titleForSection:section];
-}
+//-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return [self.viewModel titleForSection:section];
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ShopsViewModel * shopsViewModel = [[ShopsViewModel alloc] initWithModel:self.viewModel.model];
+    shopsViewModel.market = [self.viewModel marketAtIndexPath:indexPath];
     
+    THShopsViewController * shopViewController = [[THShopsViewController alloc] init];
+    shopViewController.viewModel = shopsViewModel;
+    
+    [self.navigationController pushViewController:shopViewController animated:YES];
+}
+
+#pragma mark
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 57.0;
 }
 
 #pragma mark - Navigation
@@ -118,10 +143,11 @@
 
 #pragma mark - Private Methods
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(THTableViewMarketCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.textLabel.text = [self.viewModel titleAtIndexPath:indexPath];
-    cell.detailTextLabel.text = [self.viewModel subtitleAtIndexPath:indexPath];
+    Markets * market = [self.viewModel marketAtIndexPath:indexPath];
+    
+    [cell updateWithMarket:market atIndexPath:indexPath];
 }
 
 

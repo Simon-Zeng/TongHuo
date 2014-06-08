@@ -10,9 +10,10 @@
 
 #import "THViewController.h"
 
+@class QRCodeViewModel;
 
 @interface THQRCodeViewController : THViewController
 
-//@property (nonatomic, strong) DeliveriesViewModel *viewModel;
+@property (nonatomic, strong) QRCodeViewModel *viewModel;
 
 @end

@@ -16,6 +16,7 @@
 		530FC0FC19421266007B55F2 /* shake.wav in Resources */ = {isa = PBXBuildFile; fileRef = 530FC0FB19421266007B55F2 /* shake.wav */; };
 		530FC0FF19421286007B55F2 /* THHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC0FE19421286007B55F2 /* THHelper.m */; };
 		530FC10119421678007B55F2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530FC10019421678007B55F2 /* QuartzCore.framework */; };
+		530FC1041942AEC5007B55F2 /* QRCodeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC1031942AEC5007B55F2 /* QRCodeViewModel.m */; };
 		5318244B1938C77F00AA1564 /* SignInViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318244A1938C77F00AA1564 /* SignInViewModel.m */; };
 		5318244E1938C90900AA1564 /* OrdersViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318244D1938C90900AA1564 /* OrdersViewModel.m */; };
 		531824511938C98D00AA1564 /* DeliveriesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 531824501938C98D00AA1564 /* DeliveriesViewModel.m */; };
@@ -59,6 +60,13 @@
 		532DC94D192ED83700C07757 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC932192ED83600C07757 /* Foundation.framework */; };
 		532DC94E192ED83700C07757 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC936192ED83600C07757 /* UIKit.framework */; };
 		532DC956192ED83700C07757 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 532DC954192ED83700C07757 /* InfoPlist.strings */; };
+		537F7B6B1942D93500CE1703 /* Account+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B6A1942D93500CE1703 /* Account+Access.m */; };
+		537F7B6E1942D94700CE1703 /* Goods+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B6D1942D94700CE1703 /* Goods+Access.m */; };
+		537F7B711942D95900CE1703 /* Markets+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B701942D95900CE1703 /* Markets+Access.m */; };
+		537F7B741942D96A00CE1703 /* Orders+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B731942D96A00CE1703 /* Orders+Access.m */; };
+		537F7B771942D98800CE1703 /* Platforms+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B761942D98800CE1703 /* Platforms+Access.m */; };
+		537F7B7A1942D99C00CE1703 /* Sellers+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B791942D99C00CE1703 /* Sellers+Access.m */; };
+		537F7B7D1942D9AC00CE1703 /* Shops+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B7C1942D9AC00CE1703 /* Shops+Access.m */; };
 		53AA3D7319387E1400D9C35B /* Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AA3D6019387E1400D9C35B /* Account.m */; };
 		53AA3D7419387E1400D9C35B /* Goods.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AA3D6319387E1400D9C35B /* Goods.m */; };
 		53AA3D7519387E1400D9C35B /* Markets.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AA3D6619387E1400D9C35B /* Markets.m */; };
@@ -94,6 +102,8 @@
 		530FC0FD19421286007B55F2 /* THHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THHelper.h; sourceTree = "<group>"; };
 		530FC0FE19421286007B55F2 /* THHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THHelper.m; sourceTree = "<group>"; };
 		530FC10019421678007B55F2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		530FC1021942AEC5007B55F2 /* QRCodeViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeViewModel.h; sourceTree = "<group>"; };
+		530FC1031942AEC5007B55F2 /* QRCodeViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeViewModel.m; sourceTree = "<group>"; };
 		531824491938C77F00AA1564 /* SignInViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewModel.h; sourceTree = "<group>"; };
 		5318244A1938C77F00AA1564 /* SignInViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewModel.m; sourceTree = "<group>"; };
 		5318244C1938C90900AA1564 /* OrdersViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersViewModel.h; sourceTree = "<group>"; };
@@ -172,6 +182,20 @@
 		532DC953192ED83700C07757 /* TongHuoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TongHuoTests-Info.plist"; sourceTree = "<group>"; };
 		532DC955192ED83700C07757 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		532DC957192ED83700C07757 /* TongHuoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TongHuoTests.m; sourceTree = "<group>"; };
+		537F7B691942D93500CE1703 /* Account+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Account+Access.h"; sourceTree = "<group>"; };
+		537F7B6A1942D93500CE1703 /* Account+Access.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Account+Access.m"; sourceTree = "<group>"; };
+		537F7B6C1942D94700CE1703 /* Goods+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Goods+Access.h"; sourceTree = "<group>"; };
+		537F7B6D1942D94700CE1703 /* Goods+Access.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Goods+Access.m"; sourceTree = "<group>"; };
+		537F7B6F1942D95900CE1703 /* Markets+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Markets+Access.h"; sourceTree = "<group>"; };
+		537F7B701942D95900CE1703 /* Markets+Access.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Markets+Access.m"; sourceTree = "<group>"; };
+		537F7B721942D96A00CE1703 /* Orders+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Orders+Access.h"; sourceTree = "<group>"; };
+		537F7B731942D96A00CE1703 /* Orders+Access.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Orders+Access.m"; sourceTree = "<group>"; };
+		537F7B751942D98800CE1703 /* Platforms+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Platforms+Access.h"; sourceTree = "<group>"; };
+		537F7B761942D98800CE1703 /* Platforms+Access.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Platforms+Access.m"; sourceTree = "<group>"; };
+		537F7B781942D99C00CE1703 /* Sellers+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Sellers+Access.h"; sourceTree = "<group>"; };
+		537F7B791942D99C00CE1703 /* Sellers+Access.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Sellers+Access.m"; sourceTree = "<group>"; };
+		537F7B7B1942D9AC00CE1703 /* Shops+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Shops+Access.h"; sourceTree = "<group>"; };
+		537F7B7C1942D9AC00CE1703 /* Shops+Access.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Shops+Access.m"; sourceTree = "<group>"; };
 		53AA3D5F19387E1400D9C35B /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
 		53AA3D6019387E1400D9C35B /* Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Account.m; sourceTree = "<group>"; };
 		53AA3D6219387E1400D9C35B /* Goods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Goods.h; sourceTree = "<group>"; };
@@ -477,6 +501,8 @@
 				5318245F1938CAA600AA1564 /* JackpotViewModel.m */,
 				5306D006193E08AC005BD52E /* THBasicViewModel.h */,
 				5306D007193E08AC005BD52E /* THBasicViewModel.m */,
+				530FC1021942AEC5007B55F2 /* QRCodeViewModel.h */,
+				530FC1031942AEC5007B55F2 /* QRCodeViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -536,6 +562,7 @@
 		532DC938192ED83600C07757 /* TongHuo */ = {
 			isa = PBXGroup;
 			children = (
+				537F7AC61942C7C900CE1703 /* Extern */,
 				532DC941192ED83600C07757 /* AppDelegate.h */,
 				532DC942192ED83600C07757 /* AppDelegate.m */,
 				5306D000193DFECF005BD52E /* THCoreDataStack.h */,
@@ -583,11 +610,20 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		537F7AC61942C7C900CE1703 /* Extern */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extern;
+			sourceTree = "<group>";
+		};
 		53AA3D5E19387E1400D9C35B /* Account */ = {
 			isa = PBXGroup;
 			children = (
 				53AA3D5F19387E1400D9C35B /* Account.h */,
 				53AA3D6019387E1400D9C35B /* Account.m */,
+				537F7B691942D93500CE1703 /* Account+Access.h */,
+				537F7B6A1942D93500CE1703 /* Account+Access.m */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -597,6 +633,8 @@
 			children = (
 				53AA3D6219387E1400D9C35B /* Goods.h */,
 				53AA3D6319387E1400D9C35B /* Goods.m */,
+				537F7B6C1942D94700CE1703 /* Goods+Access.h */,
+				537F7B6D1942D94700CE1703 /* Goods+Access.m */,
 			);
 			path = Goods;
 			sourceTree = "<group>";
@@ -606,6 +644,8 @@
 			children = (
 				53AA3D6519387E1400D9C35B /* Markets.h */,
 				53AA3D6619387E1400D9C35B /* Markets.m */,
+				537F7B6F1942D95900CE1703 /* Markets+Access.h */,
+				537F7B701942D95900CE1703 /* Markets+Access.m */,
 			);
 			path = Market;
 			sourceTree = "<group>";
@@ -615,6 +655,8 @@
 			children = (
 				53AA3D6819387E1400D9C35B /* Orders.h */,
 				53AA3D6919387E1400D9C35B /* Orders.m */,
+				537F7B721942D96A00CE1703 /* Orders+Access.h */,
+				537F7B731942D96A00CE1703 /* Orders+Access.m */,
 			);
 			path = Orders;
 			sourceTree = "<group>";
@@ -624,6 +666,8 @@
 			children = (
 				53AA3D6B19387E1400D9C35B /* Platforms.h */,
 				53AA3D6C19387E1400D9C35B /* Platforms.m */,
+				537F7B751942D98800CE1703 /* Platforms+Access.h */,
+				537F7B761942D98800CE1703 /* Platforms+Access.m */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -633,6 +677,8 @@
 			children = (
 				53AA3D6E19387E1400D9C35B /* Sellers.h */,
 				53AA3D6F19387E1400D9C35B /* Sellers.m */,
+				537F7B781942D99C00CE1703 /* Sellers+Access.h */,
+				537F7B791942D99C00CE1703 /* Sellers+Access.m */,
 			);
 			path = Sellers;
 			sourceTree = "<group>";
@@ -642,6 +688,8 @@
 			children = (
 				53AA3D7119387E1400D9C35B /* Shops.h */,
 				53AA3D7219387E1400D9C35B /* Shops.m */,
+				537F7B7B1942D9AC00CE1703 /* Shops+Access.h */,
+				537F7B7C1942D9AC00CE1703 /* Shops+Access.m */,
 			);
 			path = Shops;
 			sourceTree = "<group>";
@@ -697,6 +745,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = 59pi;
 				TargetAttributes = {
+					532DC92E192ED83600C07757 = {
+						DevelopmentTeam = C7E5E7WK5U;
+					};
 					532DC949192ED83600C07757 = {
 						TestTargetID = 532DC92E192ED83600C07757;
 					};
@@ -811,16 +862,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				537F7B741942D96A00CE1703 /* Orders+Access.m in Sources */,
 				532D60D11932268900537D4C /* THAPI.m in Sources */,
 				53AA3D7319387E1400D9C35B /* Account.m in Sources */,
+				537F7B6E1942D94700CE1703 /* Goods+Access.m in Sources */,
 				5306D005193E048C005BD52E /* MenuViewModel.m in Sources */,
 				531824731938D4F900AA1564 /* THMenuViewController.m in Sources */,
 				53AA3D7619387E1400D9C35B /* Orders.m in Sources */,
+				537F7B7D1942D9AC00CE1703 /* Shops+Access.m in Sources */,
 				5318245D1938CA1500AA1564 /* UploadViewModel.m in Sources */,
 				532D1340193F504100CC0399 /* THTableViewMenuCell.m in Sources */,
 				5318248B1938D5AA00AA1564 /* THUploadGoodsViewController.m in Sources */,
 				532D60BE1931DFF900537D4C /* THSettings.m in Sources */,
 				531824791938D51900AA1564 /* THQRCodeViewController.m in Sources */,
+				537F7B711942D95900CE1703 /* Markets+Access.m in Sources */,
 				530FC0F81941F1F3007B55F2 /* UINavigationBar+statusBarColor.m in Sources */,
 				532DC943192ED83600C07757 /* AppDelegate.m in Sources */,
 				531824821938D56900AA1564 /* THMarketsViewController.m in Sources */,
@@ -830,9 +885,11 @@
 				531824851938D57500AA1564 /* THShopsViewController.m in Sources */,
 				53AA3D7819387E1400D9C35B /* Sellers.m in Sources */,
 				53097FBB1934BD0B00589393 /* Model.xcdatamodeld in Sources */,
+				537F7B7A1942D99C00CE1703 /* Sellers+Access.m in Sources */,
 				5318247C1938D53600AA1564 /* THJackpotViewController.m in Sources */,
 				532DC93F192ED83600C07757 /* main.m in Sources */,
 				532D134F193F50F900CC0399 /* THTableViewGoodCell.m in Sources */,
+				530FC1041942AEC5007B55F2 /* QRCodeViewModel.m in Sources */,
 				531824541938C9C300AA1564 /* MarketsViewModel.m in Sources */,
 				53AA3D7419387E1400D9C35B /* Goods.m in Sources */,
 				530FC0FF19421286007B55F2 /* THHelper.m in Sources */,
@@ -840,6 +897,7 @@
 				532D1343193F50B300CC0399 /* THTableViewOrderCell.m in Sources */,
 				531824601938CAA600AA1564 /* JackpotViewModel.m in Sources */,
 				532D60C41931E0A800537D4C /* THAuthorizer.m in Sources */,
+				537F7B771942D98800CE1703 /* Platforms+Access.m in Sources */,
 				5318245A1938C9F500AA1564 /* GoodsViewModel.m in Sources */,
 				531824511938C98D00AA1564 /* DeliveriesViewModel.m in Sources */,
 				532D60B71931DF2200537D4C /* THNetwork.m in Sources */,
@@ -848,6 +906,7 @@
 				5306D008193E08AC005BD52E /* THBasicViewModel.m in Sources */,
 				5318246D1938D4B600AA1564 /* THNavigationController.m in Sources */,
 				531824571938C9DB00AA1564 /* ShopsViewModel.m in Sources */,
+				537F7B6B1942D93500CE1703 /* Account+Access.m in Sources */,
 				5318244B1938C77F00AA1564 /* SignInViewModel.m in Sources */,
 				531824701938D4E700AA1564 /* THDeliveriesViewController.m in Sources */,
 				5318244E1938C90900AA1564 /* OrdersViewModel.m in Sources */,
@@ -973,6 +1032,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
 				INFOPLIST_FILE = "TongHuo/TongHuo-Info.plist";
@@ -983,6 +1044,7 @@
 					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_Extra_Frameworks/Wechat/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -993,6 +1055,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
 				INFOPLIST_FILE = "TongHuo/TongHuo-Info.plist";
@@ -1003,6 +1067,7 @@
 					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_Extra_Frameworks/Wechat/**",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

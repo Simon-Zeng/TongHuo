@@ -69,7 +69,7 @@
     </entity>
     <entity name="Sellers" representedClassName="Sellers" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="productId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="productId" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="Shops" representedClassName="Shops" syncable="YES">
@@ -85,11 +85,11 @@
     </entity>
     <elements>
         <element name="Account" positionX="-243" positionY="0" width="128" height="133"/>
-        <element name="Goods" positionX="-360" positionY="90" width="128" height="405"/>
+        <element name="Goods" positionX="-360" positionY="90" width="128" height="403"/>
         <element name="Markets" positionX="-137" positionY="-153" width="128" height="133"/>
         <element name="Orders" positionX="-234" positionY="9" width="128" height="283"/>
         <element name="Platforms" positionX="-369" positionY="-151" width="128" height="120"/>
-        <element name="Sellers" positionX="-225" positionY="18" width="128" height="88"/>
+        <element name="Sellers" positionX="-225" positionY="18" width="128" height="90"/>
         <element name="Shops" positionX="-128" positionY="32" width="128" height="178"/>
     </elements>
 </model>

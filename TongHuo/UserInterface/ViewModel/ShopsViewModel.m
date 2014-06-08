@@ -8,9 +8,9 @@
 
 #import "ShopsViewModel.h"
 
-@interface ShopsViewModel ()
+#import "Shops+Access.h"
 
--(Shops *)shopAtIndexPath:(NSIndexPath *)indexPath;
+@interface ShopsViewModel ()
 
 @end
 
@@ -42,6 +42,47 @@
 {
     
 }
+
+- (RACSignal *)refreshSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        RACSignal * request = [[THAPI apiCenter] getShops];
+        
+        [request subscribeNext:^(RACTuple * x) {
+            
+//            dispatch_async(dispatch_get_main_queue(), ^{
+                NSMutableArray * shops = [[NSMutableArray alloc] init];
+                NSArray * response = x[1];
+                
+                if (response && [response isKindOfClass:[NSArray class]])
+                {
+                    for (NSDictionary * aDict in response)
+                    {
+                        Shops * shop = [Shops objectFromDictionary:aDict];
+                        
+                        [shops addObject:shop];
+                    }
+                }
+                
+                [[THCoreDataStack defaultStack] saveContext];
+                
+                [subscriber sendNext:shops];
+                [subscriber sendCompleted];
+
+//            });
+        } error:^(NSError *error) {
+            [subscriber sendError:error];
+        } completed:^{
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+        }];
+        
+        return nil;
+    }];
+}
+
+#pragma mark - UITableViewDelegate
+
 -(NSInteger)numberOfSections {
     return [[self.fetchedResultsController sections] count];
 }
@@ -73,16 +114,6 @@
     return representativeObject.marketId.description;
 }
 
--(NSString *)titleAtIndexPath:(NSIndexPath *)indexPath {
-    Shops *shop = [self shopAtIndexPath:indexPath];
-    return [shop valueForKey:@keypath(shop, name)];
-}
-
--(NSString *)subtitleAtIndexPath:(NSIndexPath *)indexPath {
-    Shops *shop = [self shopAtIndexPath:indexPath];
-    return [shop valueForKey:@keypath(shop, address)];
-}
-
 
 #pragma mark - Private Methods
 
@@ -94,7 +125,7 @@
 
 - (NSFetchRequest *)fetchRequest
 {
-    NSString * entityName =  NSStringFromClass([Shops class]);
+    NSString * entityName = [Shops entityName];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
