@@ -67,6 +67,18 @@
         <attribute name="refreshToken" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="Product" representedClassName="Product" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="createtime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="dates" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="id" attributeType="Integer 64" indexed="YES" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="no" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="size" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 16" syncable="YES"/>
+    </entity>
     <entity name="Sellers" representedClassName="Sellers" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="productId" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
@@ -91,5 +103,6 @@
         <element name="Platforms" positionX="-369" positionY="-151" width="128" height="120"/>
         <element name="Sellers" positionX="-225" positionY="18" width="128" height="90"/>
         <element name="Shops" positionX="-128" positionY="32" width="128" height="178"/>
+        <element name="Product" positionX="-243" positionY="0" width="128" height="195"/>
     </elements>
 </model>

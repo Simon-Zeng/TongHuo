@@ -12,6 +12,7 @@
 #import "ShopsViewModel.h"
 #import "THTableViewMarketCell.h"
 #import "THShopsViewController.h"
+#import "THConfigration.h"
 
 @interface THMarketsViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -51,13 +52,17 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    self.title = NSLocalizedString(@"档口", nil);
+    
     [self.tableView registerClass:[THTableViewMarketCell class]
            forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
     
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    THConfigration * configration = [THConfigration sharedConfigration];
+    BOOL needToSync = !configration.isMarketsSynced;
+    if (needToSync)
+    {
         [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
                              maskType:SVProgressHUDMaskTypeGradient];
         
@@ -65,13 +70,15 @@
             [SVProgressHUD dismiss];
             if (x)
             {
+                configration.marketsSynced = YES;
+                
                 NSLog(@"---- Markets: %@", x);
             }
         } error:^(NSError *error) {
             [SVProgressHUD dismiss];
             NSLog(@"---- Refresh error: %@", error);
         }];
-    });
+    }
     
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);

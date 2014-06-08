@@ -17,6 +17,9 @@
 		530FC0FF19421286007B55F2 /* THHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC0FE19421286007B55F2 /* THHelper.m */; };
 		530FC10119421678007B55F2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530FC10019421678007B55F2 /* QuartzCore.framework */; };
 		530FC1041942AEC5007B55F2 /* QRCodeViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 530FC1031942AEC5007B55F2 /* QRCodeViewModel.m */; };
+		53161138194482E500414567 /* THConfigration.m in Sources */ = {isa = PBXBuildFile; fileRef = 53161137194482E500414567 /* THConfigration.m */; };
+		5316113F1944A5F200414567 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 5316113E1944A5F200414567 /* Product.m */; };
+		531611421944A61000414567 /* Product+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 531611411944A61000414567 /* Product+Access.m */; };
 		5318244B1938C77F00AA1564 /* SignInViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318244A1938C77F00AA1564 /* SignInViewModel.m */; };
 		5318244E1938C90900AA1564 /* OrdersViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318244D1938C90900AA1564 /* OrdersViewModel.m */; };
 		531824511938C98D00AA1564 /* DeliveriesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 531824501938C98D00AA1564 /* DeliveriesViewModel.m */; };
@@ -104,6 +107,12 @@
 		530FC10019421678007B55F2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		530FC1021942AEC5007B55F2 /* QRCodeViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeViewModel.h; sourceTree = "<group>"; };
 		530FC1031942AEC5007B55F2 /* QRCodeViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeViewModel.m; sourceTree = "<group>"; };
+		53161136194482E500414567 /* THConfigration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THConfigration.h; sourceTree = "<group>"; };
+		53161137194482E500414567 /* THConfigration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THConfigration.m; sourceTree = "<group>"; };
+		5316113D1944A5F200414567 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
+		5316113E1944A5F200414567 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
+		531611401944A61000414567 /* Product+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Product+Access.h"; sourceTree = "<group>"; };
+		531611411944A61000414567 /* Product+Access.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Product+Access.m"; sourceTree = "<group>"; };
 		531824491938C77F00AA1564 /* SignInViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewModel.h; sourceTree = "<group>"; };
 		5318244A1938C77F00AA1564 /* SignInViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewModel.m; sourceTree = "<group>"; };
 		5318244C1938C90900AA1564 /* OrdersViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersViewModel.h; sourceTree = "<group>"; };
@@ -285,6 +294,17 @@
 			path = Audio;
 			sourceTree = "<group>";
 		};
+		5316113C1944A5F200414567 /* Product */ = {
+			isa = PBXGroup;
+			children = (
+				5316113D1944A5F200414567 /* Product.h */,
+				5316113E1944A5F200414567 /* Product.m */,
+				531611401944A61000414567 /* Product+Access.h */,
+				531611411944A61000414567 /* Product+Access.m */,
+			);
+			path = Product;
+			sourceTree = "<group>";
+		};
 		531824611938D3E700AA1564 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -415,6 +435,8 @@
 				532D60BA1931DFD200537D4C /* Settings.plist */,
 				532D60BC1931DFF900537D4C /* THSettings.h */,
 				532D60BD1931DFF900537D4C /* THSettings.m */,
+				53161136194482E500414567 /* THConfigration.h */,
+				53161137194482E500414567 /* THConfigration.m */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -425,11 +447,12 @@
 				53AA3D5E19387E1400D9C35B /* Account */,
 				53AA3D6119387E1400D9C35B /* Goods */,
 				53AA3D6419387E1400D9C35B /* Market */,
+				53097FB91934BD0A00589393 /* Model.xcdatamodeld */,
 				53AA3D6719387E1400D9C35B /* Orders */,
 				53AA3D6A19387E1400D9C35B /* Platform */,
+				5316113C1944A5F200414567 /* Product */,
 				53AA3D6D19387E1400D9C35B /* Sellers */,
 				53AA3D7019387E1400D9C35B /* Shops */,
-				53097FB91934BD0A00589393 /* Model.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -864,6 +887,7 @@
 			files = (
 				537F7B741942D96A00CE1703 /* Orders+Access.m in Sources */,
 				532D60D11932268900537D4C /* THAPI.m in Sources */,
+				53161138194482E500414567 /* THConfigration.m in Sources */,
 				53AA3D7319387E1400D9C35B /* Account.m in Sources */,
 				537F7B6E1942D94700CE1703 /* Goods+Access.m in Sources */,
 				5306D005193E048C005BD52E /* MenuViewModel.m in Sources */,
@@ -886,6 +910,7 @@
 				53AA3D7819387E1400D9C35B /* Sellers.m in Sources */,
 				53097FBB1934BD0B00589393 /* Model.xcdatamodeld in Sources */,
 				537F7B7A1942D99C00CE1703 /* Sellers+Access.m in Sources */,
+				531611421944A61000414567 /* Product+Access.m in Sources */,
 				5318247C1938D53600AA1564 /* THJackpotViewController.m in Sources */,
 				532DC93F192ED83600C07757 /* main.m in Sources */,
 				532D134F193F50F900CC0399 /* THTableViewGoodCell.m in Sources */,
@@ -907,6 +932,7 @@
 				5318246D1938D4B600AA1564 /* THNavigationController.m in Sources */,
 				531824571938C9DB00AA1564 /* ShopsViewModel.m in Sources */,
 				537F7B6B1942D93500CE1703 /* Account+Access.m in Sources */,
+				5316113F1944A5F200414567 /* Product.m in Sources */,
 				5318244B1938C77F00AA1564 /* SignInViewModel.m in Sources */,
 				531824701938D4E700AA1564 /* THDeliveriesViewController.m in Sources */,
 				5318244E1938C90900AA1564 /* OrdersViewModel.m in Sources */,

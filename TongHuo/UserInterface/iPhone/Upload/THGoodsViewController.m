@@ -12,6 +12,8 @@
 #import "UploadViewModel.h"
 #import "THTableViewGoodCell.h"
 
+#import "Shops+Access.h"
+
 #import "THUploadGoodsViewController.h"
 
 @interface THGoodsViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -51,6 +53,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    self.title = self.viewModel.shop.name;
     
     [self.tableView registerClass:[THTableViewGoodCell class]
            forCellReuseIdentifier:@"Cell"];
@@ -130,7 +134,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 57.0;
+    return 81.0;
 }
 
 #pragma mark - Navigation

@@ -20,6 +20,7 @@ target :TongHuo do
   pod "ReactiveCocoa"
   pod "ReactiveCoreData"
   pod "ReactiveViewModel"
+  pod 'SDWebImage'
   pod "SimpleSyncService"
   pod "SLCoreDataStack"
   pod 'SLRESTfulCoreData'

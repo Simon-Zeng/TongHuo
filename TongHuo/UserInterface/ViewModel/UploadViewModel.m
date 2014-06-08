@@ -8,6 +8,10 @@
 
 #import "UploadViewModel.h"
 
+#import "THAPI.h"
+#import "THAuthorizer.h"
+#import "Goods+Access.h"
+
 @implementation UploadViewModel
 
 - (id)init
@@ -32,7 +36,59 @@
 
 - (void)commandInit
 {
+    @weakify(self);
     
+    _uploadCommand = [[RACCommand alloc] initWithEnabled:[self modelIsValidSignal]
+                                             signalBlock:^RACSignal *(id input) {
+                                                 @strongify(self);
+                                                 RACSignal *networkSignal = [[THAPI apiCenter] postTBProduct:self.good
+                                                                                                    withCode:self.sellerCode
+                                                                                                    toTBShop:self.tid];
+                                                 
+                                                 return networkSignal;
+                                             }];
 }
+
+- (void)setGood:(Goods *)goods
+{
+    if (goods != _good)
+    {
+        _good = goods;
+        
+        [[[THAPI apiCenter] getSellerCodeFor:goods.numIid] subscribeNext:^(RACTuple * x) {
+            AFHTTPRequestOperation * operation = x[0];
+            id response = x[1];
+            
+            NSLog(@"---- Reponse String: %@", operation.responseString);
+//            NSLog(@"---- Response: %@", response);
+        } error:^(NSError *error) {
+            NSLog(@"---- error: %@", error);
+        }];
+    }
+}
+
+-(RACSignal *)modelIsValidSignal {
+	@weakify(self);
+	return [RACSignal
+			combineLatest:@[ RACObserve(self,title), RACObserve(self,tid), RACObserve(self, sellerCode), RACObserve(self, price) ]
+			reduce:^id(NSString *title, NSNumber *tid, NSString * sellerCode, NSString *price){
+				@strongify(self);
+                
+                BOOL isValid = (title.length > 0 && tid.longLongValue > 0 && sellerCode.length > 0 && price.length > 0);
+                
+                if (isValid && (isValid = [self validatePrice:price]))
+                {
+                    
+                }
+                
+                return @(isValid);
+			}];
+}
+
+- (BOOL)validatePrice:(NSString *)price
+{
+    return YES;
+}
+
 
 @end

@@ -63,7 +63,7 @@
 //    "refresh_token":"610191951ee0e994f14aa26a6d9158e985f9f03f139ed051739664677",
 //    "access_token":"6100519d183448f345455079fd01192fb76a930bb9b1fdf1739664677"
 //}
-- (RACSignal *)getTBAuthentication;
+- (RACSignal *)getTBAuthenticationFor:(NSNumber *)accountUserIdentifier;
 - (RACSignal *)getSellerCodeFor:(NSNumber *)productIdentifier;
 
 // Array of shop object
@@ -121,8 +121,7 @@
 
 - (RACSignal *)getGoodsForShop:(NSNumber *)shopIdentifier;
 
-- (RACSignal *)postTBProduct:(Goods *)product;
-
+- (RACSignal *)postTBProduct:(Goods *)product withCode:(NSString *)sellerCode  toTBShop:(NSNumber *)tbShopID;
 
 // @brief
 //

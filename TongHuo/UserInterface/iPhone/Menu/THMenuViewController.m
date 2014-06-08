@@ -11,6 +11,7 @@
 #import <CoreFoundation/CoreFoundation.h>
 
 #import "AppDelegate.h"
+#import "Account+Access.h"
 
 #import "MenuViewModel.h"
 #import "THTableViewMenuCell.h"
@@ -110,14 +111,10 @@
            forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
-    [self.viewModel.updateNameSignal subscribeNext:^(NSString * x) {
+    [self.viewModel.updateNameSignal subscribeNext:^(Account * x) {
         if (x)
         {
-            self.titleLabel.text = [NSString stringWithFormat:@"欢迎: %@", x];
-        }
-        else
-        {
-            self.titleLabel.text = @"欢迎";
+            self.titleLabel.text = [NSString stringWithFormat:@"欢迎: %@", x.loginname];
         }
     }];
     

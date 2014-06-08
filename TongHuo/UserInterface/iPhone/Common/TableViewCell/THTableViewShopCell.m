@@ -47,14 +47,18 @@
         self.titleLable.backgroundColor = [UIColor clearColor];
         self.titleLable.font = [UIFont boldFlatFontOfSize:16];
         self.titleLable.numberOfLines = 1;
-        self.titleLable.textColor = [UIColor yellowColor];
+        self.titleLable.textColor = [UIColor colorWithRed:248.0/255
+                                                    green:254.0/255
+                                                     blue:183.0/255
+                                                    alpha:1.0];
         
         [self.contentView addSubview:self.titleLable];
         
         self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(55, 20, 265, 37)];
         self.addressLabel.backgroundColor = [UIColor clearColor];
-        self.addressLabel.font = [UIFont boldFlatFontOfSize:12];
+        self.addressLabel.font = [UIFont flatFontOfSize:12];
         self.addressLabel.textColor = [UIColor grayColor];
+        self.addressLabel.numberOfLines = 2;
         
         [self.contentView addSubview:self.addressLabel];
         

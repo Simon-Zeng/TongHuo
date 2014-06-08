@@ -31,6 +31,16 @@
     UIImageView * backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"MainBackground"]];
     [self.view addSubview:backgroundView];
     [self.view sendSubviewToBack:backgroundView];
+    
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+    {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        self.extendedLayoutIncludesOpaqueBars = YES;
+        self.modalPresentationCapturesStatusBarAppearance = NO;
+        self.automaticallyAdjustsScrollViewInsets = YES;
+    }
+#endif
 }
 
 - (void)didReceiveMemoryWarning

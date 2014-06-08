@@ -61,7 +61,7 @@
 {
     THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
     
-    return RACObserve(authorizer.currentAccount, loginname);
+    return RACObserve(authorizer, currentAccount);
 }
 
 

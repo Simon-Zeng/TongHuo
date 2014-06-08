@@ -48,6 +48,9 @@ PODS:
     - ReactiveCocoa
   - ReactiveViewModel (0.2):
     - ReactiveCocoa (~> 2.1)
+  - SDWebImage (3.6):
+    - SDWebImage/Core
+  - SDWebImage/Core (3.6)
   - SimpleSyncService (1.2.3):
     - ObjectiveRecord
   - SLCoreDataStack (0.5.0)
@@ -62,7 +65,7 @@ PODS:
     - SLRESTfulCoreData/AFRESTfulCoreDataBackgroundQueue
     - SLRESTfulCoreData/Core
   - SLRESTfulCoreData/Core (1.8.0)
-  - SLRESTfulCoreDataUI (1.11.5):
+  - SLRESTfulCoreDataUI (1.11.6):
     - SLRESTfulCoreData (>= 1.0.0)
   - SVProgressHUD (1.0)
   - UICKeyChainStore (1.0.5)
@@ -89,6 +92,7 @@ DEPENDENCIES:
   - ReactiveCocoa
   - ReactiveCoreData
   - ReactiveViewModel
+  - SDWebImage
   - SimpleSyncService
   - SLCoreDataStack
   - SLRESTfulCoreData
@@ -118,10 +122,11 @@ SPEC CHECKSUMS:
   ReactiveCocoa: dca75777b9d18990c8714a3a6f2149f29b4d1462
   ReactiveCoreData: db76ace53a7ab70ba2cad54eaae32b2f960cae8c
   ReactiveViewModel: 78387196df2e7535bb2776c41df15dbb17300f8a
+  SDWebImage: c6989652c1cdf27cbdf3f56957e2030f825af5bc
   SimpleSyncService: ddd84adf51a6e7d25647a63aa1a7cd0183c14141
   SLCoreDataStack: 18c6fb041fa421ac6957185732e936fea512d470
   SLRESTfulCoreData: 1f34fe811de67dd30dfae9818e4ce449bb672fe5
-  SLRESTfulCoreDataUI: dbd9eabe88a0a7488b1fd1aea6113511224bf2ff
+  SLRESTfulCoreDataUI: 4921b6f5b0db1ce9f297bf5517c1da2a6eb78fb9
   SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
   UICKeyChainStore: 4f9719600cc70025064e26f28f1210bcfc3b0c35
   UIColor-Utilities: 3f13aebe447f5e19c8d3aa18c194c53116b23537

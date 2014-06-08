@@ -56,7 +56,7 @@
         [notficationCenter addObserver:self
                               selector:@selector(managedObjectContextDidSaveNotification:)
                                   name:NSManagedObjectContextDidSaveNotification
-                                object:self.managedObjectContext];
+                                object:nil];
     }
     
     return self;
@@ -198,21 +198,23 @@
 #pragma mark - Notification
 - (void)managedObjectContextDidSaveNotification:(NSNotification *)note
 {
-    if (note.object == self.managedObjectContext)
+    if (note.object != self.writerManagerObjectContext)
     {
-        @autoreleasepool {
-            NSError *error = nil;
-            NSManagedObjectContext * managedObjectContext = [self writerManagerObjectContext];
-            
-            if (managedObjectContext != nil) {
-                if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // abort() causes the application[ to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                    abort();
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            @autoreleasepool {
+                NSError *error = nil;
+                NSManagedObjectContext * managedObjectContext = [self writerManagerObjectContext];
+                
+                if (managedObjectContext != nil) {
+                    if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+                        // Replace this implementation with code to handle the error appropriately.
+                        // abort() causes the application[ to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                        abort();
+                    }
                 }
             }
-        }
+        });
     }
 }
 

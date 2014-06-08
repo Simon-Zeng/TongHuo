@@ -41,6 +41,7 @@
     
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBackground"]
                                        forBarMetrics:UIBarMetricsDefault];
+    [[UILabel appearanceWhenContainedIn:[UINavigationBar class], nil] setTextColor:[UIColor whiteColor]];
     // Setup window
 //    self.window.tintColor = [UIColor colorWithHexString:@"9E4B10"];
     

@@ -9,6 +9,7 @@
 #import "THAPI.h"
 
 #import "THNetwork.h"
+#import "THAuthorizer.h"
 #import "Goods.h"
 
 #define kSecret @"UUIJ98239JS89UJWQ3XM9I%&*ui ncd^"
@@ -65,10 +66,8 @@
 
 
 @interface THAPI ()
-{
-    NSNumber * _accountUserIdentifier;
-}
 
+@property (nonatomic, strong) NSNumber * accountUserIdentifier;
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager * getManager;
 @property (nonatomic, strong) AFHTTPRequestOperationManager * postManager;
@@ -101,10 +100,13 @@
         _getManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[THNetwork sharedNetwork].baseURL];
         _postManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[THNetwork sharedNetwork].adminURL];
         
-#if DEBUG
-//        _accountUserIdentifier = @19915; // zengconggen
-        _accountUserIdentifier = @18725; // miukoo
-#endif
+        RACSignal * updateSignal = [THAuthorizer sharedAuthorizer].updateSignal;
+        
+        @weakify(self);
+        [updateSignal subscribeNext:^(Account * x) {
+            @strongify(self);
+            self.accountUserIdentifier = x.id;
+        }];
     }
     
     return self;
@@ -128,13 +130,13 @@
     return signal;
 }
 
-- (RACSignal *)getTBAuthentication
+- (RACSignal *)getTBAuthenticationFor:(NSNumber *)accountUserIdentifier
 {
-    NSAssert(_accountUserIdentifier, @"The method has a logic error");
+    NSAssert(accountUserIdentifier, @"The method has a logic error");
     
     _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%@", _accountUserIdentifier, kSecret];
+    NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%@", accountUserIdentifier, kSecret];
     
     CocoaSecurityResult * encrypted = [CocoaSecurity md5:baseSecret];
 
@@ -143,7 +145,7 @@
     RACSignal * signal = [_postManager rac_POST:kTBAuthenticationURI
                                      parameters:(@{
                                                    @"mod" : @"tuser",
-                                                   @"uid": _accountUserIdentifier,
+                                                   @"uid": accountUserIdentifier,
                                                    @"m": m
                                                    })];
     return signal;
@@ -249,7 +251,7 @@
 //
 // kPostProductURI @"/sendTB.zzl"
 
-- (RACSignal *)postTBProduct:(Goods *)product
+- (RACSignal *)postTBProduct:(Goods *)product withCode:(NSString *)sellerCode  toTBShop:(NSNumber *)tbShopID
 {
     _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
@@ -257,9 +259,7 @@
     NSString * title = product.title;
     NSNumber * price = product.price;
     
-#warning TODO: Get seller code and tid
-    NSString * sellerCode = @"";
-    NSNumber * tid = @0;
+    NSNumber * tid = tbShopID;
     
     
     NSAssert(_accountUserIdentifier, @"The method has a logic error");

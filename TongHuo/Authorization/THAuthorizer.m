@@ -21,6 +21,7 @@
 @interface THAuthorizer ()
 
 @property (nonatomic, readwrite) Account * currentAccount;
+@property (nonatomic, strong) NSArray * platforms;
 
 - (void) loadAuthentication;
 - (void) saveAuthentication;
@@ -28,7 +29,7 @@
 
 - (RACSignal *)performSignIn;
 
-- (void)refreshTBAuthentication;
+- (void)refreshTBAuthenticationFor:(NSNumber *)accountUserIdentifier;
 
 @end
 
@@ -188,7 +189,7 @@
         if ([responseObject isKindOfClass:[NSDictionary class]])
         {
             self.currentAccount = [Account objectFromDictionary:responseObject];
-            [self refreshTBAuthentication];
+            [self refreshTBAuthenticationFor:self.currentAccount.id];
         }
     }];
     
@@ -198,29 +199,23 @@
 
 - (RACSignal *)updateSignal
 {
-    @weakify(self);
-    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        @strongify(self);
-        
-        [subscriber sendNext:self.currentAccount];
-        [subscriber sendCompleted];
-        
-        return [RACDisposable disposableWithBlock:^{
-            
-        }];
-    }];
+    RACSignal * signal = RACObserve(self, currentAccount);
+    
+    return signal;
 }
 
-- (void)refreshTBAuthentication
+- (void)refreshTBAuthenticationFor:(NSNumber *)accountUserIdentifier
 {
     RACSignal * signal = [RACSignal empty];
     
     THAPI * api = [THAPI apiCenter];
     
-    signal = [api getTBAuthentication];
+    signal = [api getTBAuthenticationFor:accountUserIdentifier];
     
-//    @weakify(self);
+    @weakify(self);
     [signal subscribeNext:^(RACTuple * x) {
+        @strongify(self);
+        
         NSDictionary * response = x[1];
         
         if (response && [response isKindOfClass:[NSDictionary class]])
@@ -237,12 +232,29 @@
             
             NSLog(@"----- Authens: %@", authens);
             
+            self.platforms = authens;
+            
             [[THCoreDataStack defaultStack] saveContext];
         }
         
     } error:^(NSError *error) {
         NSLog(@"------- Failed to refresh TBAuthentication: %@", error);
     }];
+}
+
+- (NSNumber *)authorizenCodeFor:(NSString *)tbShopName
+{
+    NSNumber * identifier = nil;
+    
+    for (Platforms * aPlatform in self.platforms)
+    {
+        if ([aPlatform.name isEqual:tbShopName])
+        {
+            identifier = aPlatform.id;
+        }
+    }
+    
+    return identifier;
 }
 
 @end

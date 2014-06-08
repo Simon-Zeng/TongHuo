@@ -10,7 +10,9 @@
 
 #import "ReactiveCocoa.h"
 #import "ReactiveCoreData.h"
+
 #import "THAPI.h"
+#import "Goods+Access.h"
 
 @interface TongHuoTests : XCTestCase
 
@@ -66,7 +68,7 @@
     
     THAPI * apiCenter = [THAPI apiCenter];
 
-    RACSignal * signal = [apiCenter getTBAuthentication];
+    RACSignal * signal = [apiCenter getTBAuthenticationFor:@111];
     
     [signal subscribeNext:^(RACTuple *result) {
         NSLog(@"--- Result: %@", result);
@@ -244,7 +246,7 @@
     
     THAPI * apiCenter = [THAPI apiCenter];
     
-    RACSignal * signal = [apiCenter postTBProduct:product];
+    RACSignal * signal = [apiCenter postTBProduct:[Goods objectFromDictionary:product] withCode:@""  toTBShop:@11];
     
     [signal subscribeNext:^(RACTuple *result) {
         NSLog(@"--- Result: %@", result);

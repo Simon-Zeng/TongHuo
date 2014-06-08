@@ -27,4 +27,6 @@
 - (RACSignal *)signInWithUsername:(NSString *)username password:(NSString *)password;
 - (void)logout;
 
+- (NSNumber *)authorizenCodeFor:(NSString *)tbShopName;
+
 @end
