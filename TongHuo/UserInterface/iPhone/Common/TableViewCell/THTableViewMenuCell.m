@@ -20,6 +20,10 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         self.textLabel.textAlignment = NSTextAlignmentLeft;
+        self.textLabel.textColor = [UIColor colorWithRed:120.0/255
+                                                   green:120.0/255
+                                                    blue:120.0/255
+                                                   alpha:1.0];
         self.indentationWidth = 40.0;
         self.indentationLevel = 2;
     }

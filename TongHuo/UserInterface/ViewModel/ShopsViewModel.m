@@ -9,6 +9,7 @@
 #import "ShopsViewModel.h"
 
 #import "Shops+Access.h"
+#import "MArkets+Access.h"
 
 @interface ShopsViewModel ()
 
@@ -51,7 +52,7 @@
         [request subscribeNext:^(RACTuple * x) {
             
 //            dispatch_async(dispatch_get_main_queue(), ^{
-                NSMutableArray * shops = [[NSMutableArray alloc] init];
+//                NSMutableArray * shops = [[NSMutableArray alloc] init];
                 NSArray * response = x[1];
                 
                 if (response && [response isKindOfClass:[NSArray class]])
@@ -60,13 +61,13 @@
                     {
                         Shops * shop = [Shops objectFromDictionary:aDict];
                         
-                        [shops addObject:shop];
+//                        [shops addObject:shop];
                     }
                 }
                 
                 [[THCoreDataStack defaultStack] saveContext];
                 
-                [subscriber sendNext:shops];
+                [subscriber sendNext:nil];
                 [subscriber sendCompleted];
 
 //            });
@@ -131,6 +132,7 @@
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"marketId = %@", self.market.id];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];

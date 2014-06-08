@@ -47,12 +47,10 @@
         RACSignal * request = [[THAPI apiCenter] getMarkets];
         
         [request subscribeNext:^(RACTuple * x) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
-                NSMutableArray * markets = [[NSMutableArray alloc] init];
-                
-                [subscriber sendNext:markets];
-                [subscriber sendCompleted];
-//            });
+            NSMutableArray * markets = [[NSMutableArray alloc] init];
+            
+            [subscriber sendNext:markets];
+            [subscriber sendCompleted];
         } error:^(NSError *error) {
             [subscriber sendError:error];
         } completed:^{

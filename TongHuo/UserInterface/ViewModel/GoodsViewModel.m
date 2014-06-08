@@ -53,7 +53,7 @@
             
 //            dispatch_async(dispatch_get_main_queue(), ^{
             
-                NSMutableArray * goods = [[NSMutableArray alloc] init];
+//                NSMutableArray * goods = [[NSMutableArray alloc] init];
                 NSArray * response = x[1];
                 
                 if (response && [response isKindOfClass:[NSArray class]])
@@ -62,13 +62,13 @@
                     {
                         Goods * good = [Goods objectFromDictionary:aDict];
                         
-                        [goods addObject:good];
+//                        [goods addObject:good];
                     }
                 }
                 
                 [[THCoreDataStack defaultStack] saveContext];
                 
-                [subscriber sendNext:goods];
+                [subscriber sendNext:nil];
                 [subscriber sendCompleted];
 //            });
         } error:^(NSError *error) {

@@ -55,15 +55,24 @@
            forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
-    [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
-        if (x)
-        {
-            NSLog(@"---- Shops: %@", x);
-        }
-    } error:^(NSError *error) {
-        NSLog(@"---- Refresh error: %@", error);
-    }];
-    
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
+                             maskType:SVProgressHUDMaskTypeGradient];
+        
+        [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
+            [SVProgressHUD dismiss];
+            if (x)
+            {
+                NSLog(@"---- Shops: %@", x);
+            }
+        } error:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            NSLog(@"---- Refresh error: %@", error);
+        }];
+    });
+
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
         [self.tableView reloadData];

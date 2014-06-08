@@ -56,12 +56,17 @@
            forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
+                         maskType:SVProgressHUDMaskTypeGradient];
+    
     [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
+        [SVProgressHUD dismiss];
         if (x)
         {
             NSLog(@"---- Goods: %@", x);
         }
     } error:^(NSError *error) {
+        [SVProgressHUD dismiss];
         NSLog(@"---- Refresh error: %@", error);
     }];
     

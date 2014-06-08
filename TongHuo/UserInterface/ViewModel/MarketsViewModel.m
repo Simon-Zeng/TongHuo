@@ -50,8 +50,8 @@
         [request subscribeNext:^(RACTuple * x) {
             
 //            dispatch_async(dispatch_get_main_queue(), ^{
-                NSMutableArray * markets = [[NSMutableArray alloc] init];
-                
+//                NSMutableArray * markets = [[NSMutableArray alloc] init];
+            
                 NSArray * response = x[1];
                 
                 if (response && [response isKindOfClass:[NSArray class]])
@@ -60,13 +60,13 @@
                     {
                         Markets * market = [Markets objectFromDictionary:aDict];
                         
-                        [markets addObject:market];
+//                        [markets addObject:market];
                     }
                 }
                 
                 [[THCoreDataStack defaultStack] saveContext];
                 
-                [subscriber sendNext:markets];
+                [subscriber sendNext:nil];
                 [subscriber sendCompleted];
 //            });
         } error:^(NSError *error) {

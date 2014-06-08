@@ -13,6 +13,7 @@
 #import "UICKeyChainStore.h"
 
 #import "Account+Access.h"
+#import "Platforms+Access.h"
 
 #define kUsernameKey @"username"
 #define kPasswordKey @"password"
@@ -26,6 +27,8 @@
 - (void) removeAuthentication;
 
 - (RACSignal *)performSignIn;
+
+- (void)refreshTBAuthentication;
 
 @end
 
@@ -170,7 +173,7 @@
     NSAssert(_username, @"****** username is nil");
     NSAssert(_password, @"****** password is nil");
     
-    RACSignal * signal = nil;
+    RACSignal * signal = [RACSignal empty];
     
     // Call Sign in API and return sign in signal for outside use.
     THAPI * api = [THAPI apiCenter];
@@ -185,6 +188,7 @@
         if ([responseObject isKindOfClass:[NSDictionary class]])
         {
             self.currentAccount = [Account objectFromDictionary:responseObject];
+            [self refreshTBAuthentication];
         }
     }];
     
@@ -204,6 +208,40 @@
         return [RACDisposable disposableWithBlock:^{
             
         }];
+    }];
+}
+
+- (void)refreshTBAuthentication
+{
+    RACSignal * signal = [RACSignal empty];
+    
+    THAPI * api = [THAPI apiCenter];
+    
+    signal = [api getTBAuthentication];
+    
+//    @weakify(self);
+    [signal subscribeNext:^(RACTuple * x) {
+        NSDictionary * response = x[1];
+        
+        if (response && [response isKindOfClass:[NSDictionary class]])
+        {
+            NSArray * authentications = [response objectForKey:@"data"];
+            
+            NSMutableArray * authens = [[NSMutableArray alloc] init];
+            
+            for (NSDictionary * aDict in authentications)
+            {
+                Platforms * plaform = [Platforms objectFromDictionary:aDict];
+                [authens addObject:plaform];
+            }
+            
+            NSLog(@"----- Authens: %@", authens);
+            
+            [[THCoreDataStack defaultStack] saveContext];
+        }
+        
+    } error:^(NSError *error) {
+        NSLog(@"------- Failed to refresh TBAuthentication: %@", error);
     }];
 }
 

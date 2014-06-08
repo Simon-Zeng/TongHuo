@@ -34,6 +34,7 @@
         self.indexLabel.backgroundColor = [UIColor clearColor];
         self.indexLabel.font = [UIFont boldFlatFontOfSize:24];
         self.indexLabel.textAlignment = NSTextAlignmentCenter;
+        self.indexLabel.textColor = [UIColor whiteColor];
         
         [self.contentView addSubview:self.indexLabel];
         
@@ -46,6 +47,7 @@
         self.titleLable.backgroundColor = [UIColor clearColor];
         self.titleLable.font = [UIFont boldFlatFontOfSize:16];
         self.titleLable.numberOfLines = 1;
+        self.titleLable.textColor = [UIColor yellowColor];
         
         [self.contentView addSubview:self.titleLable];
         

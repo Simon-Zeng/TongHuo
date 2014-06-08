@@ -59,7 +59,7 @@
     //    "access_token":"6100519d183448f345455079fd01192fb76a930bb9b1fdf1739664677"
     //}
     NSNumber * identifier = [dict objectForKey:@"id"];
-    NSString * name = [dict objectForKey:@"name"];
+    NSString * name = [dict objectForKey:@"taobao_user_nick"];
     NSString * refreshToken = [dict objectForKey:@"refresh_token"];
     NSNumber * uid = [dict objectForKey:@"uid"];
     NSString * accessToken = [dict objectForKey:@"access_token"];
