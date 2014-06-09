@@ -219,7 +219,7 @@
 {
     self.viewModel.searchString = searchString;
     
-    return YES;
+    return NO;
 }
 
 @end

@@ -65,6 +65,8 @@
                 abort();
             }
         });
+        
+        [(RACSubject *)self.updatedContentSignal sendNext:nil];
     }];
   
 }
@@ -115,7 +117,10 @@
 
 -(NSInteger)numberOfItemsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
+    
+    NSUInteger itemsCount = [sectionInfo numberOfObjects];
+    
+    return itemsCount;
 }
 
 -(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath {

@@ -62,7 +62,8 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
-
+        
+        [(RACSubject *)self.updatedContentSignal sendNext:nil];
     }];
 
 }

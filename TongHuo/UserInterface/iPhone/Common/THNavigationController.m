@@ -33,6 +33,7 @@
                                                         green:230.0/255
                                                          blue:230.0/255
                                                         alpha:1.0];
+    self.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     
     // Do any additional setup after loading the view.
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
