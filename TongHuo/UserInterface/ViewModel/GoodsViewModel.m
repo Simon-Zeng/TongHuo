@@ -41,7 +41,7 @@
 
 - (void)commandInit
 {
-    
+
 }
 
 - (RACSignal *)refreshSignal
@@ -131,8 +131,10 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
     
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"shopId = %@", self.shop.id];
+    
     // Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
+//    [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"addTime" ascending:YES];

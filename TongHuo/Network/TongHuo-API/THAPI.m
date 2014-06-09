@@ -160,6 +160,7 @@
     
     RACSignal * signal = [_getManager rac_GET:kGetSellerCode
                                      parameters:(@{
+                                                   @"m": @"GetSn",
                                                    @"num_iid" : productIdentifier
                                                    })];
     return signal;

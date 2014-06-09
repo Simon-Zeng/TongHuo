@@ -83,6 +83,7 @@
     // Sign In button
     FUIButton * signInButton = [FUIButton buttonWithType:UIButtonTypeCustom];
     signInButton.frame = CGRectMake(15, middleY + 80, 290, 31.0);
+    signInButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     signInButton.buttonColor = [UIColor colorWithRed:242.0/255
                                                green:39.0/255
                                                 blue:131.0/255

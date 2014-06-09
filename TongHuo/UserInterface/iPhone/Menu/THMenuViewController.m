@@ -16,6 +16,7 @@
 #import "MenuViewModel.h"
 #import "THTableViewMenuCell.h"
 #import "THSignInViewController.h"
+#import "UMSocial.h"
 
 @interface THMenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -171,6 +172,14 @@
         if (indexPath.row == 3)
         {
             // Share
+            NSString * shareMessage = NSLocalizedString(@"全国最大的在线服装批发市场，59批发，http://www.59pi.com", nil);
+            NSArray * shareNames = [NSArray arrayWithObjects:UMShareToWechatSession,UMShareToSina,UMShareToEmail,UMShareToSms,nil];
+            [UMSocialSnsService presentSnsIconSheetView:self.parentViewController
+                                                 appKey:nil
+                                              shareText:shareMessage
+                                             shareImage:[UIImage imageNamed:@"icon.png"]
+                                        shareToSnsNames:shareNames
+                                               delegate:nil];
         }
         else if (indexPath.row == 6)
         {

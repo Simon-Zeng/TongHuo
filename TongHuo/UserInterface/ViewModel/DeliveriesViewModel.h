@@ -14,6 +14,9 @@
 
 @property (nonatomic, readonly) RACSignal * refreshSignal;
 
+@property (nonatomic, strong) NSNumber * state;
+@property (nonatomic, strong) NSString * searchString;
+
 
 -(NSInteger)numberOfSections;
 -(NSInteger)numberOfItemsInSection:(NSInteger)section;

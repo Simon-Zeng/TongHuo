@@ -22,6 +22,9 @@
 #import "SignInViewModel.h"
 #import "OrdersViewModel.h"
 
+#import "UMSocial.h"
+#import "UMSocialWechatHandler.h"
+
 @interface AppDelegate ()
 
 @end
@@ -39,11 +42,21 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    [UMSocialData setAppKey:kUMengAppKey];
+
+    //设置微信AppId，和分享url
+    [UMSocialWechatHandler setWXAppId:kWeChatAppID url:kWeChatCallBackURL];
+
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBackground"]
                                        forBarMetrics:UIBarMetricsDefault];
-    [[UILabel appearanceWhenContainedIn:[UINavigationBar class], nil] setTextColor:[UIColor whiteColor]];
+    
+    NSDictionary * barButtonItemTitleAttribute = @{
+                                                   NSForegroundColorAttributeName: [UIColor whiteColor]
+                                                   };
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:barButtonItemTitleAttribute
+                                                                                            forState:UIControlStateNormal];
     // Setup window
-//    self.window.tintColor = [UIColor colorWithHexString:@"9E4B10"];
+    self.window.tintColor = [UIColor whiteColor];
     
     // Setup model
     [[THCoreDataStack defaultStack] ensureInitialLoad];

@@ -38,3 +38,8 @@
 
 #define kServericeName @"com.59pi.tonghuo"
 
+#define kUMengAppKey @"50514f6952701508620003c8"
+
+#define kWeChatAppID @"wxd9a39c7122aa6516"
+#define kWeChatCallBackURL @"http://www.umeng.com/social"
+

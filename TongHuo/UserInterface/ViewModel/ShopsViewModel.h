@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) Markets * market;
 
+@property (nonatomic, strong) NSString * searchString;
+
 -(NSInteger)numberOfSections;
 -(NSInteger)numberOfItemsInSection:(NSInteger)section;
 -(NSString *)titleForSection:(NSInteger)section;

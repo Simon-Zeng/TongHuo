@@ -11,9 +11,11 @@
 #import "OrdersViewModel.h"
 #import "THTableViewOrderCell.h"
 
-@interface THOrdersViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface THOrdersViewController ()<UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 
 @property (nonatomic, strong) UITableView * tableView;
+
+@property (nonatomic,strong) UISearchDisplayController *searchDisplayVC;
 
 @end
 
@@ -32,7 +34,7 @@
     
     UIView * view = [[UIView alloc] initWithFrame:windowFrame];
     
-    self.tableView = [[UITableView alloc] initWithFrame:windowFrame];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, windowFrame.size.width, windowFrame.size.height - 44)];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -49,8 +51,29 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    self.title = NSLocalizedString(@"统货中心", nil);
+    
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    searchBar.showsCancelButton = NO;
+    searchBar.text = nil;
+    searchBar.placeholder = NSLocalizedString(@"搜索", nil);
+    searchBar.delegate = self;
+    [self.view addSubview:searchBar];
+    
+    self.searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+    self.searchDisplayVC.delegate = self;
+    self.searchDisplayVC.searchResultsDataSource = self;
+    self.searchDisplayVC.searchResultsDelegate = self;
+    [self.searchDisplayVC setActive:NO];
+    
     [self.tableView registerClass:[THTableViewOrderCell class]
            forCellReuseIdentifier:@"Cell"];
+    [self.searchDisplayVC.searchResultsTableView registerClass:[THTableViewOrderCell class]
+                                        forCellReuseIdentifier:@"Cell"];
+    self.searchDisplayVC.searchResultsTableView.backgroundColor = [UIColor clearColor];
+    self.searchDisplayVC.searchResultsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    self.searchDisplayVC.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     
     @weakify(self);
     [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
@@ -65,6 +88,8 @@
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
         [self.tableView reloadData];
+        
+        [self.searchDisplayVC.searchResultsTableView reloadData];
     }];
 }
 
@@ -131,6 +156,38 @@
 {
     cell.textLabel.text = [self.viewModel titleAtIndexPath:indexPath];
     cell.detailTextLabel.text = [self.viewModel subtitleAtIndexPath:indexPath];
+}
+
+#pragma mark - UISearchBar delegate
+
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    [self.searchDisplayVC setActive:YES animated:YES];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    //
+}
+
+#pragma mark - UISearchDisplayDelegate methods related
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
+{
+    self.tableView.hidden = YES;
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView
+{
+    self.tableView.hidden = NO;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    self.viewModel.searchString = searchString;
+    
+    return NO;
 }
 
 

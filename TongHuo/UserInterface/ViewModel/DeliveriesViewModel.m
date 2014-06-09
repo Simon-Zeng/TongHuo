@@ -38,7 +38,33 @@
 
 - (void)commandInit
 {
-    
+    @weakify(self);
+    [RACObserve(self, searchString) subscribeNext:^(NSString * x) {
+        @strongify(self);
+        NSString * s = [x stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
+        
+        NSFetchRequest * request = self.fetchedResultsController.fetchRequest;
+        
+        if (s && s.length > 0)
+        {
+            request.predicate = [NSPredicate predicateWithFormat:@"state = %@ AND name CONTAINS '%@'", self.state, s];
+        }
+        else
+        {
+            [request setPredicate:nil];
+        }
+        [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
+        
+        NSError *error = nil;
+        if (![self.fetchedResultsController performFetch:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+
+    }];
+
 }
 
 - (RACSignal *)refreshSignal
@@ -123,7 +149,7 @@
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
-    [fetchRequest setFetchBatchSize:20];
+//    [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createtime" ascending:YES];
