@@ -19,6 +19,7 @@
 
 @property (nonatomic, readonly) BOOL isLoggedIn;
 @property (nonatomic, readonly) Account * currentAccount;
+@property (nonatomic, readonly) NSArray * platforms;
 
 @property (nonatomic, readonly) RACSignal * updateSignal;
 

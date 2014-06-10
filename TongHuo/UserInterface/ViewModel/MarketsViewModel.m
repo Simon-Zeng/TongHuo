@@ -43,30 +43,33 @@
     [RACObserve(self, searchString) subscribeNext:^(NSString * x) {
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
-            NSString * s = [x stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
-            
-            NSFetchRequest * request = self.fetchedResultsController.fetchRequest;
-            
-            if (s && s.length > 0)
+            if (x)
             {
-                request.predicate = [NSPredicate predicateWithFormat:@"name CONTAINS %@", s];
-            }
-            else
-            {
-                [request setPredicate:nil];
-            }
-            [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
-            
-            NSError *error = nil;
-            if (![self.fetchedResultsController performFetch:&error]) {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                abort();
+                NSString * s = [x stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
+                
+                NSFetchRequest * request = self.fetchedResultsController.fetchRequest;
+                
+                if (s && s.length > 0)
+                {
+                    request.predicate = [NSPredicate predicateWithFormat:@"%K contains[cd] %@", @"name", s];
+                }
+                else
+                {
+                    request.predicate = [NSPredicate predicateWithFormat:@"%K contains[cd] %@", @"name", @"广州"];
+                }
+                [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
+                
+                NSError *error = nil;
+                if (![self.fetchedResultsController performFetch:&error]) {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                    abort();
+                }
+                
+                [(RACSubject *)self.updatedContentSignal sendNext:nil];
             }
         });
-        
-        [(RACSubject *)self.updatedContentSignal sendNext:nil];
     }];
   
 }

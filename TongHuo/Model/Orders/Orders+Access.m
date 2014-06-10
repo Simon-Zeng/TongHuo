@@ -11,34 +11,39 @@
 @implementation Orders (Access)
 
 
-+ (void)initialize
++ (void)load
 {
-    // Load all saved record to map to fix unique issue
-    NSMutableDictionary * savedOrders = [self savedOrders];
-    
     NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
-                                 inManagedObjectContext:context];
-    
-    NSError * executeFetchError = nil;
-    NSArray * orderArray = [context executeFetchRequest:request error:&executeFetchError];
-    if (executeFetchError) {
-        NSLog(@"[%@, %@] error looking Orders with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-    } else if (!orderArray) {
-        for (Orders * aorder in orderArray)
-        {
-            NSManagedObjectID * objectID = [aorder objectID];
-            NSNumber * uniqueKey = [aorder id];
-            
-            if (uniqueKey && objectID)
+    [context performBlock:^{
+        // Load all saved record to map to fix unique issue
+        NSMutableDictionary * savedOrders = [self savedOrders];
+
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        //    request.propertiesToFetch = @[@"id"];
+        
+        request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
+                                     inManagedObjectContext:context];
+        
+        NSError * executeFetchError = nil;
+        NSArray * orderArray = [context executeFetchRequest:request error:&executeFetchError];
+        if (executeFetchError) {
+            NSLog(@"[%@, %@] error looking Orders with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
+        } else if (!orderArray) {
+            for (Orders * aorder in orderArray)
             {
-                [savedOrders setObject:objectID forKey:uniqueKey];
+                NSManagedObjectID * objectID = [aorder objectID];
+                NSNumber * uniqueKey = [aorder id];
+                
+                if (uniqueKey && objectID)
+                {
+                    [savedOrders setObject:objectID forKey:uniqueKey];
+                }
             }
         }
-    }
+        NSLog(@"++++++ Loaded savedOrders: %@", savedOrders);
+    }];
 }
 
 + (NSMutableDictionary *)savedOrders

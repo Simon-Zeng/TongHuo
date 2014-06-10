@@ -10,34 +10,39 @@
 
 @implementation Markets (Access)
 
-+ (void)initialize
++ (void)load
 {
-    // Load all saved record to map to fix unique issue
-    NSMutableDictionary * savedMarkets = [self savedMarkets];
-    
     NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
-                                 inManagedObjectContext:context];
-    
-    NSError * executeFetchError = nil;
-    NSArray * markets = [context executeFetchRequest:request error:&executeFetchError];
-    if (executeFetchError) {
-        NSLog(@"[%@, %@] error looking markets with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-    } else if (!markets) {
-        for (Markets * aMarket in markets)
-        {
-            NSManagedObjectID * objectID = [aMarket objectID];
-            NSNumber * uniqueKey = [aMarket id];
-            
-            if (uniqueKey && objectID)
+    [context performBlock:^{
+        // Load all saved record to map to fix unique issue
+        NSMutableDictionary * savedMarkets = [self savedMarkets];
+        
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        //    request.propertiesToFetch = @[@"id"];
+        
+        request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
+                                     inManagedObjectContext:context];
+        
+        NSError * executeFetchError = nil;
+        NSArray * markets = [context executeFetchRequest:request error:&executeFetchError];
+        if (executeFetchError) {
+            NSLog(@"[%@, %@] error looking markets with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
+        } else if (!markets) {
+            for (Markets * aMarket in markets)
             {
-                [savedMarkets setObject:objectID forKey:uniqueKey];
+                NSManagedObjectID * objectID = [aMarket objectID];
+                NSNumber * uniqueKey = [aMarket id];
+                
+                if (uniqueKey && objectID)
+                {
+                    [savedMarkets setObject:objectID forKey:uniqueKey];
+                }
             }
         }
-    }
+        
+        NSLog(@"++++++ Loaded savedMarkets: %@", savedMarkets);
+    }];
 }
 
 + (NSMutableDictionary *)savedMarkets

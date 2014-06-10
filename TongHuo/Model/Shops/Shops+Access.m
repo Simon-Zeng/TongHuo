@@ -10,34 +10,38 @@
 
 @implementation Shops (Access)
 
-+ (void)initialize
++ (void)load
 {
-    // Load all saved record to map to fix unique issue
-    NSMutableDictionary * savedShops = [self savedShops];
-    
     NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
-                                 inManagedObjectContext:context];
-    
-    NSError * executeFetchError = nil;
-    NSArray * shopArray = [context executeFetchRequest:request error:&executeFetchError];
-    if (executeFetchError) {
-        NSLog(@"[%@, %@] error looking Shops with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-    } else if (!shopArray) {
-        for (Shops * ashop in shopArray)
-        {
-            NSManagedObjectID * objectID = [ashop objectID];
-            NSNumber * uniqueKey = [ashop id];
-            
-            if (uniqueKey && objectID)
+    [context performBlock:^{
+        // Load all saved record to map to fix unique issue
+        NSMutableDictionary * savedShops = [self savedShops];
+
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        //    request.propertiesToFetch = @[@"id"];
+        
+        request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
+                                     inManagedObjectContext:context];
+        
+        NSError * executeFetchError = nil;
+        NSArray * shopArray = [context executeFetchRequest:request error:&executeFetchError];
+        if (executeFetchError) {
+            NSLog(@"[%@, %@] error looking Shops with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
+        } else if (!shopArray) {
+            for (Shops * ashop in shopArray)
             {
-                [savedShops setObject:objectID forKey:uniqueKey];
+                NSManagedObjectID * objectID = [ashop objectID];
+                NSNumber * uniqueKey = [ashop id];
+                
+                if (uniqueKey && objectID)
+                {
+                    [savedShops setObject:objectID forKey:uniqueKey];
+                }
             }
         }
-    }
+        NSLog(@"++++++ Loaded savedShops: %@", savedShops);
+    }];
 }
 
 + (NSMutableDictionary *)savedShops

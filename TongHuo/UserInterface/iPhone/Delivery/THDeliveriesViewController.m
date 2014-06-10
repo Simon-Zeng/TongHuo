@@ -87,9 +87,15 @@
     
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
-        [self.tableView reloadData];
-        
-        [self.searchDisplayVC.searchResultsTableView reloadData];
+        NSLog(@"---- %@ reloadData", NSStringFromClass([self class]));
+        if (self.searchDisplayVC.isActive)
+        {
+            [self.searchDisplayVC.searchResultsTableView reloadData];
+        }
+        else
+        {
+            [self.tableView reloadData];
+        }
     }];
 }
 
@@ -159,7 +165,50 @@
 }
 
 
+
 #pragma mark - UISearchBar delegate
+
+- (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
+{
+    [self.tableView removeFromSuperview];
+    self.tableView.dataSource = nil;
+    self.tableView.delegate = nil;
+}
+
+- (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
+{
+    
+}
+- (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller
+{
+    
+}
+- (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
+{
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    
+    [self.view addSubview:self.tableView];
+    
+    [self.navigationController.navigationBar layoutSubviews];
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
+{
+    tableView.hidden = NO;
+    
+    tableView.delegate = self;
+    tableView.dataSource = self;
+}
+
+- (void)searchDisplayController:(UISearchDisplayController *)controller didHideSearchResultsTableView:(UITableView *)tableView
+{
+    tableView.hidden = YES;
+    
+    tableView.delegate = nil;
+    tableView.dataSource = nil;
+}
 
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
@@ -173,16 +222,6 @@
 }
 
 #pragma mark - UISearchDisplayDelegate methods related
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
-{
-    self.tableView.hidden = YES;
-}
-
-- (void)searchDisplayController:(UISearchDisplayController *)controller willHideSearchResultsTableView:(UITableView *)tableView
-{
-    self.tableView.hidden = NO;
-}
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {

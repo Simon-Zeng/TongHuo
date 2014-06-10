@@ -11,6 +11,7 @@
 #import "THAPI.h"
 #import "THAuthorizer.h"
 #import "Goods+Access.h"
+#import "Platforms+Access.h"
 
 @implementation UploadViewModel
 
@@ -55,11 +56,21 @@
     {
         _good = goods;
         
+        Platforms * platform = [[THAuthorizer sharedAuthorizer].platforms firstObject];
+        
+        self.tid = platform.id;
+        self.title = goods.title;
+        self.price = goods.price.description;
+        
+        @weakify(self);
         [[[THAPI apiCenter] getSellerCodeFor:goods.numIid] subscribeNext:^(RACTuple * x) {
+            @strongify(self);
+            
             AFHTTPRequestOperation * operation = x[0];
-            id response = x[1];
+//            id response = x[1];
             
             NSLog(@"---- Reponse String: %@", operation.responseString);
+            self.sellerCode = operation.responseString;
 //            NSLog(@"---- Response: %@", response);
         } error:^(NSError *error) {
             NSLog(@"---- error: %@", error);

@@ -71,7 +71,7 @@
 
 - (NSString *)chacheName
 {
-    return NSStringFromClass([self class]);
+    return nil;
 }
 
 #pragma mark - Fetched results controller
@@ -92,23 +92,12 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.model sectionNameKeyPath:sectionNameKey cacheName:cacheName];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                managedObjectContext:self.model
+                                                                                                  sectionNameKeyPath:sectionNameKey
+                                                                                                           cacheName:cacheName];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
-    
-//    // Observe CoreData multithread changes
-//    self.observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextDidSaveNotification
-//                                                                      object:nil
-//                                                                       queue:[NSOperationQueue mainQueue]
-//                                                                  usingBlock:^(NSNotification *note) {
-//                                                                      NSManagedObjectContext *savedContext = [note object];
-//                                                                      
-//                                                                      // ignore change notifications for the main MOC
-//                                                                      if (aFetchedResultsController.managedObjectContext != savedContext) {
-//                                                                          [aFetchedResultsController.managedObjectContext mergeChangesFromContextDidSaveNotification:note];
-//                                                                      }
-//                                                                  }];
-//    
 
     // Delete previous cache
     [NSFetchedResultsController deleteCacheWithName:cacheName];

@@ -9,6 +9,7 @@
 #import "THUploadGoodsViewController.h"
 
 #import "Goods+Access.h"
+#import "Platforms+Access.h"
 #import "THAuthorizer.h"
 #import "UploadViewModel.h"
 
@@ -160,6 +161,11 @@
     
     [self.contentView addGestureRecognizer:tapRecognizer];
     
+    Platforms * platform =  [[THAuthorizer sharedAuthorizer].platforms firstObject];
+    
+    self.shopTextField.text = platform.name;
+    self.priceTextField.text = self.viewModel.price;
+    self.titleTextView.text = self.viewModel.title;
     // RAC bindings
     
     RAC(self.viewModel, title) = self.titleTextView.rac_textSignal;

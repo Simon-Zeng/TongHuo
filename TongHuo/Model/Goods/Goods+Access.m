@@ -11,34 +11,39 @@
 @implementation Goods (Access)
 
 
-+ (void)initialize
++ (void)load
 {
-    // Load all saved record to map to fix unique issue
-    NSMutableDictionary * savedGoods = [self savedGoods];
-    
     NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
-                                 inManagedObjectContext:context];
-    
-    NSError * executeFetchError = nil;
-    NSArray * goodArray = [context executeFetchRequest:request error:&executeFetchError];
-    if (executeFetchError) {
-        NSLog(@"[%@, %@] error looking Goods with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-    } else if (!goodArray) {
-        for (Goods * agood in goodArray)
-        {
-            NSManagedObjectID * objectID = [agood objectID];
-            NSNumber * uniqueKey = [agood id];
-            
-            if (uniqueKey && objectID)
+    [context performBlock:^{
+        // Load all saved record to map to fix unique issue
+        NSMutableDictionary * savedGoods = [self savedGoods];
+
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        //    request.propertiesToFetch = @[@"id"];
+        
+        request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
+                                     inManagedObjectContext:context];
+        
+        NSError * executeFetchError = nil;
+        NSArray * goodArray = [context executeFetchRequest:request error:&executeFetchError];
+        if (executeFetchError) {
+            NSLog(@"[%@, %@] error looking Goods with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
+        } else if (!goodArray) {
+            for (Goods * agood in goodArray)
             {
-                [savedGoods setObject:objectID forKey:uniqueKey];
+                NSManagedObjectID * objectID = [agood objectID];
+                NSNumber * uniqueKey = [agood id];
+                
+                if (uniqueKey && objectID)
+                {
+                    [savedGoods setObject:objectID forKey:uniqueKey];
+                }
             }
         }
-    }
+        NSLog(@"++++++ Loaded savedGoods: %@", savedGoods);
+    }];
 }
 
 + (NSMutableDictionary *)savedGoods

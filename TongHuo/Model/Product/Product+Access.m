@@ -11,34 +11,39 @@
 @implementation Product (Access)
 
 
-+ (void)initialize
++ (void)load
 {
-    // Load all saved record to map to fix unique issue
-    NSMutableDictionary * savedProduct = [self savedProduct];
-    
     NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
-                                 inManagedObjectContext:context];
-    
-    NSError * executeFetchError = nil;
-    NSArray * productArray = [context executeFetchRequest:request error:&executeFetchError];
-    if (executeFetchError) {
-        NSLog(@"[%@, %@] error looking Product with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-    } else if (!productArray) {
-        for (Product * aProduct in productArray)
-        {
-            NSManagedObjectID * objectID = [aProduct objectID];
-            NSNumber * uniqueKey = [aProduct id];
-            
-            if (uniqueKey && objectID)
+    [context performBlock:^{
+        // Load all saved record to map to fix unique issue
+        NSMutableDictionary * savedProduct = [self savedProduct];
+        
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        //    request.propertiesToFetch = @[@"id"];
+        
+        request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
+                                     inManagedObjectContext:context];
+        
+        NSError * executeFetchError = nil;
+        NSArray * productArray = [context executeFetchRequest:request error:&executeFetchError];
+        if (executeFetchError) {
+            NSLog(@"[%@, %@] error looking Product with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
+        } else if (!productArray) {
+            for (Product * aProduct in productArray)
             {
-                [savedProduct setObject:objectID forKey:uniqueKey];
+                NSManagedObjectID * objectID = [aProduct objectID];
+                NSNumber * uniqueKey = [aProduct id];
+                
+                if (uniqueKey && objectID)
+                {
+                    [savedProduct setObject:objectID forKey:uniqueKey];
+                }
             }
         }
-    }
+        
+        NSLog(@"++++++ Loaded savedProduct: %@", savedProduct);
+    }];
 }
 
 + (NSMutableDictionary *)savedProduct

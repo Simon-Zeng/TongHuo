@@ -14,7 +14,7 @@
 @property (readwrite, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readwrite, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (readwrite, strong, nonatomic) NSManagedObjectContext * writerManagerObjectContext;
+@property (readwrite, strong, nonatomic) NSManagedObjectContext * masterManagedObjectContext;
 
 @end
 
@@ -57,6 +57,9 @@
                               selector:@selector(managedObjectContextDidSaveNotification:)
                                   name:NSManagedObjectContextDidSaveNotification
                                 object:nil];
+        
+        // Init main NSManagedObjectContext to avoid a dead lock due to call threaded context
+        [self managedObjectContext];
     }
     
     return self;
@@ -69,17 +72,57 @@
 
 -(void)saveContext {
     @autoreleasepool {
-        NSError *error = nil;
         NSManagedObjectContext *managedObjectContext = self.threadManagedObjectContext;
-        if (managedObjectContext != nil) {
-            //        [managedObjectContext processPendingChanges];
-            if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application[ to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                abort();
-            }
+        
+        if (managedObjectContext != nil)
+        {
+            [self saveContext:managedObjectContext];
         }
+    }
+}
+
+- (void)saveContext:(NSManagedObjectContext *)ctx
+{
+    @autoreleasepool {
+        [ctx performBlock:^{
+            NSError *error = nil;
+            
+            if ([ctx hasChanges])
+            {
+                NSString * ctxType = @"Threaded";
+                
+                if (ctx == [self managedObjectContext])
+                {
+                    ctxType = @"Main";
+                }
+                else if (ctx == [self masterManagedObjectContext])
+                {
+                    ctxType = @"Master";
+                }
+                
+                if ([ctx save:&error])
+                {
+                    [ctx reset];
+                    
+                    NSLog(@"------ NSManagedObjectContext (%@, type:%@)", ctx, ctxType);
+                    
+                    NSManagedObjectContext * parentCtx = ctx.parentContext;
+                    
+                    if (parentCtx)
+                    {
+                        [self saveContext:parentCtx];
+                    }
+                }
+                else
+                {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application[ to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                    abort();
+
+                }
+            }
+        }];
     }
 }
 
@@ -95,7 +138,8 @@
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
         _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [_managedObjectContext setParentContext:[self writerManagerObjectContext]];
+        [_managedObjectContext setParentContext:[self masterManagedObjectContext]];
+        [_managedObjectContext setUndoManager:nil];
         
         [[[NSThread currentThread] threadDictionary] setObject:_managedObjectContext forKey:@"managedObjectContext"];
     }
@@ -115,6 +159,8 @@
             {
                 context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
                 [context setParentContext:[self managedObjectContext]];
+                [context setUndoManager:nil];
+
                 
                 [[[NSThread currentThread] threadDictionary] setObject:context forKey:@"managedObjectContext"];
             }
@@ -125,21 +171,23 @@
 }
 
 
-- (NSManagedObjectContext *)writerManagerObjectContext
+- (NSManagedObjectContext *)masterManagedObjectContext
 {
-    if (_writerManagerObjectContext != nil) {
-        return _writerManagerObjectContext;
+    if (_masterManagedObjectContext != nil) {
+        return _masterManagedObjectContext;
     }
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
         // Context with PSC must be with type NSConfinementConcurrencyType
-        _writerManagerObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [_writerManagerObjectContext setPersistentStoreCoordinator:coordinator];
+        _masterManagedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        [_masterManagedObjectContext setPersistentStoreCoordinator:coordinator];
+        [_masterManagedObjectContext setUndoManager:nil];
+
         
 //        [[[NSThread currentThread] threadDictionary] setObject:_writerManagerObjectContext forKey:@"writerManagerObjectContext"];
     }
-    return _writerManagerObjectContext;
+    return _masterManagedObjectContext;
 }
 
 
@@ -199,23 +247,23 @@
 #pragma mark - Notification
 - (void)managedObjectContextDidSaveNotification:(NSNotification *)note
 {
-    if (note.object != self.writerManagerObjectContext)
+    if (note.object != self.masterManagedObjectContext)
     {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            @autoreleasepool {
-                NSError *error = nil;
-                NSManagedObjectContext * managedObjectContext = [self writerManagerObjectContext];
-                
-                if (managedObjectContext != nil) {
-                    if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-                        // Replace this implementation with code to handle the error appropriately.
-                        // abort() causes the application[ to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                        abort();
-                    }
-                }
-            }
-        });
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            @autoreleasepool {
+//                NSError *error = nil;
+//                NSManagedObjectContext * managedObjectContext = [self masterManagedObjectContext];
+//                
+//                if (managedObjectContext != nil) {
+//                    if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+//                        // Replace this implementation with code to handle the error appropriately.
+//                        // abort() causes the application[ to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//                        abort();
+//                    }
+//                }
+//            }
+//        });
     }
 }
 
