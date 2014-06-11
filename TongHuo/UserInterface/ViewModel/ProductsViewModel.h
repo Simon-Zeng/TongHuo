@@ -8,9 +8,9 @@
 
 #import "THBasicViewModel.h"
 
-#import "Orders.h"
+#import "Product.h"
 
-@interface OrdersViewModel : THBasicViewModel
+@interface ProductsViewModel : THBasicViewModel
 
 
 @property (nonatomic, readonly) RACSignal * refreshSignal;
@@ -22,8 +22,7 @@
 -(NSInteger)numberOfSections;
 -(NSInteger)numberOfItemsInSection:(NSInteger)section;
 -(NSString *)titleForSection:(NSInteger)section;
--(NSString *)titleAtIndexPath:(NSIndexPath *)indexPath;
--(NSString *)subtitleAtIndexPath:(NSIndexPath *)indexPath;
+-(Product *)productAtIndexPath:(NSIndexPath *)indexPath;
 
 -(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath;
 

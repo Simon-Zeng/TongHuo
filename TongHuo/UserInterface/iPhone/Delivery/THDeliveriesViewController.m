@@ -10,6 +10,7 @@
 
 #import "DeliveriesViewModel.h"
 #import "THTableViewDeliveryCell.h"
+#import "THConfigration.h"
 
 @interface THDeliveriesViewController ()<UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 
@@ -76,14 +77,22 @@
 
     
     @weakify(self);
-    [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
-        if (x)
-        {
-            NSLog(@"---- Deleveries: %@", x);
-        }
-    } error:^(NSError *error) {
-        NSLog(@"---- Refresh error: %@", error);
-    }];
+    
+    THConfigration * configration = [THConfigration sharedConfigration];
+    BOOL needToSync = configration.hasOrdersToSync;
+    if (needToSync)
+    {
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
+                             maskType:SVProgressHUDMaskTypeGradient];
+        
+        [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
+            [SVProgressHUD dismiss];
+            configration.hasOrdersToSync = NO;
+        } error:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            NSLog(@"---- Refresh error: %@", error);
+        }];
+    }
     
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
@@ -117,7 +126,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    THTableViewDeliveryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -126,7 +135,7 @@
 {
     // Return NO if you do not want the specified item to be editable.
     // Always return YES.
-    return YES;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -135,13 +144,20 @@
         [self.viewModel deleteObjectAtIndexPath:indexPath];
     }
 }
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.viewModel titleForSection:section];
-}
+//
+//-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return [self.viewModel titleForSection:section];
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+}
+
+#pragma mark
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 112.0;
 }
 
 #pragma mark - Navigation
@@ -158,10 +174,11 @@
 
 #pragma mark - Private Methods
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(THTableViewDeliveryCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.textLabel.text = [self.viewModel titleAtIndexPath:indexPath];
-    cell.detailTextLabel.text = [self.viewModel subtitleAtIndexPath:indexPath];
+    Orders * order = [self.viewModel orderAtIndexPath:indexPath];
+    
+    [cell updateWithOrder:order atIndexPath:indexPath];
 }
 
 

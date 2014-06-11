@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface THTableViewOrderCell : UITableViewCell
+@class Product;
+
+@interface THTableViewProductCell : UITableViewCell
+
+- (void)updateWithProduct:(Product *)product atIndexPath:(NSIndexPath *)indexPath;
 
 @end

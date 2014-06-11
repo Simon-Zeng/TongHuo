@@ -14,13 +14,13 @@
 #import "Account.h"
 #import "THAuthorizer.h"
 
-#import "THOrdersViewController.h"
+#import "THProductsViewController.h"
 #import "THDeliveriesViewController.h"
 #import "THMarketsViewController.h"
 #import "THJackpotViewController.h"
 #import "THQRCodeViewController.h"
 
-#import "OrdersViewModel.h"
+#import "ProductsViewModel.h"
 #import "DeliveriesViewModel.h"
 #import "MarketsViewModel.h"
 #import "JackpotViewModel.h"
@@ -141,7 +141,7 @@
     {
         case 0:
         {
-            viewModel = [[OrdersViewModel alloc] initWithModel:self.model];
+            viewModel = [[ProductsViewModel alloc] initWithModel:self.model];
         }
             break;
         case 1:
@@ -190,8 +190,8 @@
     {
         case 0:
         {
-            THOrdersViewController * ordersController = [[THOrdersViewController alloc] init];
-            ordersController.viewModel = (OrdersViewModel *)[self viewModelForIndexPath:indexPath];
+            THProductsViewController * ordersController = [[THProductsViewController alloc] init];
+            ordersController.viewModel = (ProductsViewModel *)[self viewModelForIndexPath:indexPath];
             
             controller = ordersController;
         }

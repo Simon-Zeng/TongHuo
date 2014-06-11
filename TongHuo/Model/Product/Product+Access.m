@@ -125,23 +125,60 @@
     NSNumber * dates = [dict objectForKey:@"dates"];
     NSString * color = [dict objectForKey:@"color"];
     NSString * size = [dict objectForKey:@"size"];
-    NSNumber * price = [dict objectForKey:@"price"];
     NSNumber * createtime = [dict objectForKey:@"createtime"];
+
+
+    NSNumber * shopId = [dict objectForKey:@"did"];
+    NSNumber * pid = [dict objectForKey:@"pid"];
+    NSString * tel = [dict objectForKey:@"tel"];
+    
+    NSNumber * auth = [dict objectForKey:@"auth"];
+    NSString * buyer = [dict objectForKey:@"buyer"];
+    NSString * shopName = [dict objectForKey:@"dname"];
+    NSNumber * cid = [dict objectForKey:@"cid"];
+    NSString * courier = [dict objectForKey:@"courier"];
+    NSNumber * ctime = [dict objectForKey:@"ctime"];
+    NSNumber * isdf = [dict objectForKey:@"isdf"];
+    NSString * numid = [dict objectForKey:@"numid"];
+    NSNumber * uid = [dict objectForKey:@"uid"];
+    
+    NSString * orderid = [dict objectForKey:@"orderid"];
+    NSString * pimage = [dict objectForKey:@"pimage"];
+    NSNumber * price1 = [dict objectForKey:@"price1"];
+    NSNumber * price2 = [dict objectForKey:@"price2"];
+    NSString * ptitle = [dict objectForKey:@"ptitle"];
 
     if (identifier)
     {
         Product * product = [Product productWithId:identifier];
         
-        product.identifier = identifier;
-        product.no = no;
-        product.image = image;
-        product.count = count;
-        product.state = state;
-        product.dates = dates;
-        product.color = color;
-        product.size = size;
-        product.price = price;
-        product.createtime = createtime;
+        product.identifier = CNil(identifier);
+        product.no = CNil(no);
+        product.image = CNil(image);
+        product.count = CNil(count);
+        product.state = CNil(state);
+        product.dates = CNil(dates);
+        product.color = CNil(color);
+        product.size = CNil(size);
+        product.createtime = CNil(createtime);
+        
+        product.shopId = CNil(shopId);
+        product.pid = CNil(pid);
+        product.tel = CNil(tel);
+        product.auth = CNil(auth);
+        product.buyer = CNil(buyer);
+        product.shopName = CNil(shopName);
+        product.cid = CNil(cid);
+        product.courier = CNil(courier);
+        product.ctime = CNil(ctime);
+        product.isdf = CNil(isdf);
+        product.numid = CNil(numid);
+        product.uid = CNil(uid);
+        product.orderid = CNil(orderid);
+        product.pimage = CNil(pimage);
+        product.price1 = CNil(price1);
+        product.price2 = CNil(price2);
+        product.ptitle = CNil(ptitle);
 
         return product;
     }

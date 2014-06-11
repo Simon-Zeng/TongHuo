@@ -6,12 +6,13 @@
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
-#import "THOrdersViewController.h"
+#import "THProductsViewController.h"
 
-#import "OrdersViewModel.h"
-#import "THTableViewOrderCell.h"
+#import "ProductsViewModel.h"
+#import "THTableViewProductCell.h"
+#import "THConfigration.h"
 
-@interface THOrdersViewController ()<UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
+@interface THProductsViewController ()<UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 
 @property (nonatomic, strong) UITableView * tableView;
 
@@ -19,7 +20,7 @@
 
 @end
 
-@implementation THOrdersViewController
+@implementation THProductsViewController
 
 #pragma mark - UIViewController Overrides
 
@@ -66,9 +67,9 @@
     self.searchDisplayVC.searchResultsDelegate = self;
     [self.searchDisplayVC setActive:NO];
     
-    [self.tableView registerClass:[THTableViewOrderCell class]
+    [self.tableView registerClass:[THTableViewProductCell class]
            forCellReuseIdentifier:@"Cell"];
-    [self.searchDisplayVC.searchResultsTableView registerClass:[THTableViewOrderCell class]
+    [self.searchDisplayVC.searchResultsTableView registerClass:[THTableViewProductCell class]
                                         forCellReuseIdentifier:@"Cell"];
     self.searchDisplayVC.searchResultsTableView.backgroundColor = [UIColor clearColor];
     self.searchDisplayVC.searchResultsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -76,14 +77,23 @@
 
     
     @weakify(self);
-    [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
-        if (x)
-        {
-            NSLog(@"---- Orders: %@", x);
-        }
-    } error:^(NSError *error) {
-        NSLog(@"---- Refresh error: %@", error);
-    }];
+    
+    THConfigration * configration = [THConfigration sharedConfigration];
+    BOOL needToSync = configration.hasOrdersToSync;
+    if (needToSync)
+    {
+        [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
+                             maskType:SVProgressHUDMaskTypeGradient];
+        
+        [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
+            [SVProgressHUD dismiss];
+            configration.hasOrdersToSync = NO;
+        } error:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            NSLog(@"---- Refresh error: %@", error);
+        }];
+    }
+    
     
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
@@ -117,7 +127,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    THTableViewProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -126,7 +136,7 @@
 {
     // Return NO if you do not want the specified item to be editable.
     // Always return YES.
-    return YES;
+    return NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -135,13 +145,20 @@
         [self.viewModel deleteObjectAtIndexPath:indexPath];
     }
 }
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.viewModel titleForSection:section];
-}
+//
+//-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    return [self.viewModel titleForSection:section];
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+}
+
+#pragma mark
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 81.0;
 }
 
 #pragma mark - Navigation
@@ -158,10 +175,11 @@
 
 #pragma mark - Private Methods
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(THTableViewProductCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.textLabel.text = [self.viewModel titleAtIndexPath:indexPath];
-    cell.detailTextLabel.text = [self.viewModel subtitleAtIndexPath:indexPath];
+    Product * product = [self.viewModel productAtIndexPath:indexPath];
+    
+    [cell updateWithProduct:product atIndexPath:indexPath];
 }
 
 

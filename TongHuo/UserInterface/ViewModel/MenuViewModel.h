@@ -8,7 +8,7 @@
 
 #import "THBasicViewModel.h"
 
-@class OrdersViewModel;
+@class ProductsViewModel;
 @class DeliveriesViewModel;
 @class MarketsViewModel;
 @class JackpotViewModel;

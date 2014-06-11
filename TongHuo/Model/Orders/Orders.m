@@ -2,7 +2,7 @@
 //  Orders.m
 //  TongHuo
 //
-//  Created by zeng songgen on 14-5-30.
+//  Created by zeng songgen on 14-6-11.
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
@@ -15,7 +15,6 @@
 @dynamic color;
 @dynamic createtime;
 @dynamic cs;
-@dynamic shopId;
 @dynamic identifier;
 @dynamic kno;
 @dynamic ktype;
@@ -23,9 +22,19 @@
 @dynamic no;
 @dynamic pid;
 @dynamic sf;
+@dynamic shopId;
 @dynamic size;
-@dynamic state;
+@dynamic pay;
 @dynamic tb;
 @dynamic tel;
+@dynamic count;
+@dynamic shopName;
+@dynamic dq;
+@dynamic email;
+@dynamic has;
+@dynamic note;
+@dynamic state;
+@dynamic type;
+@dynamic uid;
 
 @end

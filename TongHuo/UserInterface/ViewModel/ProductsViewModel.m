@@ -6,15 +6,16 @@
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
-#import "OrdersViewModel.h"
+#import "ProductsViewModel.h"
 
-@interface OrdersViewModel ()
+#import "Orders+Access.h"
+#import "Product+Access.h"
 
--(Orders *)orderAtIndexPath:(NSIndexPath *)indexPath;
+@interface ProductsViewModel ()
 
 @end
 
-@implementation OrdersViewModel
+@implementation ProductsViewModel
 
 - (id)init
 {
@@ -47,7 +48,7 @@
         
         if (s && s.length > 0)
         {
-            request.predicate = [NSPredicate predicateWithFormat:@"state = %@ AND name CONTAINS '%@'", self.state, s];
+            request.predicate = [NSPredicate predicateWithFormat:@"state = %@ AND buyer CONTAINS '%@'", self.state, s];
         }
         else
         {
@@ -72,17 +73,31 @@
 - (RACSignal *)refreshSignal
 {
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        RACSignal * request = [[THAPI apiCenter] getMarkets];
+        RACSignal * request = [[THAPI apiCenter] postAndGetOrders:[NSArray array]];
         
         [request subscribeNext:^(RACTuple * x) {
-//            dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary * response = x[1];
             
-                NSMutableArray * markets = [[NSMutableArray alloc] init];
+            if (response && [response isKindOfClass:[NSDictionary class]])
+            {
+                NSArray * ordersInfo = [response objectForKey:@"fh"];
+                NSArray * productsInfo = [response objectForKey:@"pro"];
                 
-                [subscriber sendNext:markets];
-                [subscriber sendCompleted];
-
-//            });
+                for (NSDictionary * aDict1 in ordersInfo)
+                {
+                    [Orders objectFromDictionary:aDict1];
+                }
+                
+                for (NSDictionary * aDict2 in productsInfo)
+                {
+                    [Product objectFromDictionary:aDict2];
+                }
+            }
+            
+            [[THCoreDataStack defaultStack] saveContext];
+            
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
         } error:^(NSError *error) {
             [subscriber sendError:error];
         } completed:^{
@@ -122,25 +137,14 @@
 -(NSString *)titleForSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
     NSArray *sectionObjects = [sectionInfo objects];
-    Orders *representativeObject = [sectionObjects firstObject];
+    Product *representativeObject = [sectionObjects firstObject];
     
-    return representativeObject.ktype;
+    return representativeObject.shopName;
 }
-
--(NSString *)titleAtIndexPath:(NSIndexPath *)indexPath {
-    Orders *order = [self orderAtIndexPath:indexPath];
-    return [order valueForKey:@keypath(order, address)];
-}
-
--(NSString *)subtitleAtIndexPath:(NSIndexPath *)indexPath {
-    Orders *order = [self orderAtIndexPath:indexPath];
-    return [order valueForKey:@keypath(order, color)];
-}
-
 
 #pragma mark - Private Methods
 
--(Orders *)orderAtIndexPath:(NSIndexPath *)indexPath {
+-(Product *)productAtIndexPath:(NSIndexPath *)indexPath {
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
@@ -148,7 +152,7 @@
 
 - (NSFetchRequest *)fetchRequest
 {
-    NSString * entityName = [Orders entityName];
+    NSString * entityName = [Product entityName];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
@@ -159,7 +163,7 @@
 //    [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createtime" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createtime" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];

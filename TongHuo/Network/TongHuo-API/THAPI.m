@@ -320,6 +320,64 @@
 // @brief sync un－deliveried products to server, and
 //        request new orders from server
 //
+//fh =     (
+//          {
+//              address = "\U7fe0*\U5c0f\U533a\U4e16\U7eaa\U98ce\U7f51\U5427";
+//              alipay = "<null>";
+//              color = "\U9ed1\U8272";
+//              count = 1;
+//              createtime = 20140612;
+//              cs = "\U5546\U6d1b\U5e02";
+//              did = 1010;
+//              dname = tmuffamad;
+//              dq = "\U5c71\U9633\U53bf";
+//              email = "<null>";
+//              has = 0;
+//              id = 477444;
+//              kno = "<null>";
+//              ktype = "<null>";
+//              name = "\U6768**";
+//              note = "null@//null";
+//              oid = 406974;
+//              pay = 0;
+//              sf = "\U9655\U897f\U7701";
+//              size = 39;
+//              tel = "1839292****";
+//              tno = 690566813758511;
+//              type = 0;
+//              uid = 18725;
+//          }
+//          );
+//pro =     (
+//           {
+//               auth = 0;
+//               buyer = "\U72ec\U5bb6\U8bb0\U5fc6406520";
+//               cid = 0;
+//               color = "\U9ed1\U8272";
+//               count = 1;
+//               courier = 690566813758511;
+//               createtime = 20140612;
+//               ctime = 1402476561000;
+//               did = 1010;
+//               dname = tmuffamad;
+//               id = 406974;
+//               isdf = 0;
+//               no = "\U8fbe\U7075&DL-13";
+//               numid = 37341771372;
+//               orderid = 690566813758511;
+//               pid = 0;
+//               pimage = "http://img02.taobaocdn.com/bao/uploaded/i2/T1UgR_FyFbXXXXXXXX_!!0-item_pic.jpg";
+//               price1 = 53;
+//               price2 = 0;
+//               ptitle = "\U51c9\U978b\U59732014\U590f\U5b63\U65b0\U6b3e\U95ea\U4eae\U725b\U76ae\U62fc\U8272\U9732\U8dbe\U6f06\U76ae\U5e73\U8ddf\U7b80\U7ea6 \U7693\U96c5\U5973\U978b\U5305\U90ae";
+//               size = 39;
+//               state = 0;
+//               tel = "1839292****";
+//               uid = 18725;
+//           }
+//           );
+//sj =     (
+//);
 // @param products Array of Product
 - (RACSignal *)postAndGetOrders:(NSArray *)products
 {

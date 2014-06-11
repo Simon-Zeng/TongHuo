@@ -80,27 +80,20 @@
         RACSignal * request = [[THAPI apiCenter] getMarkets];
         
         [request subscribeNext:^(RACTuple * x) {
+            NSArray * response = x[1];
             
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                NSMutableArray * markets = [[NSMutableArray alloc] init];
-            
-                NSArray * response = x[1];
-                
-                if (response && [response isKindOfClass:[NSArray class]])
+            if (response && [response isKindOfClass:[NSArray class]])
+            {
+                for (NSDictionary * aDict in response)
                 {
-                    for (NSDictionary * aDict in response)
-                    {
-                        Markets * market = [Markets objectFromDictionary:aDict];
-                        
-//                        [markets addObject:market];
-                    }
+                    [Markets objectFromDictionary:aDict];
                 }
-                
-                [[THCoreDataStack defaultStack] saveContext];
-                
-                [subscriber sendNext:nil];
-                [subscriber sendCompleted];
-//            });
+            }
+            
+            [[THCoreDataStack defaultStack] saveContext];
+            
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
         } error:^(NSError *error) {
             [subscriber sendError:error];
         } completed:^{

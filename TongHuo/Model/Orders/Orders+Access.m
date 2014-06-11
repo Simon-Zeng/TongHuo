@@ -118,41 +118,61 @@
 {
     NSNumber * identifier = [dict objectForKey:@"id"];
     NSString * address = [dict objectForKey:@"address"];
-    NSString * name = [dict objectForKey:@"name"];
     NSString * color = [dict objectForKey:@"color"];
     NSNumber * createtime = [dict objectForKey:@"createtime"];
     NSString * cs = [dict objectForKey:@"cs"];
     NSNumber * shopId = [dict objectForKey:@"did"];
     NSString * kno = [dict objectForKey:@"kno"];
     NSString * ktype = [dict objectForKey:@"ktype"];
+    NSString * name = [dict objectForKey:@"name"];
     NSString * no = [dict objectForKey:@"no"];
     NSNumber * pid = [dict objectForKey:@"pid"];
     NSString * sf = [dict objectForKey:@"sf"];
     NSString * size = [dict objectForKey:@"size"];
     NSNumber * state = [dict objectForKey:@"state"];
     NSNumber * tb = [dict objectForKey:@"tb"];
-    NSNumber * tel = [dict objectForKey:@"tel"];
+    NSString * tel = [dict objectForKey:@"tel"];
+
+    NSNumber * pay = [dict objectForKey:@"pay"];
+    NSNumber * count = [dict objectForKey:@"count"];
+    NSString * shopName = [dict objectForKey:@"dname"];
+    NSString * dq = [dict objectForKey:@"dq"];
+    NSString * email = [dict objectForKey:@"email"];
+    NSNumber * has = [dict objectForKey:@"has"];
+    NSString * note = [dict objectForKey:@"note"];
+    NSNumber * type = [dict objectForKey:@"type"];
+    NSNumber * uid = [dict objectForKey:@"uid"];
 
     if (identifier)
     {
         Orders * order = [Orders orderWithId:identifier];
         
-        order.identifier = identifier;
-        order.address = address;
-        order.name = name;
-        order.color = color;
-        order.createtime = createtime;
-        order.cs = cs;
-        order.shopId = shopId;
-        order.kno = kno;
-        order.ktype = ktype;
-        order.no = no;
-        order.pid = pid;
-        order.sf = sf;
-        order.size = size;
-        order.state = state;
-        order.tb = tb;
-        order.tel = tel;
+        order.identifier = CNil(identifier);
+        order.address = CNil(address);
+        order.name = CNil(name);
+        order.color = CNil(color);
+        order.createtime = CNil(createtime);
+        order.cs = CNil(cs);
+        order.shopId = CNil(shopId);
+        order.kno = CNil(kno);
+        order.ktype = CNil(ktype);
+        order.no = CNil(no);
+        order.pid = CNil(pid);
+        order.sf = CNil(sf);
+        order.size = CNil(size);
+        order.state = CNil(state);
+        order.tb = CNil(tb);
+        order.tel = CNil(tel);
+        
+        order.pay = CNil(pay);
+        order.count = CNil(count);
+        order.shopName = CNil(shopName);
+        order.dq = CNil(dq);
+        order.email = CNil(email);
+        order.has = CNil(has);
+        order.note = CNil(note);
+        order.type = CNil(type);
+        order.uid = CNil(uid);
         
         return order;
     }

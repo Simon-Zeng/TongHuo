@@ -50,28 +50,20 @@
         RACSignal * request = [[THAPI apiCenter] getGoodsForShop:[self.shop identifier]];
         
         [request subscribeNext:^(RACTuple * x) {
+            NSArray * response = x[1];
             
-//            dispatch_async(dispatch_get_main_queue(), ^{
-            
-//                NSMutableArray * goods = [[NSMutableArray alloc] init];
-                NSArray * response = x[1];
-                
-                if (response && [response isKindOfClass:[NSArray class]])
+            if (response && [response isKindOfClass:[NSArray class]])
+            {
+                for (NSDictionary * aDict in response)
                 {
-                    for (NSDictionary * aDict in response)
-                    {
-                        Goods * good = [Goods objectFromDictionary:aDict];
-                        
-//                        [goods addObject:good];
-                    }
+                    [Goods objectFromDictionary:aDict];
                 }
-                
-                [[THCoreDataStack defaultStack] saveContext];
-                
-                [subscriber sendNext:nil];
-                [subscriber sendCompleted];
-//            });
-        } error:^(NSError *error) {
+            }
+            
+            [[THCoreDataStack defaultStack] saveContext];
+            
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];        } error:^(NSError *error) {
             [subscriber sendError:error];
         } completed:^{
             [subscriber sendNext:nil];

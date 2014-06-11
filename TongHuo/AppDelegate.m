@@ -15,12 +15,12 @@
 // View Controllers
 #import "THMenuViewController.h"
 #import "THSignInViewController.h"
-#import "THOrdersViewController.h"
+#import "THProductsViewController.h"
 
 // View Models
 #import "MenuViewModel.h"
 #import "SignInViewModel.h"
-#import "OrdersViewModel.h"
+#import "ProductsViewModel.h"
 
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
@@ -71,8 +71,8 @@
     MenuViewModel * menuModel =[[MenuViewModel alloc] initWithModel:[THCoreDataStack defaultStack].managedObjectContext];
     menuViewController.viewModel = menuModel;
     
-    THOrdersViewController * ordersViewController = [[THOrdersViewController alloc] init];
-    ordersViewController.viewModel = (OrdersViewModel *)[menuModel viewModelForIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    THProductsViewController * ordersViewController = [[THProductsViewController alloc] init];
+    ordersViewController.viewModel = (ProductsViewModel *)[menuModel viewModelForIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     
     THNavigationController * navControlloer = [[THNavigationController alloc] initWithRootViewController:ordersViewController];
     

@@ -10,10 +10,10 @@
 
 #import "THViewController.h"
 
-@class OrdersViewModel;
+@class ProductsViewModel;
 
-@interface THOrdersViewController : THViewController
+@interface THProductsViewController : THViewController
 
-@property (nonatomic, strong) OrdersViewModel *viewModel;
+@property (nonatomic, strong) ProductsViewModel *viewModel;
 
 @end

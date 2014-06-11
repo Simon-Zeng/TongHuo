@@ -8,9 +8,10 @@
 
 #import "DeliveriesViewModel.h"
 
-@interface DeliveriesViewModel ()
+#import "Orders+Access.h"
+#import "Product+Access.h"
 
--(Orders *)orderAtIndexPath:(NSIndexPath *)indexPath;
+@interface DeliveriesViewModel ()
 
 @end
 
@@ -74,9 +75,26 @@
         RACSignal * request = [[THAPI apiCenter] getMarkets];
         
         [request subscribeNext:^(RACTuple * x) {
-            NSMutableArray * markets = [[NSMutableArray alloc] init];
+            NSDictionary * response = x[1];
             
-            [subscriber sendNext:markets];
+            if (response && [response isKindOfClass:[NSDictionary class]])
+            {
+                NSArray * ordersInfo = [response objectForKey:@"fh"];
+                NSArray * productsInfo = [response objectForKey:@"pro"];
+                
+                for (NSDictionary * aDict1 in ordersInfo)
+                {
+                    [Orders objectFromDictionary:aDict1];
+                }
+                
+                for (NSDictionary * aDict2 in productsInfo)
+                {
+                    [Product objectFromDictionary:aDict2];
+                }
+            }
+            [[THCoreDataStack defaultStack] saveContext];
+            
+            [subscriber sendNext:nil];
             [subscriber sendCompleted];
         } error:^(NSError *error) {
             [subscriber sendError:error];
@@ -85,7 +103,8 @@
             [subscriber sendCompleted];
         }];
         
-        return nil;    }];
+        return nil;
+    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -121,17 +140,6 @@
     return representativeObject.ktype;
 }
 
--(NSString *)titleAtIndexPath:(NSIndexPath *)indexPath {
-    Orders *order = [self orderAtIndexPath:indexPath];
-    return [order valueForKey:@keypath(order, address)];
-}
-
--(NSString *)subtitleAtIndexPath:(NSIndexPath *)indexPath {
-    Orders *order = [self orderAtIndexPath:indexPath];
-    return [order valueForKey:@keypath(order, color)];
-}
-
-
 #pragma mark - Private Methods
 
 -(Orders *)orderAtIndexPath:(NSIndexPath *)indexPath {
@@ -153,7 +161,7 @@
 //    [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createtime" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createtime" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
