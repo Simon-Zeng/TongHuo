@@ -81,6 +81,14 @@
     return [savedShops objectForKey:identifier];
 }
 
+- (void)didSave
+{
+    [super didSave];
+    
+    [Shops didSaved:self];
+}
+
+
 #pragma mark - Public
 
 + (instancetype)shopWithId:(NSNumber *)identifier

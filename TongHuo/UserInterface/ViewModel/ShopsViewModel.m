@@ -51,6 +51,9 @@
             
             NSFetchRequest * request = self.fetchedResultsController.fetchRequest;
             
+            // Unfault the object before access its properties, otherwise nil will be returneds
+            [self.market willAccessValueForKey:nil];
+            
             if (s && s.length > 0)
             {
                 request.predicate = [NSPredicate predicateWithFormat:@"marketId = %@ AND name contains[cd] %@", self.market.identifier, s];

@@ -113,7 +113,14 @@
     return _fetchedResultsController;
 }
 
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    NSError * error = nil;
+    if(![self.fetchedResultsController performFetch:&error])
+    {
+        NSLog(@"---- Fetch error : %@", error);
+    }
+    
     [(RACSubject *)self.updatedContentSignal sendNext:nil];
 }
 

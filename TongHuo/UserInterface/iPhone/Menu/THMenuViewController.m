@@ -112,10 +112,11 @@
            forCellReuseIdentifier:@"Cell"];
     
     @weakify(self);
-    [self.viewModel.updateNameSignal subscribeNext:^(Account * x) {
+    [self.viewModel.updateNameSignal subscribeNext:^(NSManagedObjectID * x) {
         if (x)
         {
-            self.titleLabel.text = [NSString stringWithFormat:@"欢迎: %@", x.loginname];
+            Account * account = (Account *)[[THCoreDataStack defaultStack].threadManagedObjectContext objectWithID:x];
+            self.titleLabel.text = [NSString stringWithFormat:@"欢迎: %@", account.loginname];
         }
     }];
     

@@ -83,6 +83,14 @@
     return [savedGoods objectForKey:identifier];
 }
 
+- (void)didSave
+{
+    [super didSave];
+    
+    [Goods didSaved:self];
+}
+
+
 #pragma mark - Public
 
 + (instancetype)goodWithId:(NSNumber *)identifier

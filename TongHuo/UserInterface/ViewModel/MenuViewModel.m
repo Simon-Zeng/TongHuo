@@ -61,7 +61,9 @@
 {
     THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
     
-    return RACObserve(authorizer, currentAccount);
+    return [RACObserve(authorizer, currentAccount) map:^id(Account * value) {
+        return [value objectID];
+    }];
 }
 
 

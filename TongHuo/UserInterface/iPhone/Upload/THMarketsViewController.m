@@ -90,12 +90,7 @@
         
         [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
             [SVProgressHUD dismiss];
-            if (x)
-            {
-                configration.marketsSynced = YES;
-                
-                NSLog(@"---- Markets: %@", x);
-            }
+            configration.marketsSynced = YES;
         } error:^(NSError *error) {
             [SVProgressHUD dismiss];
             NSLog(@"---- Refresh error: %@", error);
@@ -215,6 +210,7 @@
 }
 - (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
 {
+    self.viewModel.searchString = @"";
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

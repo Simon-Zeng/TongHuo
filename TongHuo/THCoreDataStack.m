@@ -100,9 +100,11 @@
                     ctxType = @"Master";
                 }
                 
+                [ctx obtainPermanentIDsForObjects:[ctx.insertedObjects allObjects] error:&error];
+                
                 if ([ctx save:&error])
                 {
-                    if ([ctxType isEqual:@"Threaded"])
+                    //                    if (![ctxType isEqual:@"Main"])
                     {
                         [ctx reset];
                     }
@@ -122,7 +124,7 @@
                     // abort() causes the application[ to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                     NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
                     abort();
-
+                    
                 }
             }
         }];
@@ -152,27 +154,35 @@
 
 - (NSManagedObjectContext *)threadManagedObjectContext
 {
-    NSManagedObjectContext * context = [[[NSThread currentThread] threadDictionary] objectForKey:@"managedObjectContext"];
-    
-    if (!context)
+    if ([NSThread isMainThread])
     {
-        @synchronized(self)
+        return [self managedObjectContext];
+    }
+    else
+    {
+        NSManagedObjectContext * context = [[[NSThread currentThread] threadDictionary] objectForKey:@"managedObjectContext"];
+        
+        if (!context)
         {
-            if (!context)
+            @synchronized(self)
             {
-                context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-                [context setParentContext:[self managedObjectContext]];
-                [context setUndoManager:nil];
-
+                context = [[[NSThread currentThread] threadDictionary] objectForKey:@"managedObjectContext"];
                 
-                [[[NSThread currentThread] threadDictionary] setObject:context forKey:@"managedObjectContext"];
+                if (!context)
+                {
+                    context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+                    [context setParentContext:[self managedObjectContext]];
+                    [context setUndoManager:nil];
+                    
+                    
+                    [[[NSThread currentThread] threadDictionary] setObject:context forKey:@"managedObjectContext"];
+                }
             }
         }
+        
+        return context;
     }
-    
-    return context;
 }
-
 
 - (NSManagedObjectContext *)masterManagedObjectContext
 {

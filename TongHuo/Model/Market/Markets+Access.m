@@ -82,6 +82,13 @@
     return [savedMarkets objectForKey:identifier];
 }
 
+- (void)didSave
+{
+    [super didSave];
+    
+    [Markets didSaved:self];
+}
+
 #pragma mark - Public
 
 + (instancetype)marketWithId:(NSNumber *)identifier
@@ -134,14 +141,6 @@
     }
     
     return nil;
-}
-
-
-- (void)didSave
-{
-    [super didSave];
-    
-    [Markets didSaved:self];
 }
 
 @end

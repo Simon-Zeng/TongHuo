@@ -83,6 +83,14 @@
     return [savedOrders objectForKey:identifier];
 }
 
+- (void)didSave
+{
+    [super didSave];
+    
+    [Orders didSaved:self];
+}
+
+
 #pragma mark - Public
 
 + (instancetype)orderWithId:(NSNumber *)identifier
