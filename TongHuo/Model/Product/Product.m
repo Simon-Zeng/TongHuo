@@ -11,7 +11,7 @@
 
 @implementation Product
 
-@dynamic id;
+@dynamic identifier;
 @dynamic no;
 @dynamic image;
 @dynamic count;

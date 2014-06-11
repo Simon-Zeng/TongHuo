@@ -120,7 +120,7 @@
 
 - (BOOL)isLoggedIn
 {
-    if (_currentAccount && _currentAccount.id.longLongValue > 0)
+    if (_currentAccount && _currentAccount.identifier.longLongValue > 0)
     {
         return YES;
     }
@@ -189,7 +189,7 @@
         if ([responseObject isKindOfClass:[NSDictionary class]])
         {
             self.currentAccount = [Account objectFromDictionary:responseObject];
-            [self refreshTBAuthenticationFor:self.currentAccount.id];
+            [self refreshTBAuthenticationFor:self.currentAccount.identifier];
         }
     }];
     
@@ -250,7 +250,7 @@
     {
         if ([aPlatform.name isEqual:tbShopName])
         {
-            identifier = aPlatform.id;
+            identifier = aPlatform.identifier;
         }
     }
     

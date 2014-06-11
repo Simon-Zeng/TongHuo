@@ -28,11 +28,11 @@
         NSArray * shopArray = [context executeFetchRequest:request error:&executeFetchError];
         if (executeFetchError) {
             NSLog(@"[%@, %@] error looking Shops with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-        } else if (!shopArray) {
+        } else if (shopArray) {
             for (Shops * ashop in shopArray)
             {
                 NSManagedObjectID * objectID = [ashop objectID];
-                NSNumber * uniqueKey = [ashop id];
+                NSNumber * uniqueKey = [ashop identifier];
                 
                 if (uniqueKey && objectID)
                 {
@@ -64,7 +64,7 @@
     NSMutableDictionary * savedShops = [self savedShops];
     
     NSManagedObjectID * objectID = [ashop objectID];
-    NSNumber * uniqueKey = [ashop id];
+    NSNumber * uniqueKey = [ashop identifier];
     
     if (uniqueKey && objectID)
     {
@@ -128,7 +128,7 @@
     {
         Shops * shop = [Shops shopWithId:identifier];
         
-        shop.id = identifier;
+        shop.identifier = identifier;
         shop.address = address;
         shop.name = name;
         shop.marketId = marketId;

@@ -55,7 +55,7 @@
                 }
                 else
                 {
-                    request.predicate = [NSPredicate predicateWithFormat:@"%K contains[cd] %@", @"name", @"广州"];
+                    request.predicate = nil;
                 }
                 [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
                 
@@ -169,7 +169,7 @@
 //    [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"identifier" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];

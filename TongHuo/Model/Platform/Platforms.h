@@ -12,7 +12,7 @@
 @interface Platforms : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSNumber * id;
+@property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSString * refreshToken;
 @property (nonatomic, retain) NSNumber * uid;
 @property (nonatomic, retain) NSString * accessToken;

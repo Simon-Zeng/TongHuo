@@ -53,11 +53,11 @@
             
             if (s && s.length > 0)
             {
-                request.predicate = [NSPredicate predicateWithFormat:@"marketId == %@ AND name contains[cd] %@", self.market.id, s];
+                request.predicate = [NSPredicate predicateWithFormat:@"marketId = %@ AND name contains[cd] %@", self.market.identifier, s];
             }
             else
             {
-                request.predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"marketId", self.market.id];
+                request.predicate = [NSPredicate predicateWithFormat:@"%K = %@", @"marketId", self.market.identifier];
             }
             [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
             
@@ -163,13 +163,13 @@
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"%K == %@", @"marketId", self.market.id];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"%K = %@", @"marketId", self.market.identifier];
     
     // Set the batch size to a suitable number.
 //    [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"id" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"identifier" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];

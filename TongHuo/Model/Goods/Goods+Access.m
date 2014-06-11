@@ -30,11 +30,11 @@
         NSArray * goodArray = [context executeFetchRequest:request error:&executeFetchError];
         if (executeFetchError) {
             NSLog(@"[%@, %@] error looking Goods with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-        } else if (!goodArray) {
+        } else if (goodArray) {
             for (Goods * agood in goodArray)
             {
                 NSManagedObjectID * objectID = [agood objectID];
-                NSNumber * uniqueKey = [agood id];
+                NSNumber * uniqueKey = [agood identifier];
                 
                 if (uniqueKey && objectID)
                 {
@@ -66,7 +66,7 @@
     NSMutableDictionary * savedGoods = [self savedGoods];
     
     NSManagedObjectID * objectID = [agood objectID];
-    NSNumber * uniqueKey = [agood id];
+    NSNumber * uniqueKey = [agood identifier];
     
     if (uniqueKey && objectID)
     {
@@ -167,7 +167,7 @@
         good.cityId = cityId;
         good.diyCid = diyCid;
         good.goodsType = goodsType;
-        good.id = identifier;
+        good.identifier = identifier;
         good.listTime = listTime;
         good.marketId = marketId;
         good.numIid = numIid;

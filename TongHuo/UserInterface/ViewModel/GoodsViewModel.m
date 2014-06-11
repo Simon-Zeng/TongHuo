@@ -47,7 +47,7 @@
 - (RACSignal *)refreshSignal
 {
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        RACSignal * request = [[THAPI apiCenter] getGoodsForShop:[self.shop id]];
+        RACSignal * request = [[THAPI apiCenter] getGoodsForShop:[self.shop identifier]];
         
         [request subscribeNext:^(RACTuple * x) {
             
@@ -131,7 +131,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
     
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"shopId = %@", self.shop.id];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"shopId = %@", self.shop.identifier];
     
     // Set the batch size to a suitable number.
 //    [fetchRequest setFetchBatchSize:20];

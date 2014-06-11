@@ -14,7 +14,7 @@
 @interface Shops : NSManagedObject
 
 @property (nonatomic, retain) NSString * address;
-@property (nonatomic, retain) NSNumber * id;
+@property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSNumber * marketId;
 @property (nonatomic, retain) NSNumber * mobile;
 @property (nonatomic, retain) NSString * name;

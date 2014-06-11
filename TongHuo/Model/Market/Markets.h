@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSString * address;
 @property (nonatomic, retain) NSNumber * cityId;
-@property (nonatomic, retain) NSNumber * id;
+@property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *goods;
 @property (nonatomic, retain) NSSet *shops;

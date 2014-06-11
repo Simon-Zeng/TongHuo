@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSNumber * createtime;
 @property (nonatomic, retain) NSString * cs;
 @property (nonatomic, retain) NSNumber * shopId;
-@property (nonatomic, retain) NSNumber * id;
+@property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSString * kno;
 @property (nonatomic, retain) NSString * ktype;
 @property (nonatomic, retain) NSString * name;

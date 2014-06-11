@@ -28,11 +28,11 @@
         NSArray * markets = [context executeFetchRequest:request error:&executeFetchError];
         if (executeFetchError) {
             NSLog(@"[%@, %@] error looking markets with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-        } else if (!markets) {
+        } else if (markets) {
             for (Markets * aMarket in markets)
             {
                 NSManagedObjectID * objectID = [aMarket objectID];
-                NSNumber * uniqueKey = [aMarket id];
+                NSNumber * uniqueKey = [aMarket identifier];
                 
                 if (uniqueKey && objectID)
                 {
@@ -65,7 +65,7 @@
     NSMutableDictionary * savedMarkets = [self savedMarkets];
     
     NSManagedObjectID * objectID = [aMarket objectID];
-    NSNumber * uniqueKey = [aMarket id];
+    NSNumber * uniqueKey = [aMarket identifier];
     
     if (uniqueKey && objectID)
     {
@@ -125,7 +125,7 @@
     {
         Markets * market = [Markets marketWithId:identifier];
         
-        market.id = identifier;
+        market.identifier = identifier;
         market.address = address;
         market.name = name;
         market.cityId = cityId;

@@ -21,7 +21,7 @@
     request.entity = [NSEntityDescription entityForName:[self entityName]
                                  inManagedObjectContext:context];
     
-    request.predicate = [NSPredicate predicateWithFormat:@"id = %@", identifier];
+    request.predicate = [NSPredicate predicateWithFormat:@"identifier = %@", identifier];
     
     NSError *executeFetchError = nil;
     account = [[context executeFetchRequest:request error:&executeFetchError] lastObject];
@@ -74,7 +74,7 @@
     {
         Account * account = [Account accountWithId:identifier];
         
-        account.id = identifier;
+        account.identifier = identifier;
         account.email = email;
         account.name = name;
         account.loginname = loginName;

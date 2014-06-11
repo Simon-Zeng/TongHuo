@@ -30,11 +30,11 @@
         NSArray * orderArray = [context executeFetchRequest:request error:&executeFetchError];
         if (executeFetchError) {
             NSLog(@"[%@, %@] error looking Orders with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-        } else if (!orderArray) {
+        } else if (orderArray) {
             for (Orders * aorder in orderArray)
             {
                 NSManagedObjectID * objectID = [aorder objectID];
-                NSNumber * uniqueKey = [aorder id];
+                NSNumber * uniqueKey = [aorder identifier];
                 
                 if (uniqueKey && objectID)
                 {
@@ -66,7 +66,7 @@
     NSMutableDictionary * savedOrders = [self savedOrders];
     
     NSManagedObjectID * objectID = [aorder objectID];
-    NSNumber * uniqueKey = [aorder id];
+    NSNumber * uniqueKey = [aorder identifier];
     
     if (uniqueKey && objectID)
     {
@@ -129,7 +129,7 @@
     {
         Orders * order = [Orders orderWithId:identifier];
         
-        order.id = identifier;
+        order.identifier = identifier;
         order.address = address;
         order.name = name;
         order.color = color;

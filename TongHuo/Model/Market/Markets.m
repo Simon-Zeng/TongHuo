@@ -15,7 +15,7 @@
 
 @dynamic address;
 @dynamic cityId;
-@dynamic id;
+@dynamic identifier;
 @dynamic name;
 @dynamic goods;
 @dynamic shops;

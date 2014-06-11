@@ -29,7 +29,7 @@
         NSArray * sellerArray = [context executeFetchRequest:request error:&executeFetchError];
         if (executeFetchError) {
             NSLog(@"[%@, %@] error looking Sellers with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-        } else if (!sellerArray) {
+        } else if (sellerArray) {
             for (Sellers * aseller in sellerArray)
             {
                 NSManagedObjectID * objectID = [aseller objectID];

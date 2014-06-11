@@ -12,7 +12,7 @@
 
 @interface Product : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * id;
+@property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSString * no;
 @property (nonatomic, retain) NSString * image;
 @property (nonatomic, retain) NSNumber * count;

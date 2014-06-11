@@ -58,7 +58,7 @@
         
         Platforms * platform = [[THAuthorizer sharedAuthorizer].platforms firstObject];
         
-        self.tid = platform.id;
+        self.tid = platform.identifier;
         self.title = goods.title;
         self.price = goods.price.description;
         

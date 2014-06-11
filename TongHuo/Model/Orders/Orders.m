@@ -16,7 +16,7 @@
 @dynamic createtime;
 @dynamic cs;
 @dynamic shopId;
-@dynamic id;
+@dynamic identifier;
 @dynamic kno;
 @dynamic ktype;
 @dynamic name;

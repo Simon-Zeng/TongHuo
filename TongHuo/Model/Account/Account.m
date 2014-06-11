@@ -13,7 +13,7 @@
 
 @dynamic email;
 @dynamic name;
-@dynamic id;
+@dynamic identifier;
 @dynamic loginname;
 @dynamic type;
 @dynamic typeName;

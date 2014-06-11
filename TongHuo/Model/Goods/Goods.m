@@ -19,7 +19,7 @@
 @dynamic cityId;
 @dynamic diyCid;
 @dynamic goodsType;
-@dynamic id;
+@dynamic identifier;
 @dynamic listTime;
 @dynamic marketId;
 @dynamic numIid;

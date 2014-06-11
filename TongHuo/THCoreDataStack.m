@@ -102,7 +102,10 @@
                 
                 if ([ctx save:&error])
                 {
-                    [ctx reset];
+                    if ([ctxType isEqual:@"Threaded"])
+                    {
+                        [ctx reset];
+                    }
                     
                     NSLog(@"------ NSManagedObjectContext (%@, type:%@)", ctx, ctxType);
                     

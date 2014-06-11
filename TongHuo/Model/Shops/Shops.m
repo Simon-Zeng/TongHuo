@@ -14,7 +14,7 @@
 @implementation Shops
 
 @dynamic address;
-@dynamic id;
+@dynamic identifier;
 @dynamic marketId;
 @dynamic mobile;
 @dynamic name;

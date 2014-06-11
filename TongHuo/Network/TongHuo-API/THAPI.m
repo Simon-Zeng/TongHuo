@@ -105,7 +105,7 @@
         @weakify(self);
         [updateSignal subscribeNext:^(Account * x) {
             @strongify(self);
-            self.accountUserIdentifier = x.id;
+            self.accountUserIdentifier = x.identifier;
         }];
     }
     
@@ -256,7 +256,7 @@
 {
     _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
     
-    NSNumber * pid = product.id;
+    NSNumber * pid = product.identifier;
     NSString * title = product.title;
     NSNumber * price = product.price;
     

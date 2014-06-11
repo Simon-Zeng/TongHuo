@@ -12,7 +12,7 @@
 @implementation Platforms
 
 @dynamic name;
-@dynamic id;
+@dynamic identifier;
 @dynamic refreshToken;
 @dynamic uid;
 @dynamic accessToken;

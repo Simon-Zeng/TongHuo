@@ -21,7 +21,7 @@
     request.entity = [NSEntityDescription entityForName:[self entityName]
                                  inManagedObjectContext:context];
     
-    request.predicate = [NSPredicate predicateWithFormat:@"id = %@", identifier];
+    request.predicate = [NSPredicate predicateWithFormat:@"identifier = %@", identifier];
     
     NSError *executeFetchError = nil;
     platform = [[context executeFetchRequest:request error:&executeFetchError] lastObject];
@@ -68,7 +68,7 @@
     {
         Platforms * platform = [Platforms platformWithId:identifier];
         
-        platform.id = identifier;
+        platform.identifier = identifier;
         platform.name = name;
         platform.refreshToken = refreshToken;
         platform.uid = uid;

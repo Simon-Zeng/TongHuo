@@ -47,7 +47,7 @@
         
         if (s && s.length > 0)
         {
-            request.predicate = [NSPredicate predicateWithFormat:@"state = %@ AND name CONTAINS '%@'", self.state, s];
+            request.predicate = [NSPredicate predicateWithFormat:@"state = %@ AND name contains[cd] %@", self.state, s];
         }
         else
         {

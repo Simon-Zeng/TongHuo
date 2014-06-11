@@ -29,11 +29,11 @@
         NSArray * productArray = [context executeFetchRequest:request error:&executeFetchError];
         if (executeFetchError) {
             NSLog(@"[%@, %@] error looking Product with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
-        } else if (!productArray) {
+        } else if (productArray) {
             for (Product * aProduct in productArray)
             {
                 NSManagedObjectID * objectID = [aProduct objectID];
-                NSNumber * uniqueKey = [aProduct id];
+                NSNumber * uniqueKey = [aProduct identifier];
                 
                 if (uniqueKey && objectID)
                 {
@@ -66,7 +66,7 @@
     NSMutableDictionary * savedProduct = [self savedProduct];
     
     NSManagedObjectID * objectID = [aProduct objectID];
-    NSNumber * uniqueKey = [aProduct id];
+    NSNumber * uniqueKey = [aProduct identifier];
     
     if (uniqueKey && objectID)
     {
@@ -124,7 +124,7 @@
     {
         Product * product = [Product productWithId:identifier];
         
-        product.id = identifier;
+        product.identifier = identifier;
         product.no = no;
         product.image = image;
         product.count = count;

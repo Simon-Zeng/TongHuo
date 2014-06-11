@@ -19,7 +19,7 @@
 @property (nonatomic, retain) NSNumber * cityId;
 @property (nonatomic, retain) NSString * diyCid;
 @property (nonatomic, retain) NSNumber * goodsType;
-@property (nonatomic, retain) NSNumber * id;
+@property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSNumber * listTime;
 @property (nonatomic, retain) NSNumber * marketId;
 @property (nonatomic, retain) NSNumber * numIid;
