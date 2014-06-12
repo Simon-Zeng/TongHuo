@@ -120,9 +120,18 @@
 
 - (BOOL)isLoggedIn
 {
-    if (_currentAccount && _currentAccount.identifier.longLongValue > 0)
+    if (_currentAccount)
     {
-        return YES;
+        [_currentAccount willAccessValueForKey:nil];
+        
+        if (_currentAccount.identifier.longLongValue > 0)
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
     }
     else
     {

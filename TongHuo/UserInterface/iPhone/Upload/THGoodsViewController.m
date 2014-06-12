@@ -83,7 +83,10 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.viewModel.active = YES;
+    if ([THAuthorizer sharedAuthorizer].isLoggedIn)
+    {
+        self.viewModel.active = YES;
+    }
 }
 
 #pragma mark - Table View

@@ -15,10 +15,10 @@
 @property (nonatomic, retain) NSString * color;
 @property (nonatomic, retain) NSNumber * count;
 @property (nonatomic, retain) NSNumber * createtime;
-@property (nonatomic, retain) NSNumber * dates;
+@property (nonatomic, retain) NSNumber * dates; // 延期数量
 @property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSString * image;
-@property (nonatomic, retain) NSString * no;
+@property (nonatomic, retain) NSString * no; // 商家编码
 @property (nonatomic, retain) NSString * size;
 @property (nonatomic, retain) NSNumber * state;
 @property (nonatomic, retain) NSNumber * auth;

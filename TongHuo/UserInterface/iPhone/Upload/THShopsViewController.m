@@ -83,7 +83,7 @@
     
     THConfigration * configration = [THConfigration sharedConfigration];
     BOOL needToSync = !configration.isShopsSynced;
-    if (needToSync)
+    if (needToSync && [THAuthorizer sharedAuthorizer].currentAccount)
     {
         [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
                              maskType:SVProgressHUDMaskTypeGradient];
@@ -116,7 +116,10 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.viewModel.active = YES;
+    if ([THAuthorizer sharedAuthorizer].isLoggedIn)
+    {
+        self.viewModel.active = YES;
+    }
 }
 
 #pragma mark - Table View

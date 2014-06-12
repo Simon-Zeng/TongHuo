@@ -12,6 +12,9 @@
 #import "THAuthorizer.h"
 #import "Goods.h"
 
+#import "Account.h"
+
+
 #define kSecret @"UUIJ98239JS89UJWQ3XM9I%&*ui ncd^"
 
 //    userinfo.loginname

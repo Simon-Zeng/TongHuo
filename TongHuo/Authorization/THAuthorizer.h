@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import "Account.h"
+@class Account;
+@class RACSignal;
 
 @interface THAuthorizer : NSObject
 

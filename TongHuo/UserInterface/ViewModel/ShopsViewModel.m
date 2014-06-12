@@ -45,7 +45,10 @@
     [RACObserve(self, searchString) subscribeNext:^(NSString * x) {
         @strongify(self);
         
-        if( x)
+        THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
+        
+        NSNumber * uid = authorizer.currentAccount.identifier;
+        if (uid)
         {
             NSString * s = [x stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
             
@@ -56,11 +59,11 @@
             
             if (s && s.length > 0)
             {
-                request.predicate = [NSPredicate predicateWithFormat:@"marketId = %@ AND name contains[cd] %@", self.market.identifier, s];
+                request.predicate = [NSPredicate predicateWithFormat:@"uid = %@ AND marketId = %@ AND name contains[cd] %@", uid, self.market.identifier, s];
             }
             else
             {
-                request.predicate = [NSPredicate predicateWithFormat:@"%K = %@", @"marketId", self.market.identifier];
+                request.predicate = [NSPredicate predicateWithFormat:@"uid = %@ AND %K = %@", @"marketId", uid, self.market.identifier];
             }
             [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
             
@@ -159,7 +162,13 @@
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"%K = %@", @"marketId", self.market.identifier];
+    THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
+    
+    NSNumber * uid = authorizer.currentAccount.identifier;
+    if (uid)
+    {
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"uid = %@ AND %K = %@", @"marketId", uid, self.market.identifier];
+    }
     
     // Set the batch size to a suitable number.
 //    [fetchRequest setFetchBatchSize:20];

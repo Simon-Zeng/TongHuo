@@ -158,7 +158,7 @@
         @strongify(self);
         if (![THAuthorizer sharedAuthorizer].isLoggedIn)
         {
-            [self showLoginFailedAlertWithError:nil];
+            [self showLoginFailedAlertWithError:err];
         }
     }];
 }
@@ -170,9 +170,9 @@
         [SVProgressHUD dismiss];
         
         NSString * message = @"您输入的用户名或者密码不正确，请重新输入后再试！";
-        if (error)
+        if (error && [error.domain isEqual:NSURLErrorDomain])
         {
-            message = [NSString stringWithFormat:@"错误: %@", error];
+            message = [NSString stringWithFormat:@"错误: %@", error.localizedDescription];
         }
         
         AMSmoothAlertView * alertView = [[AMSmoothAlertView alloc] initDropAlertWithTitle:@"登录失败"

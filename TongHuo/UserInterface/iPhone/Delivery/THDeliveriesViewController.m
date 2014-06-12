@@ -18,6 +18,8 @@
 
 @property (nonatomic,strong) UISearchDisplayController *searchDisplayVC;
 
+@property (nonatomic, strong) FUISegmentedControl * stateControl;
+
 @end
 
 @implementation THDeliveriesViewController
@@ -54,6 +56,22 @@
     
     self.title = NSLocalizedString(@"发货中心", nil);
     
+    UIView * titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    titleView.backgroundColor = [UIColor clearColor];
+    
+    self.stateControl = [[FUISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"未发货", nil), NSLocalizedString(@"已发货", nil)]];
+    self.stateControl.bounds = CGRectMake(0, 0, 120, 31);
+    self.stateControl.selectedColor = [UIColor colorWithRed:242.0/255
+                                                      green:39.0/255
+                                                       blue:131.0/255
+                                                      alpha:1.0];
+    self.stateControl.deselectedColor = [UIColor clearColor];
+    [self.stateControl addTarget:self
+                          action:@selector(stateControlDidChangeValue:)
+                forControlEvents:UIControlEventValueChanged];
+    
+    self.navigationItem.titleView = self.stateControl;
+    
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     searchBar.showsCancelButton = NO;
     searchBar.text = nil;
@@ -80,7 +98,7 @@
     
     THConfigration * configration = [THConfigration sharedConfigration];
     BOOL needToSync = configration.hasOrdersToSync;
-    if (needToSync)
+    if (needToSync && [THAuthorizer sharedAuthorizer].currentAccount)
     {
         [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
                              maskType:SVProgressHUDMaskTypeGradient];
@@ -111,7 +129,20 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.viewModel.active = YES;
+    if ([THAuthorizer sharedAuthorizer].isLoggedIn)
+    {
+        self.viewModel.active = YES;
+    }
+    
+    self.stateControl.selectedSegmentIndex = 0;
+}
+
+#pragma mark - 
+- (void)stateControlDidChangeValue:(FUISegmentedControl *)control
+{
+    NSNumber * index = @(control.selectedSegmentIndex);
+    
+    self.viewModel.state = index;
 }
 
 #pragma mark - Table View

@@ -8,6 +8,9 @@
 
 #import "MarketsViewModel.h"
 
+
+#import "Account.h"
+
 #import "Markets+Access.h"
 
 @interface MarketsViewModel ()
@@ -43,7 +46,11 @@
     [RACObserve(self, searchString) subscribeNext:^(NSString * x) {
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
-            if (x)
+            
+            THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
+            
+            NSNumber * uid = authorizer.currentAccount.identifier;
+            if (uid)
             {
                 NSString * s = [x stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
                 
@@ -51,11 +58,11 @@
                 
                 if (s && s.length > 0)
                 {
-                    request.predicate = [NSPredicate predicateWithFormat:@"%K contains[cd] %@", @"name", s];
+                    request.predicate = [NSPredicate predicateWithFormat:@"uid = %@ AND %K contains[cd] %@", uid, @"name", s];
                 }
                 else
                 {
-                    request.predicate = nil;
+                    request.predicate = [NSPredicate predicateWithFormat:@"uid = %@", uid];
                 }
                 [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
                 
@@ -157,7 +164,15 @@
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
-
+    
+    THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
+    
+    NSNumber * uid = authorizer.currentAccount.identifier;
+    if (uid)
+    {
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"uid = %@", uid]];
+    }
+    
     // Set the batch size to a suitable number.
 //    [fetchRequest setFetchBatchSize:20];
     
