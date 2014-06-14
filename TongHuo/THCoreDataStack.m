@@ -84,7 +84,7 @@
 - (void)saveContext:(NSManagedObjectContext *)ctx
 {
     @autoreleasepool {
-        [ctx performBlock:^{
+        [ctx performBlockAndWait:^{
             NSError *error = nil;
             
             if ([ctx hasChanges])

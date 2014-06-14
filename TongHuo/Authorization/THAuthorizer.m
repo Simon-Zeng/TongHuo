@@ -189,10 +189,11 @@
         if ([responseObject isKindOfClass:[NSDictionary class]])
         {
              Account * currentAccount = [Account objectFromDictionary:responseObject];
+            
             [self refreshTBAuthenticationFor:currentAccount.identifier];
             
             [[THCoreDataStack defaultStack] saveContext];
-            
+
             self.currentAccountID = [currentAccount objectID];
         }
     }];

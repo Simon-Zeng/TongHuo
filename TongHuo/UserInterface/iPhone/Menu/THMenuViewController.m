@@ -116,7 +116,11 @@
         if (x)
         {
             Account * account = (Account *)[[THCoreDataStack defaultStack].threadManagedObjectContext objectWithID:x];
-            self.titleLabel.text = [NSString stringWithFormat:@"欢迎: %@", account.loginname];
+            NSString * loginName = account.loginname;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.titleLabel.text = [NSString stringWithFormat:@"欢迎: %@", loginName];
+            });
         }
     }];
     
