@@ -56,13 +56,24 @@
     
     self.title = NSLocalizedString(@"统货中心", nil);
     
-    self.stateControl = [[FUISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"未发货", nil), NSLocalizedString(@"已发货", nil)]];
+    self.stateControl = [[FUISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"未提货", nil), NSLocalizedString(@"已提货", nil)]];
     self.stateControl.bounds = CGRectMake(0, 0, 120, 31);
+    self.stateControl.selectedColor = [UIColor colorWithRed:242.0/255
+                                                      green:39.0/255
+                                                       blue:131.0/255
+                                                      alpha:1.0];
+    self.stateControl.deselectedColor = [UIColor clearColor];
     [self.stateControl addTarget:self
                           action:@selector(stateControlDidChangeValue:)
                 forControlEvents:UIControlEventValueChanged];
     
     self.navigationItem.titleView = self.stateControl;
+    
+    UIBarButtonItem * rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"同步", nil)
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(synchronizeOrders:)];
+    self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     searchBar.showsCancelButton = NO;
@@ -90,7 +101,7 @@
     
     THConfigration * configration = [THConfigration sharedConfigration];
     BOOL needToSync = configration.hasOrdersToSync;
-    if (needToSync && [THAuthorizer sharedAuthorizer].currentAccount)
+    if (needToSync && [THAuthorizer sharedAuthorizer].isLoggedIn)
     {
         [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
                              maskType:SVProgressHUDMaskTypeGradient];
@@ -136,6 +147,19 @@
     NSNumber * index = @(control.selectedSegmentIndex);
     
     self.viewModel.state = index;
+}
+
+- (void)synchronizeOrders:(id)sender
+{
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"同步中...", nil)
+                         maskType:SVProgressHUDMaskTypeGradient];
+    
+    [self.viewModel.synchronizeSignal subscribeNext:^(id x) {
+        [SVProgressHUD dismiss];
+    } error:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        NSLog(@"--- Synchronization error: %@", error);
+    }];
 }
 
 #pragma mark - Table View

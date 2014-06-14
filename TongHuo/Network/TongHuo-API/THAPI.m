@@ -70,10 +70,10 @@
 
 @interface THAPI ()
 
-@property (nonatomic, strong) NSNumber * accountUserIdentifier;
+@property (nonatomic, readwrite, strong) NSNumber * accountUserIdentifier;
 
-@property (nonatomic, strong) AFHTTPRequestOperationManager * getManager;
-@property (nonatomic, strong) AFHTTPRequestOperationManager * postManager;
+@property (nonatomic, readwrite, strong) AFHTTPRequestOperationManager * getManager;
+@property (nonatomic, readwrite, strong) AFHTTPRequestOperationManager * postManager;
 
 @end
 
@@ -106,9 +106,20 @@
         RACSignal * updateSignal = [THAuthorizer sharedAuthorizer].updateSignal;
         
         @weakify(self);
-        [updateSignal subscribeNext:^(Account * x) {
+        [updateSignal subscribeNext:^(NSManagedObjectID * x) {
             @strongify(self);
-            self.accountUserIdentifier = x.identifier;
+            if (x)
+            {
+                NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
+                
+                [context performBlockAndWait:^{
+                    Account * account = (Account *)[context objectWithID:x];
+                    
+                    [account willAccessValueForKey:nil];
+                    
+                    self.accountUserIdentifier = account.identifier;
+                }];
+            }
         }];
     }
     

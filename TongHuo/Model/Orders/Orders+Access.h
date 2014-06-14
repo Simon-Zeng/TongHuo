@@ -15,5 +15,10 @@
 + (instancetype)objectFromDictionary:(NSDictionary *)dict;
 
 
+#pragma mark -
++(NSArray *)getAllOrdersWithCriteria:(NSDictionary *)criteria;
+
+- (NSDictionary *)presentAsDictionary;
+
 
 @end

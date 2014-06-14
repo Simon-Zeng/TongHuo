@@ -122,9 +122,7 @@
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
-    
-    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"shopId = %@", self.shop.identifier];
-    
+
     // Set the batch size to a suitable number.
 //    [fetchRequest setFetchBatchSize:20];
     
@@ -135,6 +133,20 @@
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     return fetchRequest;
+}
+
+- (void)updateFetchRequest
+{
+    NSMutableDictionary * criteria = [[NSMutableDictionary alloc] init];
+    
+    if (self.shop)
+    {
+        [self.shop willAccessValueForKey:nil];
+        
+        [criteria setObject:self.shop.identifier forKey:@"shopId"];
+    }
+    
+    [self updateFetchRequestWithCriteria:criteria];
 }
 
 - (NSString *)sectionNameKeyForEntity

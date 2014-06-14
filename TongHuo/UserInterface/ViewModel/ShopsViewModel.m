@@ -13,6 +13,8 @@
 
 @interface ShopsViewModel ()
 
+@property (nonatomic, strong) NSNumber * marketID;
+
 @end
 
 
@@ -45,26 +47,11 @@
     [RACObserve(self, searchString) subscribeNext:^(NSString * x) {
         @strongify(self);
         
-        THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
-        
-        NSNumber * uid = authorizer.currentAccount.identifier;
+        NSNumber * uid = self.uid;
         if (uid)
         {
-            NSString * s = [x stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
+            [self updateFetchRequest];
             
-            NSFetchRequest * request = self.fetchedResultsController.fetchRequest;
-            
-            // Unfault the object before access its properties, otherwise nil will be returneds
-            [self.market willAccessValueForKey:nil];
-            
-            if (s && s.length > 0)
-            {
-                request.predicate = [NSPredicate predicateWithFormat:@"uid = %@ AND marketId = %@ AND name contains[cd] %@", uid, self.market.identifier, s];
-            }
-            else
-            {
-                request.predicate = [NSPredicate predicateWithFormat:@"uid = %@ AND %K = %@", @"marketId", uid, self.market.identifier];
-            }
             [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
             
             NSError *error = nil;
@@ -74,8 +61,8 @@
                 NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
                 abort();
             }
-            [(RACSubject *)self.updatedContentSignal sendNext:nil];
 
+            [(RACSubject *)self.updatedContentSignal sendNext:nil];
         }
     }];
 
@@ -110,6 +97,16 @@
         
         return nil;
     }];
+}
+
+- (void)setMarket:(Markets *)market
+{
+    if (_market != market)
+    {
+        self.marketID = market.identifier;
+        
+        _market = market;
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -162,14 +159,7 @@
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
-    THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
-    
-    NSNumber * uid = authorizer.currentAccount.identifier;
-    if (uid)
-    {
-        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"uid = %@ AND %K = %@", @"marketId", uid, self.market.identifier];
-    }
-    
+
     // Set the batch size to a suitable number.
 //    [fetchRequest setFetchBatchSize:20];
     
@@ -180,6 +170,27 @@
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     return fetchRequest;
+}
+
+- (void)updateFetchRequest
+{
+    NSString * s = [self.searchString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
+    
+    NSMutableDictionary * criteria = [[NSMutableDictionary alloc] init];
+    
+    if (self.marketID)
+    {
+        [criteria setObject:self.marketID forKey:@"marketId"];
+    }
+    
+    if (s && s.length > 0)
+    {
+        NSArray * r = @[s, @"CONTAINS[cd]"];
+        [criteria setObject:r forKey:@"name"];
+    }
+    
+    [self updateFetchRequestWithCriteria:criteria];
+    
 }
 
 - (NSString *)sectionNameKeyForEntity

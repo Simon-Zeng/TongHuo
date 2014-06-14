@@ -19,6 +19,7 @@
 @property (nonatomic, strong) UIImageView * iconView;
 @property (nonatomic, strong) UILabel * titleLable;
 @property (nonatomic, strong) UILabel * infoLabel;
+@property (nonatomic, strong) UILabel * countLabel;
 
 @property (nonatomic, strong) THUISwitch * deliveredSwitch;
 
@@ -59,8 +60,20 @@
         
         [self.contentView addSubview:self.infoLabel];
         
+        self.countLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width - 90, 8, 75, 20)];
+        self.countLabel.backgroundColor = [UIColor clearColor];
+        self.countLabel.textAlignment = NSTextAlignmentRight;
+        self.countLabel.font = [UIFont flatFontOfSize:13];
+        self.countLabel.textColor = [UIColor colorWithRed:139/255.0
+                                                    green:17/255.0
+                                                     blue:1/255.0
+                                                    alpha:1.0];
+        self.countLabel.numberOfLines = 1;
+        
+        [self.contentView addSubview:self.countLabel];
+        
         self.deliveredSwitch  = [[THUISwitch alloc] init];
-        self.deliveredSwitch.frame = CGRectMake(self.frame.size.width - 90, 8, 75, 24.0);
+        self.deliveredSwitch.frame = CGRectMake(self.frame.size.width - 90, 38, 75, 24.0);
         self.deliveredSwitch.onBackgroundColor = [UIColor colorWithRed:224.0/255
                                                                  green:35.0/255
                                                                   blue:122.0/255
@@ -106,6 +119,7 @@
     
     self.titleLable.text = product.buyer;
     self.infoLabel.text = [NSString stringWithFormat:@"%@, %@", product.color, product.size];
+    self.countLabel.text = [NSString stringWithFormat:@"%@ 件", product.count];
     
     if (1 == product.state.longLongValue)
     {

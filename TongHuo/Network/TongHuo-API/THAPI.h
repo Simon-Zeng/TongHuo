@@ -12,6 +12,10 @@
 
 @interface THAPI : NSObject
 
+
+@property (nonatomic, readonly) NSNumber * accountUserIdentifier;
+
+
 + (instancetype) apiCenter;
 
 

@@ -72,6 +72,12 @@
     
     self.navigationItem.titleView = self.stateControl;
     
+    UIBarButtonItem * rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"同步", nil)
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(synchronizeOrders:)];
+    self.navigationItem.rightBarButtonItem = rightBarButtonItem;
+    
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     searchBar.showsCancelButton = NO;
     searchBar.text = nil;
@@ -98,7 +104,7 @@
     
     THConfigration * configration = [THConfigration sharedConfigration];
     BOOL needToSync = configration.hasOrdersToSync;
-    if (needToSync && [THAuthorizer sharedAuthorizer].currentAccount)
+    if (needToSync && [THAuthorizer sharedAuthorizer].isLoggedIn)
     {
         [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
                              maskType:SVProgressHUDMaskTypeGradient];
@@ -144,6 +150,20 @@
     
     self.viewModel.state = index;
 }
+
+- (void)synchronizeOrders:(id)sender
+{
+    [SVProgressHUD showWithStatus:NSLocalizedString(@"同步中...", nil)
+                         maskType:SVProgressHUDMaskTypeGradient];
+    
+    [self.viewModel.synchronizeSignal subscribeNext:^(id x) {
+        [SVProgressHUD dismiss];
+    } error:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        NSLog(@"--- Synchronization error: %@", error);
+    }];
+}
+
 
 #pragma mark - Table View
 

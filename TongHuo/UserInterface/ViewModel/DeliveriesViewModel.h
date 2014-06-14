@@ -13,6 +13,8 @@
 @interface DeliveriesViewModel : THBasicViewModel
 
 @property (nonatomic, readonly) RACSignal * refreshSignal;
+@property (nonatomic, readonly) RACSignal * synchronizeSignal;
+
 
 @property (nonatomic, strong) NSNumber * state;
 @property (nonatomic, strong) NSString * searchString;

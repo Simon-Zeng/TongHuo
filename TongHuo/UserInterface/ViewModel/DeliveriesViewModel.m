@@ -48,24 +48,11 @@
                         ]]
      subscribeNext:^(id x) {
          @strongify(self);
-         
-         THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
-         
-         NSNumber * uid = authorizer.currentAccount.identifier;
+         NSNumber * uid = self.uid;
          if (uid)
          {
-             NSString * s = [self.searchString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
+             [self updateFetchRequest];
              
-             NSFetchRequest * request = self.fetchedResultsController.fetchRequest;
-             
-             if (s && s.length > 0)
-             {
-                 request.predicate = [NSPredicate predicateWithFormat:@"uid = %@ AND state = %@ AND name contains[cd] %@", uid, self.state, s];
-             }
-             else
-             {
-                 [request setPredicate:[NSPredicate predicateWithFormat:@"uid = %@ AND state = %@", uid, self.state]];
-             }
              [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
              
              NSError *error = nil;
@@ -86,7 +73,59 @@
 - (RACSignal *)refreshSignal
 {
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        RACSignal * request = [[THAPI apiCenter] getMarkets];
+        
+        THAPI * apiCenter = [THAPI apiCenter];
+        
+        return [RACObserve(apiCenter, accountUserIdentifier) subscribeNext:^(id x) {
+            if (x)
+            {
+                RACSignal * request = [[THAPI apiCenter] getMarkets];
+                
+                [request subscribeNext:^(RACTuple * x) {
+                    NSDictionary * response = x[1];
+                    
+                    if (response && [response isKindOfClass:[NSDictionary class]])
+                    {
+                        NSArray * ordersInfo = [response objectForKey:@"fh"];
+                        NSArray * productsInfo = [response objectForKey:@"pro"];
+                        
+                        for (NSDictionary * aDict1 in ordersInfo)
+                        {
+                            [Orders objectFromDictionary:aDict1];
+                        }
+                        
+                        for (NSDictionary * aDict2 in productsInfo)
+                        {
+                            [Product objectFromDictionary:aDict2];
+                        }
+                    }
+                    [[THCoreDataStack defaultStack] saveContext];
+                    
+                    [subscriber sendNext:nil];
+                    [subscriber sendCompleted];
+                } error:^(NSError *error) {
+                    [subscriber sendError:error];
+                } completed:^{
+                    [subscriber sendNext:nil];
+                    [subscriber sendCompleted];
+                }];
+            }
+        }];
+    }];
+}
+
+- (RACSignal *)synchronizeSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+
+        NSNumber * uid = self.uid;
+        
+        NSArray * changedProducts = [Product getAllOrdersWithCriteria:(@{
+                                                                         @"uid": uid,
+                                                                         @"state": @0
+                                                                         })];
+        
+        RACSignal * request = [[THAPI apiCenter] postAndGetOrders:changedProducts];
         
         [request subscribeNext:^(RACTuple * x) {
             NSDictionary * response = x[1];
@@ -106,6 +145,7 @@
                     [Product objectFromDictionary:aDict2];
                 }
             }
+            
             [[THCoreDataStack defaultStack] saveContext];
             
             [subscriber sendNext:nil];
@@ -171,14 +211,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
     
-    THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
-    
-    NSNumber * uid = authorizer.currentAccount.identifier;
-    if (uid)
-    {
-        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"uid = %@ AND state = %@", uid, self.state]];
-    }
-    
+        
     // Set the batch size to a suitable number.
 //    [fetchRequest setFetchBatchSize:20];
     
@@ -189,6 +222,31 @@
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     return fetchRequest;
+}
+
+- (void)updateFetchRequest
+{
+    NSString * s = [self.searchString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
+    
+    NSMutableDictionary * criteria = [[NSMutableDictionary alloc] init];
+    
+    NSNumber * uid = self.uid;
+    if (uid)
+    {
+        [criteria setObject:uid forKey:@"uid"];
+    }
+    
+    if (self.state)
+    {
+        [criteria setObject:self.state forKey:@"state"];
+    }
+    if (s && s.length > 0)
+    {
+        NSArray * r = @[s, @"CONTAINS[cd]"];
+        [criteria setObject:r forKey:@"name"];
+    }
+    
+    [self updateFetchRequestWithCriteria:criteria];
 }
 
 - (NSString *)sectionNameKeyForEntity

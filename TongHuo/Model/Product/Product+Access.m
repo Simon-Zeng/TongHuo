@@ -186,5 +186,84 @@
     return nil;
 }
 
+#pragma mark -
++ (NSArray *)getAllOrdersWithCriteria:(NSDictionary *)criteria
+{
+    __block NSArray * result = nil;
+    
+    NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
+    
+    [context performBlockAndWait:^{
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        NSMutableArray * precidates = [[NSMutableArray alloc] init];
+        
+        for (NSString * key in criteria)
+        {
+            id value = [criteria objectForKey:@"value"];
+            
+            NSPredicate * precidate = [NSPredicate predicateWithFormat:@"%K = %@", key, value];
+            
+            [precidates addObject:precidate];
+        }
+        
+        if (precidates.count > 0)
+        {
+            NSCompoundPredicate * compoundPrecidate = [[NSCompoundPredicate alloc] initWithType:NSAndPredicateType
+                                                                                  subpredicates:precidates];
+            
+            request.predicate = compoundPrecidate;
+        }
+        
+        //    request.propertiesToFetch = @[@"id"];
+        
+        request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
+                                     inManagedObjectContext:context];
+        
+        NSError * executeFetchError = nil;
+        result = [context executeFetchRequest:request error:&executeFetchError];
+        if (executeFetchError) {
+            NSLog(@"[%@, %@] error looking Orders with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
+        }
+    }];
+    
+    return result;
+}
+
+- (NSDictionary *)presentAsDictionary
+{
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+    
+    NSArray * properties = [[self entity] properties];
+    
+    for (NSPropertyDescription * propertyDesc in properties)
+    {
+        NSString * name = [propertyDesc name];
+        id value = [self valueForKey:name];
+        
+        if (value)
+        {
+            if ([name isEqual:@"identifier"])
+            {
+                [dict setValue:value forKey:@"id"];
+            }
+            else if ([name isEqual:@"shopId"])
+            {
+                [dict setValue:value forKey:@"did"];
+            }
+            else if ([name isEqual:@"shopName"])
+            {
+                [dict setValue:value forKey:@"dname"];
+            }
+            else
+            {
+                [dict setValue:value forKey:name];
+            }
+        }
+    }
+    
+    return dict;
+}
+
 @end
 

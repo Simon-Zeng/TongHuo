@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
 @class Account;
 @class RACSignal;
@@ -19,7 +20,7 @@
 @property (nonatomic, assign, getter = isAutoSignInEnabled) BOOL autoSignInEnabled;
 
 @property (nonatomic, readonly) BOOL isLoggedIn;
-@property (nonatomic, readonly) Account * currentAccount;
+@property (nonatomic, readonly) NSManagedObjectID * currentAccountID;
 @property (nonatomic, readonly) NSArray * platforms;
 
 @property (nonatomic, readonly) RACSignal * updateSignal;

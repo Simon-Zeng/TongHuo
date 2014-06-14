@@ -47,23 +47,11 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             @strongify(self);
             
-            THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
-            
-            NSNumber * uid = authorizer.currentAccount.identifier;
+            NSNumber * uid = self.uid;
             if (uid)
             {
-                NSString * s = [x stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
+                [self updateFetchRequest];
                 
-                NSFetchRequest * request = self.fetchedResultsController.fetchRequest;
-                
-                if (s && s.length > 0)
-                {
-                    request.predicate = [NSPredicate predicateWithFormat:@"uid = %@ AND %K contains[cd] %@", uid, @"name", s];
-                }
-                else
-                {
-                    request.predicate = [NSPredicate predicateWithFormat:@"uid = %@", uid];
-                }
                 [NSFetchedResultsController deleteCacheWithName:self.fetchedResultsController.cacheName];
                 
                 NSError *error = nil;
@@ -165,14 +153,6 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
     
-    THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
-    
-    NSNumber * uid = authorizer.currentAccount.identifier;
-    if (uid)
-    {
-        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"uid = %@", uid]];
-    }
-    
     // Set the batch size to a suitable number.
 //    [fetchRequest setFetchBatchSize:20];
     
@@ -183,6 +163,22 @@
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     return fetchRequest;
+}
+
+- (void)updateFetchRequest
+{
+    NSString * s = [self.searchString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
+    
+    NSMutableDictionary * criteria = [[NSMutableDictionary alloc] init];
+    
+    if (s && s.length > 0)
+    {
+        NSArray * r = @[s, @"CONTAINS[cd]"];
+        [criteria setObject:r forKey:@"name"];
+    }
+    
+    [self updateFetchRequestWithCriteria:criteria];
+    
 }
 
 - (NSString *)sectionNameKeyForEntity

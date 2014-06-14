@@ -83,7 +83,7 @@
     
     THConfigration * configration = [THConfigration sharedConfigration];
     BOOL needToSync = !configration.isMarketsSynced;
-    if (needToSync && [THAuthorizer sharedAuthorizer].currentAccount)
+    if (needToSync && [THAuthorizer sharedAuthorizer].isLoggedIn)
     {
         [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
                              maskType:SVProgressHUDMaskTypeGradient];

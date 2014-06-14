@@ -20,7 +20,7 @@
 
 @interface THAuthorizer ()
 
-@property (nonatomic, readwrite) Account * currentAccount;
+@property (nonatomic, readwrite) NSManagedObjectID * currentAccountID;
 @property (nonatomic, strong) NSArray * platforms;
 
 - (void) loadAuthentication;
@@ -61,7 +61,7 @@
         
         _autoSignInEnabled = NO;
         
-        _currentAccount = nil;
+        _currentAccountID = nil;
         
         [self loadAuthentication];
     }
@@ -110,7 +110,7 @@
     _username = nil;
     _password = nil;
     
-    _currentAccount = nil;
+    _currentAccountID = nil;
 }
 
 - (BOOL)isAutoSignInEnabled
@@ -120,18 +120,9 @@
 
 - (BOOL)isLoggedIn
 {
-    if (_currentAccount)
+    if (_currentAccountID)
     {
-        [_currentAccount willAccessValueForKey:nil];
-        
-        if (_currentAccount.identifier.longLongValue > 0)
-        {
-            return YES;
-        }
-        else
-        {
-            return NO;
-        }
+        return YES;
     }
     else
     {
@@ -197,8 +188,12 @@
         @strongify(self);
         if ([responseObject isKindOfClass:[NSDictionary class]])
         {
-            self.currentAccount = [Account objectFromDictionary:responseObject];
-            [self refreshTBAuthenticationFor:self.currentAccount.identifier];
+             Account * currentAccount = [Account objectFromDictionary:responseObject];
+            [self refreshTBAuthenticationFor:currentAccount.identifier];
+            
+            [[THCoreDataStack defaultStack] saveContext];
+            
+            self.currentAccountID = [currentAccount objectID];
         }
     }];
     
@@ -208,7 +203,7 @@
 
 - (RACSignal *)updateSignal
 {
-    RACSignal * signal = RACObserve(self, currentAccount);
+    RACSignal * signal = RACObserve(self, currentAccountID);
     
     return signal;
 }

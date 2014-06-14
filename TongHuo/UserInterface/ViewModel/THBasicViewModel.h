@@ -17,6 +17,8 @@
 
 - (NSFetchRequest *)fetchRequest;
 
+- (void)updateFetchRequest;
+
 - (NSString *)sectionNameKeyForEntity;
 - (NSString *)chacheName;
 
@@ -26,6 +28,8 @@
 
 
 @property (nonatomic, readonly) RACSignal *updatedContentSignal;
+
+@property (nonatomic, readonly) NSNumber * uid;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (readonly, nonatomic) NSManagedObjectContext *model;
@@ -40,5 +44,8 @@
 //
 // Returns an initialized view model, or nil if an error occurs.
 - (instancetype)initWithModel:(id)model;
+
+// Convenient method for helping updateFetchRequest;
+- (void)updateFetchRequestWithCriteria:(NSDictionary *)criteria;
 
 @end

@@ -8,9 +8,13 @@
 
 #import "THBasicViewModel.h"
 
+#import "THCoreDataStack.h"
+
 @interface THBasicViewModel () <NSFetchedResultsControllerDelegate>
 
-@property (nonatomic, strong) RACSubject *updatedContentSignal;
+@property (nonatomic, readwrite, strong) RACSubject *updatedContentSignal;
+
+@property (nonatomic, readwrite, strong) NSNumber * uid;
 
 @property (nonatomic, strong) id observer;
 
@@ -35,10 +39,28 @@
     @weakify(self)
     [self.didBecomeActiveSignal subscribeNext:^(id x) {
         @strongify(self);
+        if(self.fetchedResultsController)
+        {
+            [self updateFetchRequest];
+        }
+        
         [self.fetchedResultsController performFetch:nil];
     }];
     
-
+    THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
+    
+    [authorizer.updateSignal subscribeNext:^(NSManagedObjectID * x) {
+        @strongify(self);
+        
+        Account * account = nil;
+        
+        if (x)
+        {
+            account = (Account *)[[THCoreDataStack defaultStack].threadManagedObjectContext objectWithID:x];
+        }
+        
+        self.uid = account.identifier;
+    }];
     
 	return self;
 }
@@ -51,11 +73,67 @@
     }
 }
 
+- (void)updateFetchRequest
+{
+    NSAssert(NO, @"This method should be override in subclass");
+}
+
+- (void)updateFetchRequestWithCriteria:(NSDictionary *)criteria
+{
+    NSFetchRequest * fetchRequest = self.fetchedResultsController.fetchRequest;
+    
+    if (fetchRequest)
+    {
+        NSMutableArray * predicates = [[NSMutableArray alloc] init];
+        
+        for (NSString * key in criteria)
+        {
+            NSPredicate * predicate = nil;
+            
+            id value = [criteria objectForKey:key];
+            
+            if ([value isKindOfClass:[NSArray class]])
+            {
+                id realValue = [value firstObject];
+                NSString * relation = [value lastObject];
+                
+                if (realValue == relation) // default = used
+                {
+                    predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, realValue];
+                }
+                else
+                {
+                    NSString * format = [NSString stringWithFormat:@"%%K %@ %%@", relation];
+                    predicate = [NSPredicate predicateWithFormat:format, key, realValue];
+                }
+            }
+            else
+            {
+                predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, value];
+            }
+            
+            [predicates addObject:predicate];
+        }
+        
+        NSCompoundPredicate * compoundPredicate = [[NSCompoundPredicate alloc] initWithType:NSAndPredicateType
+                                                                              subpredicates:predicates];
+#if DEBUG
+        NSLog(@"+++++ Query %@ using: %@", fetchRequest.entityName, compoundPredicate);
+#endif
+        fetchRequest.predicate = compoundPredicate;
+    }
+}
+
 #pragma mark - THBasicViewModelCoreDataProtocol
 
 - (NSFetchRequest *)fetchRequest
 {
     return nil;
+}
+
+- (void)updateFetchWithCriteria:(NSDictionary *)criteria
+{
+    
 }
 
 - (NSString *)sectionNameKeyForEntity
