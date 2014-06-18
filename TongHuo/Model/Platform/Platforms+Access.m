@@ -20,6 +20,7 @@
     
     request.entity = [NSEntityDescription entityForName:[self entityName]
                                  inManagedObjectContext:context];
+    request.returnsObjectsAsFaults = NO;
     
     request.predicate = [NSPredicate predicateWithFormat:@"identifier = %@", identifier];
     

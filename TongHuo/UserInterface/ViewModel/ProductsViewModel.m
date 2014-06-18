@@ -121,7 +121,7 @@
         
         NSArray * changedProducts = [Product getAllOrdersWithCriteria:(@{
                                                                          @"uid": uid,
-                                                                         @"state": @0
+                                                                         @"state": @2,
                                                                          })];
         
         RACSignal * request = [[THAPI apiCenter] postAndGetOrders:changedProducts];

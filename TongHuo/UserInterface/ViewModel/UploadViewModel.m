@@ -56,9 +56,8 @@
     {
         _good = goods;
         
-        Platforms * platform = [[THAuthorizer sharedAuthorizer].platforms firstObject];
+        [goods willAccessValueForKey:nil];
         
-        self.tid = platform.identifier;
         self.title = goods.title;
         self.price = goods.price.description;
         
@@ -70,8 +69,10 @@
 //            id response = x[1];
             
             NSLog(@"---- Reponse String: %@", operation.responseString);
-            self.sellerCode = operation.responseString;
-//            NSLog(@"---- Response: %@", response);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.sellerCode = operation.responseString;
+            });
+            //            NSLog(@"---- Response: %@", response);
         } error:^(NSError *error) {
             NSLog(@"---- error: %@", error);
         }];

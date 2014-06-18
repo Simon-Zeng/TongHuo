@@ -10,4 +10,6 @@
 
 @interface QRCodeViewModel : THBasicViewModel
 
+- (BOOL)canOpenShop:(NSNumber *)shopId;
+
 @end

@@ -94,7 +94,7 @@
                   placeholderImage:[UIImage imageNamed:@"DefaultImage"]];
     
     self.titleLabel.text = good.numIid.description;
-    self.priceLabel.text = [NSString stringWithFormat:@"(%@)", good.price];
+    self.priceLabel.text = [NSString stringWithFormat:@"(%.2f)", good.price.floatValue];
     self.addressLabel.text = good.title;
     
     [self layoutSubviews];

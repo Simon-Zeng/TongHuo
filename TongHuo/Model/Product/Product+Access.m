@@ -66,7 +66,7 @@
     NSMutableDictionary * savedProduct = [self savedProduct];
     
     NSManagedObjectID * objectID = [aProduct objectID];
-    NSNumber * uniqueKey = [aProduct identifier];
+    NSString * uniqueKey = [aProduct courier];
     
     if (uniqueKey && objectID)
     {
@@ -74,13 +74,13 @@
     }
 }
 
-+ (NSManagedObjectID *)objectIDForIdentifier:(NSNumber *)identifier
++ (NSManagedObjectID *)objectIDForCourier:(NSString *)courier
 {
-    NSAssert(identifier, @"The method has a logic error");
+    NSAssert(courier, @"The method has a logic error");
     
     NSMutableDictionary * savedProduct = [self savedProduct];
     
-    return [savedProduct objectForKey:identifier];
+    return [savedProduct objectForKey:courier];
 }
 
 - (void)didSave
@@ -93,11 +93,11 @@
 
 #pragma mark - Public
 
-+ (instancetype)productWithId:(NSNumber *)identifier
++ (instancetype)productWithCourier:(NSString *)courier
 {
     Product * product = nil;
     
-    NSManagedObjectID * objectID = [self objectIDForIdentifier:identifier];
+    NSManagedObjectID * objectID = [self objectIDForCourier:courier];
     
     NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
     
@@ -148,15 +148,14 @@
     NSNumber * price2 = [dict objectForKey:@"price2"];
     NSString * ptitle = [dict objectForKey:@"ptitle"];
 
-    if (identifier)
+    if (courier)
     {
-        Product * product = [Product productWithId:identifier];
+        Product * product = [Product productWithCourier:courier];
         
         product.identifier = CNil(identifier);
         product.no = CNil(no);
         product.image = CNil(image);
         product.count = CNil(count);
-        product.state = CNil(state);
         product.dates = CNil(dates);
         product.color = CNil(color);
         product.size = CNil(size);
@@ -179,6 +178,11 @@
         product.price1 = CNil(price1);
         product.price2 = CNil(price2);
         product.ptitle = CNil(ptitle);
+        
+        // Handle local state change
+        if (product.state.longLongValue == 0) {
+            product.state = CNil(state);
+        }
 
         return product;
     }

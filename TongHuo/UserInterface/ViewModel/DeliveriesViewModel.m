@@ -120,30 +120,20 @@
 
         NSNumber * uid = self.uid;
         
-        NSArray * changedProducts = [Product getAllOrdersWithCriteria:(@{
-                                                                         @"uid": uid,
-                                                                         @"state": @0
-                                                                         })];
+        NSArray * changedOrders = [Orders getAllOrdersWithCriteria:(@{
+                                                                      @"uid": uid,
+                                                                      @"state": @1,
+                                                                      @"tb": @0
+                                                                      })];
         
-        RACSignal * request = [[THAPI apiCenter] postAndGetOrders:changedProducts];
+        RACSignal * request = [[THAPI apiCenter] postOrders:changedOrders];
         
         [request subscribeNext:^(RACTuple * x) {
             NSDictionary * response = x[1];
             
             if (response && [response isKindOfClass:[NSDictionary class]])
             {
-                NSArray * ordersInfo = [response objectForKey:@"fh"];
-                NSArray * productsInfo = [response objectForKey:@"pro"];
-                
-                for (NSDictionary * aDict1 in ordersInfo)
-                {
-                    [Orders objectFromDictionary:aDict1];
-                }
-                
-                for (NSDictionary * aDict2 in productsInfo)
-                {
-                    [Product objectFromDictionary:aDict2];
-                }
+                NSLog(@"---- Post Orders: %@", response);
             }
             
             [[THCoreDataStack defaultStack] saveContext];
@@ -189,14 +179,14 @@
 -(NSString *)titleForSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
     NSArray *sectionObjects = [sectionInfo objects];
-    Orders *representativeObject = [sectionObjects firstObject];
+    Product *representativeObject = [sectionObjects firstObject];
     
-    return representativeObject.ktype;
+    return representativeObject.cid.stringValue;
 }
 
 #pragma mark - Private Methods
 
--(Orders *)orderAtIndexPath:(NSIndexPath *)indexPath {
+-(Product *)productAtIndexPath:(NSIndexPath *)indexPath {
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
@@ -204,7 +194,7 @@
 
 - (NSFetchRequest *)fetchRequest
 {
-    NSString * entityName = [Orders entityName];
+    NSString * entityName = [Product entityName];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.

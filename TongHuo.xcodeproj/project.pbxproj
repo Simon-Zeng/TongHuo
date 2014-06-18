@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		530521231951DE5800B36FB8 /* LKPopupMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 530521221951DE5800B36FB8 /* LKPopupMenuController.m */; };
 		5306D002193DFECF005BD52E /* THCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306D001193DFECF005BD52E /* THCoreDataStack.m */; };
 		5306D005193E048C005BD52E /* MenuViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306D004193E048C005BD52E /* MenuViewModel.m */; };
 		5306D008193E08AC005BD52E /* THBasicViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5306D007193E08AC005BD52E /* THBasicViewModel.m */; };
@@ -41,6 +42,9 @@
 		531DB3011948A21B00D12FE1 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 531DB3001948A21B00D12FE1 /* Product.m */; };
 		531DB3041948A24500D12FE1 /* Orders.m in Sources */ = {isa = PBXBuildFile; fileRef = 531DB3031948A24500D12FE1 /* Orders.m */; };
 		531DB3081948BD5000D12FE1 /* THUISwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 531DB3071948BD5000D12FE1 /* THUISwitch.m */; };
+		5320BBAD194F403D005E1DBB /* UIImage+StackBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320BBA9194F403D005E1DBB /* UIImage+StackBlur.m */; };
+		5320BBAE194F403D005E1DBB /* THZoomPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320BBAB194F403D005E1DBB /* THZoomPopup.m */; };
+		5320BBAF194F403D005E1DBB /* zoomPopupClose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5320BBAC194F403D005E1DBB /* zoomPopupClose@2x.png */; };
 		532D1340193F504100CC0399 /* THTableViewMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D133F193F504100CC0399 /* THTableViewMenuCell.m */; };
 		532D1343193F50B300CC0399 /* THTableViewProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D1342193F50B300CC0399 /* THTableViewProductCell.m */; };
 		532D1346193F50C600CC0399 /* THTableViewDeliveryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D1345193F50C600CC0399 /* THTableViewDeliveryCell.m */; };
@@ -65,6 +69,8 @@
 		532DC94D192ED83700C07757 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC932192ED83600C07757 /* Foundation.framework */; };
 		532DC94E192ED83700C07757 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532DC936192ED83600C07757 /* UIKit.framework */; };
 		532DC956192ED83700C07757 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 532DC954192ED83700C07757 /* InfoPlist.strings */; };
+		5349B353195092E900E0564D /* THScanPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5349B352195092E900E0564D /* THScanPostViewController.m */; };
+		5349B3561950937F00E0564D /* ScanPostViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5349B3551950937F00E0564D /* ScanPostViewModel.m */; };
 		537F7B6B1942D93500CE1703 /* Account+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B6A1942D93500CE1703 /* Account+Access.m */; };
 		537F7B6E1942D94700CE1703 /* Goods+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B6D1942D94700CE1703 /* Goods+Access.m */; };
 		537F7B711942D95900CE1703 /* Markets+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B701942D95900CE1703 /* Markets+Access.m */; };
@@ -93,6 +99,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		530521211951DE5800B36FB8 /* LKPopupMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LKPopupMenuController.h; sourceTree = "<group>"; };
+		530521221951DE5800B36FB8 /* LKPopupMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LKPopupMenuController.m; sourceTree = "<group>"; };
 		5306D000193DFECF005BD52E /* THCoreDataStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THCoreDataStack.h; sourceTree = "<group>"; };
 		5306D001193DFECF005BD52E /* THCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THCoreDataStack.m; sourceTree = "<group>"; };
 		5306D003193E048C005BD52E /* MenuViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewModel.h; sourceTree = "<group>"; };
@@ -157,6 +165,11 @@
 		531DB3051948A8FF00D12FE1 /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
 		531DB3061948BD5000D12FE1 /* THUISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THUISwitch.h; sourceTree = "<group>"; };
 		531DB3071948BD5000D12FE1 /* THUISwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THUISwitch.m; sourceTree = "<group>"; };
+		5320BBA8194F403D005E1DBB /* UIImage+StackBlur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+StackBlur.h"; sourceTree = "<group>"; };
+		5320BBA9194F403D005E1DBB /* UIImage+StackBlur.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+StackBlur.m"; sourceTree = "<group>"; };
+		5320BBAA194F403D005E1DBB /* THZoomPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THZoomPopup.h; sourceTree = "<group>"; };
+		5320BBAB194F403D005E1DBB /* THZoomPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THZoomPopup.m; sourceTree = "<group>"; };
+		5320BBAC194F403D005E1DBB /* zoomPopupClose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "zoomPopupClose@2x.png"; sourceTree = "<group>"; };
 		532D133E193F504100CC0399 /* THTableViewMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THTableViewMenuCell.h; sourceTree = "<group>"; };
 		532D133F193F504100CC0399 /* THTableViewMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THTableViewMenuCell.m; sourceTree = "<group>"; };
 		532D1341193F50B300CC0399 /* THTableViewProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THTableViewProductCell.h; sourceTree = "<group>"; };
@@ -197,6 +210,10 @@
 		532DC953192ED83700C07757 /* TongHuoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TongHuoTests-Info.plist"; sourceTree = "<group>"; };
 		532DC955192ED83700C07757 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		532DC957192ED83700C07757 /* TongHuoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TongHuoTests.m; sourceTree = "<group>"; };
+		5349B351195092E900E0564D /* THScanPostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THScanPostViewController.h; sourceTree = "<group>"; };
+		5349B352195092E900E0564D /* THScanPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THScanPostViewController.m; sourceTree = "<group>"; };
+		5349B3541950937F00E0564D /* ScanPostViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanPostViewModel.h; sourceTree = "<group>"; };
+		5349B3551950937F00E0564D /* ScanPostViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanPostViewModel.m; sourceTree = "<group>"; };
 		537F7B691942D93500CE1703 /* Account+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Account+Access.h"; sourceTree = "<group>"; };
 		537F7B6A1942D93500CE1703 /* Account+Access.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Account+Access.m"; sourceTree = "<group>"; };
 		537F7B6C1942D94700CE1703 /* Goods+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Goods+Access.h"; sourceTree = "<group>"; };
@@ -256,6 +273,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		530521201951DE5800B36FB8 /* LKPopupMenu */ = {
+			isa = PBXGroup;
+			children = (
+				530521211951DE5800B36FB8 /* LKPopupMenuController.h */,
+				530521221951DE5800B36FB8 /* LKPopupMenuController.m */,
+			);
+			path = LKPopupMenu;
+			sourceTree = "<group>";
+		};
 		530FC0F31941F1C5007B55F2 /* General */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,6 +354,8 @@
 			children = (
 				5318246E1938D4E700AA1564 /* THDeliveriesViewController.h */,
 				5318246F1938D4E700AA1564 /* THDeliveriesViewController.m */,
+				5349B351195092E900E0564D /* THScanPostViewController.h */,
+				5349B352195092E900E0564D /* THScanPostViewController.m */,
 			);
 			path = Delivery;
 			sourceTree = "<group>";
@@ -404,6 +432,18 @@
 				531824721938D4F900AA1564 /* THMenuViewController.m */,
 			);
 			path = Menu;
+			sourceTree = "<group>";
+		};
+		5320BBA7194F403D005E1DBB /* THZoomPopup */ = {
+			isa = PBXGroup;
+			children = (
+				5320BBA8194F403D005E1DBB /* UIImage+StackBlur.h */,
+				5320BBA9194F403D005E1DBB /* UIImage+StackBlur.m */,
+				5320BBAA194F403D005E1DBB /* THZoomPopup.h */,
+				5320BBAB194F403D005E1DBB /* THZoomPopup.m */,
+				5320BBAC194F403D005E1DBB /* zoomPopupClose@2x.png */,
+			);
+			path = THZoomPopup;
 			sourceTree = "<group>";
 		};
 		532D133D193F4FE100CC0399 /* TableViewCell */ = {
@@ -532,6 +572,8 @@
 				5306D007193E08AC005BD52E /* THBasicViewModel.m */,
 				530FC1021942AEC5007B55F2 /* QRCodeViewModel.h */,
 				530FC1031942AEC5007B55F2 /* QRCodeViewModel.m */,
+				5349B3541950937F00E0564D /* ScanPostViewModel.h */,
+				5349B3551950937F00E0564D /* ScanPostViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -643,6 +685,8 @@
 		537F7AC61942C7C900CE1703 /* Extern */ = {
 			isa = PBXGroup;
 			children = (
+				530521201951DE5800B36FB8 /* LKPopupMenu */,
+				5320BBA7194F403D005E1DBB /* THZoomPopup */,
 			);
 			path = Extern;
 			sourceTree = "<group>";
@@ -809,6 +853,7 @@
 				532DC93D192ED83600C07757 /* InfoPlist.strings in Resources */,
 				532D60BB1931DFD200537D4C /* Settings.plist in Resources */,
 				532D60B91931DF7600537D4C /* Config.xcconfig in Resources */,
+				5320BBAF194F403D005E1DBB /* zoomPopupClose@2x.png in Resources */,
 				530FC0FC19421266007B55F2 /* shake.wav in Resources */,
 				532DC945192ED83600C07757 /* Images.xcassets in Resources */,
 			);
@@ -900,11 +945,13 @@
 				5306D005193E048C005BD52E /* MenuViewModel.m in Sources */,
 				531824731938D4F900AA1564 /* THMenuViewController.m in Sources */,
 				537F7B7D1942D9AC00CE1703 /* Shops+Access.m in Sources */,
+				5349B3561950937F00E0564D /* ScanPostViewModel.m in Sources */,
 				5318245D1938CA1500AA1564 /* UploadViewModel.m in Sources */,
 				532D1340193F504100CC0399 /* THTableViewMenuCell.m in Sources */,
 				5318248B1938D5AA00AA1564 /* THUploadGoodsViewController.m in Sources */,
 				532D60BE1931DFF900537D4C /* THSettings.m in Sources */,
 				531824791938D51900AA1564 /* THQRCodeViewController.m in Sources */,
+				530521231951DE5800B36FB8 /* LKPopupMenuController.m in Sources */,
 				537F7B711942D95900CE1703 /* Markets+Access.m in Sources */,
 				530FC0F81941F1F3007B55F2 /* UINavigationBar+statusBarColor.m in Sources */,
 				532DC943192ED83600C07757 /* AppDelegate.m in Sources */,
@@ -927,6 +974,7 @@
 				53AA3D7419387E1400D9C35B /* Goods.m in Sources */,
 				530FC0FF19421286007B55F2 /* THHelper.m in Sources */,
 				5306D002193DFECF005BD52E /* THCoreDataStack.m in Sources */,
+				5320BBAE194F403D005E1DBB /* THZoomPopup.m in Sources */,
 				532D1343193F50B300CC0399 /* THTableViewProductCell.m in Sources */,
 				531824601938CAA600AA1564 /* JackpotViewModel.m in Sources */,
 				532D60C41931E0A800537D4C /* THAuthorizer.m in Sources */,
@@ -937,10 +985,12 @@
 				532D1352193F640600CC0399 /* THViewController.m in Sources */,
 				53AA3D7719387E1400D9C35B /* Platforms.m in Sources */,
 				5306D008193E08AC005BD52E /* THBasicViewModel.m in Sources */,
+				5320BBAD194F403D005E1DBB /* UIImage+StackBlur.m in Sources */,
 				5318246D1938D4B600AA1564 /* THNavigationController.m in Sources */,
 				531824571938C9DB00AA1564 /* ShopsViewModel.m in Sources */,
 				537F7B6B1942D93500CE1703 /* Account+Access.m in Sources */,
 				531DB3011948A21B00D12FE1 /* Product.m in Sources */,
+				5349B353195092E900E0564D /* THScanPostViewController.m in Sources */,
 				5318244B1938C77F00AA1564 /* SignInViewModel.m in Sources */,
 				531824701938D4E700AA1564 /* THDeliveriesViewController.m in Sources */,
 				5318244E1938C90900AA1564 /* ProductsViewModel.m in Sources */,

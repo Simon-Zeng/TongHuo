@@ -8,7 +8,7 @@
 
 #import "THBasicViewModel.h"
 
-#import "Orders.h"
+#import "Product+Access.h"
 
 @interface DeliveriesViewModel : THBasicViewModel
 
@@ -23,7 +23,7 @@
 -(NSInteger)numberOfSections;
 -(NSInteger)numberOfItemsInSection:(NSInteger)section;
 -(NSString *)titleForSection:(NSInteger)section;
--(Orders *)orderAtIndexPath:(NSIndexPath *)indexPath;
+-(Product *)productAtIndexPath:(NSIndexPath *)indexPath;
 
 -(void)deleteObjectAtIndexPath:(NSIndexPath *)indexPath;
 

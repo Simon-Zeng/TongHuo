@@ -56,7 +56,7 @@
     
     self.title = NSLocalizedString(@"统货中心", nil);
     
-    self.stateControl = [[FUISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"未提货", nil), NSLocalizedString(@"已提货", nil)]];
+    self.stateControl = [[FUISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"待提货", nil), NSLocalizedString(@"延迟提货", nil)]];
     self.stateControl.bounds = CGRectMake(0, 0, 120, 31);
     self.stateControl.selectedColor = [UIColor colorWithRed:242.0/255
                                                       green:39.0/255
@@ -69,7 +69,7 @@
     
     self.navigationItem.titleView = self.stateControl;
     
-    UIBarButtonItem * rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"同步", nil)
+    UIBarButtonItem * rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"同步订单", nil)
                                                                             style:UIBarButtonItemStylePlain
                                                                            target:self
                                                                            action:@selector(synchronizeOrders:)];

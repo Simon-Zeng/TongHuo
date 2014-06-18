@@ -12,6 +12,11 @@
 #import "THTableViewDeliveryCell.h"
 #import "THConfigration.h"
 
+#import "Orders+Access.h"
+
+#import "ScanPostViewModel.h"
+#import "THScanPostViewController.h"
+
 @interface THDeliveriesViewController ()<UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 
 @property (nonatomic, strong) UITableView * tableView;
@@ -19,6 +24,8 @@
 @property (nonatomic,strong) UISearchDisplayController *searchDisplayVC;
 
 @property (nonatomic, strong) FUISegmentedControl * stateControl;
+
+@property (nonatomic, strong) UIBarButtonItem * rightBarButtonItem;
 
 @end
 
@@ -72,11 +79,12 @@
     
     self.navigationItem.titleView = self.stateControl;
     
-    UIBarButtonItem * rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"同步", nil)
-                                                                            style:UIBarButtonItemStylePlain
-                                                                           target:self
-                                                                           action:@selector(synchronizeOrders:)];
-    self.navigationItem.rightBarButtonItem = rightBarButtonItem;
+    self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"同步", nil)
+                                                               style:UIBarButtonItemStylePlain
+                                                              target:self
+                                                              action:@selector(synchronizeOrders:)];
+    //    self.navigationItem.rightBarButtonItem = rightBarButtonItem;
+
     
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     searchBar.showsCancelButton = NO;
@@ -102,21 +110,33 @@
     
     @weakify(self);
     
-    THConfigration * configration = [THConfigration sharedConfigration];
-    BOOL needToSync = configration.hasOrdersToSync;
-    if (needToSync && [THAuthorizer sharedAuthorizer].isLoggedIn)
-    {
-        [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
-                             maskType:SVProgressHUDMaskTypeGradient];
-        
-        [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
-            [SVProgressHUD dismiss];
-            configration.hasOrdersToSync = NO;
-        } error:^(NSError *error) {
-            [SVProgressHUD dismiss];
-            NSLog(@"---- Refresh error: %@", error);
-        }];
-    }
+    RAC(self.navigationItem, rightBarButtonItem) = [RACObserve(self.stateControl, selectedSegmentIndex) map:^id(NSNumber * value) {
+        @strongify(self);
+        if (0 == value.longLongValue)
+        {
+            return nil;
+        }
+        else
+        {
+            return self.rightBarButtonItem;
+        }
+    }];
+    
+//    THConfigration * configration = [THConfigration sharedConfigration];
+//    BOOL needToSync = configration.hasOrdersToSync;
+//    if (needToSync && [THAuthorizer sharedAuthorizer].isLoggedIn)
+//    {
+//        [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
+//                             maskType:SVProgressHUDMaskTypeGradient];
+//        
+//        [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
+//            [SVProgressHUD dismiss];
+//            configration.hasOrdersToSync = NO;
+//        } error:^(NSError *error) {
+//            [SVProgressHUD dismiss];
+//            NSLog(@"---- Refresh error: %@", error);
+//        }];
+//    }
     
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
@@ -146,7 +166,7 @@
 #pragma mark - 
 - (void)stateControlDidChangeValue:(FUISegmentedControl *)control
 {
-    NSNumber * index = @(control.selectedSegmentIndex);
+    NSNumber * index = @(control.selectedSegmentIndex + 2);
     
     self.viewModel.state = index;
 }
@@ -201,7 +221,17 @@
 //}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Product * product = [self.viewModel productAtIndexPath:indexPath];
+    Orders * order = [Orders orderWithId:product.pid];
     
+    ScanPostViewModel * scanpostViewModel = [[ScanPostViewModel alloc] initWithModel:self.viewModel.model];
+    scanpostViewModel.order = order;
+    
+    THScanPostViewController * scanpostViewController = [[THScanPostViewController alloc] init];
+    scanpostViewController.viewModel = scanpostViewModel;
+    
+    [self.navigationController pushViewController:scanpostViewController
+                                         animated:YES];
 }
 
 #pragma mark
@@ -227,9 +257,9 @@
 
 - (void)configureCell:(THTableViewDeliveryCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Orders * order = [self.viewModel orderAtIndexPath:indexPath];
+    Product * product = [self.viewModel productAtIndexPath:indexPath];
     
-    [cell updateWithOrder:order atIndexPath:indexPath];
+    [cell updateWithProduct:product atIndexPath:indexPath];
 }
 
 

@@ -14,6 +14,6 @@
 
 + (instancetype)objectFromDictionary:(NSDictionary *)dict;
 
-
++ (BOOL)isShopExists:(NSNumber *)identifier;
 
 @end

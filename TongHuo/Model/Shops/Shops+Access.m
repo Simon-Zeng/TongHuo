@@ -150,4 +150,13 @@
     return nil;
 }
 
++ (BOOL)isShopExists:(NSNumber *)identifier
+{
+    NSAssert(identifier, @"The method has a logic error");
+    
+    NSMutableDictionary * savedShops = [self savedShops];
+    
+    return (nil != [savedShops objectForKey:identifier]);
+}
+
 @end

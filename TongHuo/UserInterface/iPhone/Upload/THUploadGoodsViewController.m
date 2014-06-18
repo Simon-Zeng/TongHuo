@@ -13,7 +13,9 @@
 #import "THAuthorizer.h"
 #import "UploadViewModel.h"
 
-@interface THUploadGoodsViewController () <UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate>
+#import "LKPopupMenuController.h"
+
+@interface THUploadGoodsViewController () <UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, LKPopupMenuControllerDelegate>
 
 @property (nonatomic, strong) UIScrollView * contentView;
 
@@ -23,6 +25,9 @@
 @property (nonatomic, strong) UITextView * titleTextView;
 
 @property (nonatomic, strong) FUIButton * uploadButton;
+
+@property (nonatomic, strong) LKPopupMenuController * popupMenu;
+@property (nonatomic, strong) NSArray * tbOptions;
 
 @end
 
@@ -161,11 +166,21 @@
     
     [self.contentView addGestureRecognizer:tapRecognizer];
     
-    Platforms * platform =  [[THAuthorizer sharedAuthorizer].platforms firstObject];
+    NSArray * platforms = [THAuthorizer sharedAuthorizer].platforms;
     
-    self.shopTextField.text = platform.name;
+    NSMutableArray * platformNames = [[NSMutableArray alloc] init];
+    for (Platforms * aPlatform in platforms)
+    {
+        [aPlatform willAccessValueForKey:nil];
+        [platformNames addObject:aPlatform.name];
+    }
+    
+    self.tbOptions = platformNames;
+    
+    self.shopTextField.text = [self.tbOptions firstObject];
     self.priceTextField.text = self.viewModel.price;
     self.titleTextView.text = self.viewModel.title;
+
     // RAC bindings
     
     RAC(self.viewModel, title) = self.titleTextView.rac_textSignal;
@@ -186,6 +201,7 @@
     }];
     self.uploadButton.rac_command = self.viewModel.uploadCommand;
 }
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -252,6 +268,42 @@
     // Pass the selected object to the new view controller.
 }
 */
+#pragma mark Actions
+- (void)_popupAt:(CGPoint)location arrangementMode:(LKPopupMenuControllerArrangementMode)arrangementMode
+{
+    if (self.popupMenu.popupmenuVisible) {
+        [self.popupMenu dismiss];
+    } else {
+        if (self.popupMenu == nil) {
+            self.popupMenu = [LKPopupMenuController popupMenuControllerOnView:self.view];
+            self.popupMenu.textList = self.tbOptions;
+            self.popupMenu.delegate = self;
+        }
+        self.popupMenu.title = NSLocalizedString(@"选择店铺", nil);
+        self.popupMenu.autoresizeEnabled = YES;
+        self.popupMenu.autocloseEnabled = YES;
+        self.popupMenu.bounceEnabled = NO;
+        self.popupMenu.multipleSelectionEnabled = NO;
+        self.popupMenu.arrangementMode = arrangementMode;
+        self.popupMenu.animationMode = LKPopupMenuControllerAnimationModeSlide;
+        self.popupMenu.modalEnabled = YES;
+        self.popupMenu.closeButtonEnabled = NO;
+        
+        LKPopupMenuAppearance* appearance = [LKPopupMenuAppearance defaultAppearanceWithSize:LKPopupMenuControllerSizeMedium
+                                                                                       color:LKPopupMenuControllerColorDefault];
+        appearance.shadowEnabled = YES;
+        appearance.triangleEnabled = YES;
+        appearance.separatorEnabled = YES;
+        appearance.outlineEnabled = YES;
+        appearance.titleHighlighted = YES;
+        self.popupMenu.appearance = appearance;
+        // test auto resizing
+        //        self.popupMenu.appearance.listWidth = 1000.0;
+        //        self.popupMenu.appearance.listHeight = 1000.0;
+        
+        [self.popupMenu presentPopupMenuFromLocation:location];
+    }
+}
 
 #pragma mark -
 - (void)tapped:(UITapGestureRecognizer *)gesture
@@ -270,6 +322,22 @@
 }
 
 #pragma mark - UITextFieldDelegate
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField == self.shopTextField)
+    {
+        
+        CGSize size = textField.frame.size;
+        CGPoint origin = textField.frame.origin;
+        CGPoint location = CGPointMake(origin.x + size.width/2.0,
+                                       CGRectGetMaxY(textField.frame));
+        [self _popupAt:location arrangementMode:LKPopupMenuControllerArrangementModeDown];
+        
+        return NO;
+    }
+    
+    return YES;
+}
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [UIView animateWithDuration:0.3
@@ -353,6 +421,22 @@
 {
     [self didEndEditing];
 }
+
+#pragma mark - LKPopupMenuControllerDelegate
+/**
+ Tell the delegate that the specified row is now selected.
+ 
+ @param popupMenuController The popup menu object requesting this information.
+ @param index An index locating the new selected row in popup menu.
+ */
+- (void)popupMenuController:(LKPopupMenuController*)popupMenuController didSelectRowAtIndex:(NSUInteger)index
+{
+    NSString * shopName = [self.tbOptions objectAtIndex:index];
+    self.shopTextField.text = shopName;
+    
+//    self.viewModel.tid = [[THAuthorizer sharedAuthorizer] authorizenCodeFor:shopName];
+}
+
 
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch

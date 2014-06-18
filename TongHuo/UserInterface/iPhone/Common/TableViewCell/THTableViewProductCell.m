@@ -8,20 +8,24 @@
 
 #import "THTableViewProductCell.h"
 
-
+#import "Orders+Access.h"
 #import "Product+Access.h"
 #import "THUISwitch.h"
+#import "THZoomPopup.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface THTableViewProductCell ()
+
+@property (nonatomic, strong) Product * product;
 
 @property (nonatomic, strong) UIImageView * iconView;
 @property (nonatomic, strong) UILabel * titleLable;
 @property (nonatomic, strong) UILabel * infoLabel;
 @property (nonatomic, strong) UILabel * countLabel;
 
-@property (nonatomic, strong) THUISwitch * deliveredSwitch;
+@property (nonatomic, strong) FUIButton * deliveredButton;
+@property (nonatomic, strong) FUIButton * undeliveredButton;
 
 @end
 
@@ -43,6 +47,15 @@
         self.iconView.layer.borderWidth = 1.0;
         self.iconView.layer.cornerRadius = 4;
         self.iconView.layer.masksToBounds = YES;
+        self.iconView.userInteractionEnabled = YES;
+        
+        // Tap
+        UITapGestureRecognizer * tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                         action:@selector(showDetailImage:)];
+        tapRecognizer.numberOfTapsRequired = 1;
+        tapRecognizer.numberOfTouchesRequired = 1;
+        [self.iconView addGestureRecognizer:tapRecognizer];
+        
         
         [self.contentView addSubview:self.iconView];
         
@@ -50,6 +63,14 @@
         self.titleLable.backgroundColor = [UIColor clearColor];
         self.titleLable.font = [UIFont boldFlatFontOfSize:16];
         self.titleLable.numberOfLines = 1;
+        self.titleLable.userInteractionEnabled = YES;
+        // Tap
+        UITapGestureRecognizer * tap2Recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                         action:@selector(showOrderInfo:)];
+        tap2Recognizer.numberOfTapsRequired = 1;
+        tap2Recognizer.numberOfTouchesRequired = 1;
+        [self.titleLable addGestureRecognizer:tap2Recognizer];
+        
         
         [self.contentView addSubview:self.titleLable];
         
@@ -72,27 +93,57 @@
         
         [self.contentView addSubview:self.countLabel];
         
-        self.deliveredSwitch  = [[THUISwitch alloc] init];
-        self.deliveredSwitch.frame = CGRectMake(self.frame.size.width - 90, 38, 75, 24.0);
-        self.deliveredSwitch.onBackgroundColor = [UIColor colorWithRed:224.0/255
-                                                                 green:35.0/255
-                                                                  blue:122.0/255
-                                                                 alpha:1.0];
-
-        self.deliveredSwitch.offBackgroundColor = [UIColor colorWithRed:129.0/255
-                                                          green:122.0/255
-                                                           blue:161.0/255
+        self.deliveredButton  = [FUIButton buttonWithType:UIButtonTypeCustom];
+        self.deliveredButton.frame = CGRectMake(self.frame.size.width - 118, 8, 55, 31.0);
+        self.deliveredButton.buttonColor = [UIColor colorWithRed:242.0/255
+                                                          green:39.0/255
+                                                           blue:131.0/255
                                                           alpha:1.0];
-        self.deliveredSwitch.onColor = [UIColor whiteColor];
-        self.deliveredSwitch.offColor = [UIColor whiteColor];
-
-        self.deliveredSwitch.switchCornerRadius = 4.0f;
-        self.deliveredSwitch.onLabel.text = NSLocalizedString(@"已提货", nil);
+        self.deliveredButton.shadowColor = [UIColor colorWithRed:175.0/255
+                                                          green:179.0/255
+                                                           blue:190.0/255
+                                                          alpha:1.0];
+        self.deliveredButton.shadowHeight = 2.0f;
+        self.deliveredButton.highlightedColor = [UIColor colorWithRed:204.0/255
+                                                               green:205.0/255
+                                                                blue:210.0/255
+                                                               alpha:1.0];
+        self.deliveredButton.cornerRadius = 4.0f;
         
-        self.deliveredSwitch.offLabel.text = NSLocalizedString(@"未提货", nil);
+        [self.deliveredButton setTitle:NSLocalizedString(@"已提货", nil)
+                             forState:UIControlStateNormal];
+        self.deliveredButton.titleLabel.font = [UIFont flatFontOfSize:14];
+        [self.deliveredButton addTarget:self
+                                 action:@selector(deliveredProduct:)
+                       forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:self.deliveredButton];
 
-        [self.contentView addSubview:self.deliveredSwitch];
         
+        self.undeliveredButton  = [FUIButton buttonWithType:UIButtonTypeCustom];
+        self.undeliveredButton.frame = CGRectMake(self.frame.size.width - 63, 8, 55, 31.0);
+        self.undeliveredButton.buttonColor = [UIColor colorWithRed:131.0/255
+                                                          green:139.0/255
+                                                           blue:131.0/255
+                                                          alpha:1.0];
+        self.undeliveredButton.shadowColor = [UIColor colorWithRed:175.0/255
+                                                          green:179.0/255
+                                                           blue:190.0/255
+                                                          alpha:1.0];
+        self.undeliveredButton.shadowHeight = 2.0f;
+        self.undeliveredButton.highlightedColor = [UIColor colorWithRed:204.0/255
+                                                               green:205.0/255
+                                                                blue:210.0/255
+                                                               alpha:1.0];
+        self.undeliveredButton.cornerRadius = 4.0f;
+        
+        [self.undeliveredButton setTitle:NSLocalizedString(@"未提货", nil)
+                             forState:UIControlStateNormal];
+        self.undeliveredButton.titleLabel.font = [UIFont flatFontOfSize:14];
+        [self.undeliveredButton addTarget:self
+                                 action:@selector(delayDeliveryProduct:)
+                       forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:self.undeliveredButton];
+
         self.contentView.backgroundColor = [UIColor clearColor];
         self.contentView.superview.backgroundColor = [UIColor clearColor]; // ScrollView is added in iOS7
         
@@ -114,6 +165,8 @@
 
 - (void)updateWithProduct:(Product *)product atIndexPath:(NSIndexPath *)indexPath
 {
+    self.product = product;
+    
     [self.iconView setImageWithURL:[NSURL URLWithString:product.pimage]
                   placeholderImage:[UIImage imageNamed:@"DefaultImage"]];
     
@@ -121,17 +174,86 @@
     self.infoLabel.text = [NSString stringWithFormat:@"%@, %@", product.color, product.size];
     self.countLabel.text = [NSString stringWithFormat:@"%@ 件", product.count];
     
-    if (1 == product.state.longLongValue)
-    {
-        self.deliveredSwitch.on = YES;
-    }
-    else
-    {
-        self.deliveredSwitch.on = NO;
-    }
-    
     [self layoutSubviews];
 }
 
+- (void)showDetailImage:(UITapGestureRecognizer *)recognizer
+{
+    UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 84, 280, self.window.bounds.size.height - 104)];
+    [imageView setImageWithURL:[NSURL URLWithString:self.product.pimage]
+              placeholderImage:[UIImage imageNamed:@"DefaultImage"]];
+    
+    CGRect startRect = [self.iconView convertRect:self.iconView.frame toView:self.window];
+    
+    [THZoomPopup initWithMainview:self.window andStartRect:startRect];
+    [THZoomPopup showPopup:imageView];
+}
+
+- (void)showOrderInfo:(UITapGestureRecognizer *)recognizer
+{
+    Orders * order = [Orders orderWithId:@(self.product.pid.longLongValue)];
+    
+    UIView * infoView = [[UIView alloc] initWithFrame:CGRectMake(30, 84, 260, 200)];
+    
+    UILabel * nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, 250, 31)];
+    nameLabel.font = [UIFont boldFlatFontOfSize:18.0];
+    nameLabel.text = [NSString stringWithFormat:@"%@ - %@", self.product.buyer, order.cs];
+    
+    [infoView addSubview:nameLabel];
+    
+    UILabel * telLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 50, 250, 31)];
+    telLabel.font = [UIFont boldFlatFontOfSize:18.0];
+    telLabel.text = [NSString stringWithFormat:@"%@", self.product.tel];
+    
+    [infoView addSubview:telLabel];
+
+    
+    FUIButton * callButton  = [FUIButton buttonWithType:UIButtonTypeCustom];
+    callButton.frame = CGRectMake(10, 98, 250, 31.0);
+    callButton.buttonColor = [UIColor colorWithRed:131.0/255
+                                                         green:139.0/255
+                                                          blue:131.0/255
+                                                         alpha:1.0];
+    callButton.shadowColor = [UIColor colorWithRed:175.0/255
+                                                         green:179.0/255
+                                                          blue:190.0/255
+                                                         alpha:1.0];
+    callButton.shadowHeight = 2.0f;
+    callButton.highlightedColor = [UIColor colorWithRed:204.0/255
+                                                              green:205.0/255
+                                                               blue:210.0/255
+                                                              alpha:1.0];
+    callButton.cornerRadius = 4.0f;
+    
+    [callButton setTitle:NSLocalizedString(@"打电话", nil)
+                            forState:UIControlStateNormal];
+    callButton.titleLabel.font = [UIFont flatFontOfSize:18];
+    [callButton addTarget:self
+                               action:@selector(call:)
+                     forControlEvents:UIControlEventTouchUpInside];
+    [infoView addSubview:callButton];
+    
+    
+    CGRect startRect = [self.titleLable convertRect:self.titleLable.frame toView:self.window];
+    
+    [THZoomPopup initWithMainview:self.window andStartRect:startRect];
+    [THZoomPopup showPopup:infoView];
+}
+
+- (void)call:(id)sender
+{
+    NSString * tel = [NSString stringWithFormat:@"tel://%@", self.product.tel];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:tel]];
+}
+
+- (void)deliveredProduct:(id)sender
+{
+    self.product.state = @1;
+}
+- (void)delayDeliveryProduct:(id)sender
+{
+    self.product.state = @2;
+}
 
 @end

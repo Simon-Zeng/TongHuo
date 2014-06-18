@@ -9,6 +9,7 @@
 #import "THTableViewDeliveryCell.h"
 
 #import "Orders+Access.h"
+#import "Product+Access.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -108,13 +109,15 @@
     // Configure the view for the selected state
 }
 
-- (void)updateWithOrder:(Orders *)order atIndexPath:(NSIndexPath *)indexPath
+- (void)updateWithProduct:(Product *)product atIndexPath:(NSIndexPath *)indexPath
 {
-    [self.iconView setImageWithURL:[NSURL URLWithString:order.no]
+    [self.iconView setImageWithURL:[NSURL URLWithString:product.pimage]
                   placeholderImage:[UIImage imageNamed:@"DefaultImage"]];
     
-    self.titleLable.text = [NSString stringWithFormat:@"%@ - %@", order.name, order.cs];
-    self.infoLabel.text = [NSString stringWithFormat:@"%@ %@, %@", order.sf, order.color, order.size];
+    Orders * order = [Orders orderWithId:@(product.pid.longLongValue)];
+    
+    self.titleLable.text = [NSString stringWithFormat:@"%@ - %@", product.buyer, order.cs];
+    self.infoLabel.text = [NSString stringWithFormat:@"%@ %@, %@", order.sf, product.color, product.size];
     self.addressLabel.text = [NSString stringWithFormat:@"%@ (%@)", order.address, order.tel];
     
     if (1 == order.state.longLongValue)

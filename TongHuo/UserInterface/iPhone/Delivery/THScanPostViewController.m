@@ -1,28 +1,25 @@
 //
-//  THQRCodeViewController.m
+//  THScanPostViewController.m
 //  TongHuo
 //
-//  Created by zeng songgen on 14-5-30.
+//  Created by zeng songgen on 14-6-17.
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
-#import "THQRCodeViewController.h"
+#import "THScanPostViewController.h"
 
 #import <ZXingObjC/ZXingObjC.h>
-#import "QRCodeViewModel.h"
+#import "ScanPostViewModel.h"
 
-#import "Shops+Access.h"
-#import "GoodsViewModel.h"
-#import "THGoodsViewController.h"
-
-@interface THQRCodeViewController () <ZXCaptureDelegate>
+@interface THScanPostViewController () <ZXCaptureDelegate>
 
 @property (nonatomic, strong) ZXCapture *capture;
 @property (nonatomic, strong)  UIView *scanRectView;
 
+
 @end
 
-@implementation THQRCodeViewController
+@implementation THScanPostViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -69,55 +66,55 @@
 - (NSString *)barcodeFormatToString:(ZXBarcodeFormat)format {
     switch (format) {
         case kBarcodeFormatAztec:
-            return @"Aztec";
-            
+        return @"Aztec";
+        
         case kBarcodeFormatCodabar:
-            return @"CODABAR";
-            
+        return @"CODABAR";
+        
         case kBarcodeFormatCode39:
-            return @"Code 39";
-            
+        return @"Code 39";
+        
         case kBarcodeFormatCode93:
-            return @"Code 93";
-            
+        return @"Code 93";
+        
         case kBarcodeFormatCode128:
-            return @"Code 128";
-            
+        return @"Code 128";
+        
         case kBarcodeFormatDataMatrix:
-            return @"Data Matrix";
-            
+        return @"Data Matrix";
+        
         case kBarcodeFormatEan8:
-            return @"EAN-8";
-            
+        return @"EAN-8";
+        
         case kBarcodeFormatEan13:
-            return @"EAN-13";
-            
+        return @"EAN-13";
+        
         case kBarcodeFormatITF:
-            return @"ITF";
-            
+        return @"ITF";
+        
         case kBarcodeFormatPDF417:
-            return @"PDF417";
-            
+        return @"PDF417";
+        
         case kBarcodeFormatQRCode:
-            return @"QR Code";
-            
+        return @"QR Code";
+        
         case kBarcodeFormatRSS14:
-            return @"RSS 14";
-            
+        return @"RSS 14";
+        
         case kBarcodeFormatRSSExpanded:
-            return @"RSS Expanded";
-            
+        return @"RSS Expanded";
+        
         case kBarcodeFormatUPCA:
-            return @"UPCA";
-            
+        return @"UPCA";
+        
         case kBarcodeFormatUPCE:
-            return @"UPCE";
-            
+        return @"UPCE";
+        
         case kBarcodeFormatUPCEANExtension:
-            return @"UPC/EAN extension";
-            
+        return @"UPC/EAN extension";
+        
         default:
-            return @"Unknown";
+        return @"Unknown";
     }
 }
 
@@ -125,7 +122,7 @@
 
 - (void)captureResult:(ZXCapture *)capture result:(ZXResult *)result {
     if (!result) return;
-
+    
     [self.capture stop];
     
     // We got a result. Display information about the result onscreen.
@@ -136,29 +133,20 @@
     
     // Vibrate
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    
-    NSNumber * shopId = @(display.longLongValue);
-    
+
     // Search for shop and open.
-    if (![self.viewModel canOpenShop:shopId])
+    if (![self.viewModel isPostValid:display])
     {
         AMSmoothAlertView * alert = [[AMSmoothAlertView alloc] initDropAlertWithTitle:NSLocalizedString(@"错误", nil)
-                                                                              andText:NSLocalizedString(@"未找到符合要求的商家", nil)
+                                                                              andText:NSLocalizedString(@"未能解析快递单号", nil)
                                                                       andCancelButton:NO
                                                                          forAlertType:AlertFailure];
         [alert show];
     }
     else
     {
-        GoodsViewModel * goodsViewModel = [[GoodsViewModel alloc] initWithModel:self.viewModel.model];
-        goodsViewModel.shop = [Shops shopWithId:shopId];
-        
-        THGoodsViewController * goodsViewController = [[THGoodsViewController alloc] init];
-        goodsViewController.viewModel = goodsViewModel;
-        
-        [self.navigationController pushViewController:goodsViewController animated:YES];
+#warning TODO: Handle delivery
     }
 }
-
 
 @end

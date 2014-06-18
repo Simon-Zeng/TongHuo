@@ -17,8 +17,8 @@
 
 @property (nonatomic, strong) NSNumber * tid;
 @property (nonatomic, strong) NSString * sellerCode;
-@property (nonatomic, strong) NSString * price;
-@property (nonatomic, strong) NSString * title;
+@property (nonatomic, copy) NSString * price;
+@property (nonatomic, copy) NSString * title;
 
 @property (nonatomic, readonly) RACCommand * uploadCommand;
 

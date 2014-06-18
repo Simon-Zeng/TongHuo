@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class Orders;
+@class Product;
 
 @interface THTableViewDeliveryCell : UITableViewCell
 
-- (void)updateWithOrder:(Orders *)order atIndexPath:(NSIndexPath *)indexPath;
+- (void)updateWithProduct:(Product *)product atIndexPath:(NSIndexPath *)indexPath;
 
 @end

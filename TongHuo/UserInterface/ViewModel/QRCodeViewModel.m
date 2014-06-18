@@ -8,6 +8,8 @@
 
 #import "QRCodeViewModel.h"
 
+#import "Shops+Access.h"
+
 @implementation QRCodeViewModel
 
 - (id)init
@@ -33,6 +35,18 @@
 - (void)commandInit
 {
 
+}
+
+- (BOOL)canOpenShop:(NSNumber *)shopId
+{
+    BOOL canOpen = NO;
+    
+    if ([Shops isShopExists:shopId])
+    {
+        canOpen = YES;
+    }
+    
+    return canOpen;
 }
 
 @end

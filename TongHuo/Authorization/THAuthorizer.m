@@ -227,19 +227,21 @@
         {
             NSArray * authentications = [response objectForKey:@"data"];
             
-            NSMutableArray * authens = [[NSMutableArray alloc] init];
-            
-            for (NSDictionary * aDict in authentications)
-            {
-                Platforms * plaform = [Platforms objectFromDictionary:aDict];
-                [authens addObject:plaform];
-            }
-            
-            NSLog(@"----- Authens: %@", authens);
-            
-            self.platforms = authens;
-            
-            [[THCoreDataStack defaultStack] saveContext];
+            [[THCoreDataStack defaultStack].managedObjectContext performBlock:^{
+                NSMutableArray * authens = [[NSMutableArray alloc] init];
+                
+                for (NSDictionary * aDict in authentications)
+                {
+                    Platforms * plaform = [Platforms objectFromDictionary:aDict];
+                    [authens addObject:plaform];
+                }
+                
+                NSLog(@"----- Authens: %@", authens);
+                
+                self.platforms = authens;
+                
+                [[THCoreDataStack defaultStack] saveContext];
+            }];
         }
         
     } error:^(NSError *error) {
