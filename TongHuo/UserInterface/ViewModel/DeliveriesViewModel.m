@@ -122,7 +122,7 @@
         
         NSArray * changedOrders = [Orders getAllOrdersWithCriteria:(@{
                                                                       @"uid": uid,
-                                                                      @"state": @1,
+                                                                      @"state": @3,
                                                                       @"tb": @0
                                                                       })];
         
@@ -134,9 +134,29 @@
             if (response && [response isKindOfClass:[NSDictionary class]])
             {
                 NSLog(@"---- Post Orders: %@", response);
+                
+                NSString * ids = [response objectForKey:@"ids"];
+                
+                if (ids.length > 0)
+                {
+                    NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
+                    
+                    [mainContext performBlock:^{
+                        NSArray * idsArray = [ids componentsSeparatedByString:@","];
+                        
+                        for (NSString * oid in idsArray)
+                        {
+                            NSNumber * identifier = @(oid.integerValue);
+                            
+                            Orders * order = [Orders orderWithId:identifier];
+                            
+                            order.tb = @1;
+                        }
+                        
+                        [[THCoreDataStack defaultStack] saveContext];
+                    }];
+                }
             }
-            
-            [[THCoreDataStack defaultStack] saveContext];
             
             [subscriber sendNext:nil];
             [subscriber sendCompleted];

@@ -8,11 +8,11 @@
 
 #import "THBasicViewModel.h"
 
-@class Orders;
+@class Product;
 
 @interface ScanPostViewModel : THBasicViewModel
 
-@property (nonatomic, strong) Orders * order;
+@property (nonatomic, strong) Product * product;
 
 - (BOOL)isPostValid:(NSString *)post;
 

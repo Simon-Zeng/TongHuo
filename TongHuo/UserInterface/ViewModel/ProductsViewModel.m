@@ -121,7 +121,7 @@
         
         NSArray * changedProducts = [Product getAllOrdersWithCriteria:(@{
                                                                          @"uid": uid,
-                                                                         @"state": @2,
+                                                                         @"state": @1,
                                                                          })];
         
         RACSignal * request = [[THAPI apiCenter] postAndGetOrders:changedProducts];
@@ -134,18 +134,22 @@
                 NSArray * ordersInfo = [response objectForKey:@"fh"];
                 NSArray * productsInfo = [response objectForKey:@"pro"];
                 
-                for (NSDictionary * aDict1 in ordersInfo)
-                {
-                    [Orders objectFromDictionary:aDict1];
-                }
+                NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
                 
-                for (NSDictionary * aDict2 in productsInfo)
-                {
-                    [Product objectFromDictionary:aDict2];
-                }
+                [mainContext performBlock:^{
+                    for (NSDictionary * aDict1 in ordersInfo)
+                    {
+                        [Orders objectFromDictionary:aDict1];
+                    }
+                    
+                    for (NSDictionary * aDict2 in productsInfo)
+                    {
+                        [Product objectFromDictionary:aDict2];
+                    }
+                    
+                    [[THCoreDataStack defaultStack] saveContext];
+                }];
             }
-            
-            [[THCoreDataStack defaultStack] saveContext];
             
             [subscriber sendNext:nil];
             [subscriber sendCompleted];

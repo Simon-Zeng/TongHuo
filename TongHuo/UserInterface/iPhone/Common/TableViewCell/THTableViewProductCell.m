@@ -249,11 +249,23 @@
 
 - (void)deliveredProduct:(id)sender
 {
-    self.product.state = @1;
+    NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
+    
+    [mainContext performBlock:^{
+        self.product.state = @2;
+        
+        [[THCoreDataStack defaultStack] saveContext];
+    }];
 }
 - (void)delayDeliveryProduct:(id)sender
 {
-    self.product.state = @2;
+    NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
+    
+    [mainContext performBlock:^{
+        self.product.state = @1;
+        
+        [[THCoreDataStack defaultStack] saveContext];
+    }];
 }
 
 @end

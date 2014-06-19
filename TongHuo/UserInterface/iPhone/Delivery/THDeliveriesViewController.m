@@ -223,10 +223,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Product * product = [self.viewModel productAtIndexPath:indexPath];
-    Orders * order = [Orders orderWithId:product.pid];
     
     ScanPostViewModel * scanpostViewModel = [[ScanPostViewModel alloc] initWithModel:self.viewModel.model];
-    scanpostViewModel.order = order;
+    scanpostViewModel.product = product;
     
     THScanPostViewController * scanpostViewController = [[THScanPostViewController alloc] init];
     scanpostViewController.viewModel = scanpostViewModel;

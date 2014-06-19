@@ -9,7 +9,12 @@
 #import "THScanPostViewController.h"
 
 #import <ZBarSDK.h>
+
+#import "Orders+Access.h"
+#import "Product+Access.h"
 #import "ScanPostViewModel.h"
+#import "THZoomPopup.h"
+#import "THPostResultConfirmView.h"
 
 @interface THScanPostViewController () <ZBarReaderViewDelegate>
 {
@@ -117,6 +122,8 @@
      didReadSymbols: (ZBarSymbolSet*) syms
           fromImage: (UIImage*) img
 {
+    [view stop];
+    
     NSString * resultString = nil;
     
     // do something useful with results
@@ -141,7 +148,32 @@
     }
     else
     {
-#warning TODO: Handle delivery
+        THPostResultConfirmView * confirmView = [[THPostResultConfirmView alloc] initWithFrame:CGRectMake(20, 84, 280, 200)];
+        confirmView.postCode = resultString;
+        
+        THZoomPopup * popup = [[THZoomPopup alloc] initWithMainview:self.view andStartRect:self.view.bounds];
+        popup.showCloseButton = NO;
+        
+        [confirmView setResultBlock:^(NSString * company, NSString * code){
+            NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
+            
+            [mainContext performBlock:^{
+                Product * product = self.viewModel.product;
+                Orders * order = [Orders orderWithId:product.pid];
+                
+                product.state = @3;
+                
+                order.kno = code;
+                order.ktype = company;
+                order.state = @1;
+                
+                [[THCoreDataStack defaultStack] saveContext];
+            }];
+            
+            [popup closePopup];
+        }];
+        
+        [popup showPopup:confirmView];
     }
 }
 
