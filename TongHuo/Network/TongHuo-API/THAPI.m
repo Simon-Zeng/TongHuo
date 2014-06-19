@@ -75,6 +75,8 @@
 @property (nonatomic, readwrite, strong) AFHTTPRequestOperationManager * getManager;
 @property (nonatomic, readwrite, strong) AFHTTPRequestOperationManager * postManager;
 
+@property (nonatomic, strong) AFJSONResponseSerializer * jsonResponseSerializer;
+
 @end
 
 @implementation THAPI
@@ -102,6 +104,18 @@
     if (self = [super init]) {
         _getManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[THNetwork sharedNetwork].baseURL];
         _postManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[THNetwork sharedNetwork].adminURL];
+        
+        
+        AFJSONResponseSerializer * jsonResponseSerializer = [AFJSONResponseSerializer serializer];
+        
+        NSMutableSet * acceptableContentTypes = [[NSMutableSet alloc] initWithSet:jsonResponseSerializer.acceptableContentTypes];
+        [acceptableContentTypes addObject:@"text/plain"];
+        [acceptableContentTypes addObject:@"text/html"];
+        
+        [jsonResponseSerializer setAcceptableContentTypes:acceptableContentTypes];
+        
+        self.jsonResponseSerializer = jsonResponseSerializer;
+        
         
         RACSignal * updateSignal = [THAuthorizer sharedAuthorizer].updateSignal;
         
@@ -132,8 +146,8 @@
 {
     NSAssert(username, @"The method has a logic error");
     NSAssert(password, @"The method has a logic error");
-    
-    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
+
+    _postManager.responseSerializer = self.jsonResponseSerializer;
 
     RACSignal * signal = [_postManager rac_POST:kSignInURI
                                      parameters:(@{
@@ -148,7 +162,7 @@
 {
     NSAssert(accountUserIdentifier, @"The method has a logic error");
     
-    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _postManager.responseSerializer = self.jsonResponseSerializer;
     
     NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%@", accountUserIdentifier, kSecret];
     
@@ -194,7 +208,7 @@
 //    }
 - (RACSignal *)getShops
 {
-    _getManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _getManager.responseSerializer = self.jsonResponseSerializer;
     
     RACSignal * signal = [_getManager rac_GET:kGetShopsURI
                                    parameters:(@{
@@ -216,7 +230,7 @@
 
 - (RACSignal *)getMarkets
 {
-    _getManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _getManager.responseSerializer =  self.jsonResponseSerializer;
     
     RACSignal * signal = [_getManager rac_GET:kGetMarketsURI
                                    parameters:(@{
@@ -230,7 +244,7 @@
 {
     NSAssert(_accountUserIdentifier, @"The method has a logic error");
     
-    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _postManager.responseSerializer = self.jsonResponseSerializer;
     
     _postManager.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:nil];
 
@@ -246,7 +260,7 @@
 {
     NSAssert(shopIdentifier, @"The method has a logic error");
     
-    _getManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _getManager.responseSerializer = self.jsonResponseSerializer;
     
     RACSignal * signal = [_getManager rac_GET:kGetGoods
                                    parameters:(@{
@@ -268,9 +282,9 @@
 
 - (RACSignal *)postTBProduct:(Goods *)product withCode:(NSString *)sellerCode  toTBShop:(NSNumber *)tbShopID
 {
-    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _postManager.responseSerializer = self.jsonResponseSerializer;
     
-    NSNumber * pid = product.identifier;
+    NSNumber * pid = product.numIid;
     NSString * title = product.title;
     NSNumber * price = product.price;
     
@@ -308,7 +322,7 @@
 {
     NSAssert(_accountUserIdentifier, @"The method has a logic error");
     
-    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _postManager.responseSerializer =  self.jsonResponseSerializer;
     
     NSString * ordersJson = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:orders
                                                                                            options:NSJSONWritingPrettyPrinted
@@ -397,7 +411,7 @@
 {
     NSAssert(_accountUserIdentifier, @"The method has a logic error");
     
-    _postManager.responseSerializer = [AFJSONResponseSerializer serializer];
+    _postManager.responseSerializer = self.jsonResponseSerializer;
     
     NSString * productsJson = [[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:products
                                                                                              options:NSJSONWritingPrettyPrinted

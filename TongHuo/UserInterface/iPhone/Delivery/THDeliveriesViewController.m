@@ -79,6 +79,9 @@
     
     self.navigationItem.titleView = self.stateControl;
     
+    self.stateControl.selectedSegmentIndex = 0;
+    self.viewModel.state = @(2);
+    
     self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"同步", nil)
                                                                style:UIBarButtonItemStylePlain
                                                               target:self
@@ -159,8 +162,6 @@
     {
         self.viewModel.active = YES;
     }
-    
-    self.stateControl.selectedSegmentIndex = 0;
 }
 
 #pragma mark - 

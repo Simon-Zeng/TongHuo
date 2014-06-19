@@ -31,8 +31,8 @@ target :TongHuo do
   pod 'UIColor-Utilities'
   pod 'UMengSocial'
   pod 'YLMoment'
-#pod 'ZBarSDK'
-  pod 'ZXingObjC'
+  pod 'ZBarSDK'
+  #pod 'ZXingObjC'
 
 end
 

@@ -214,7 +214,7 @@
         
         [signal subscribeNext:^(RACTuple * x) {
             AFHTTPRequestOperation * operation = x[0];
-            NSLog(@"----- Sign in response: %@", operation.responseString);
+            NSLog(@"----- Upload response: %@", operation.responseString);
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 @strongify(self);
@@ -279,7 +279,7 @@
             self.popupMenu.textList = self.tbOptions;
             self.popupMenu.delegate = self;
         }
-        self.popupMenu.title = NSLocalizedString(@"选择店铺", nil);
+//        self.popupMenu.title = NSLocalizedString(@"选择店铺", nil);
         self.popupMenu.autoresizeEnabled = YES;
         self.popupMenu.autocloseEnabled = YES;
         self.popupMenu.bounceEnabled = NO;
@@ -296,6 +296,7 @@
         appearance.separatorEnabled = YES;
         appearance.outlineEnabled = YES;
         appearance.titleHighlighted = YES;
+        appearance.titleTextColor = [UIColor whiteColor];
         self.popupMenu.appearance = appearance;
         // test auto resizing
         //        self.popupMenu.appearance.listWidth = 1000.0;

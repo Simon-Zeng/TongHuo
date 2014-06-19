@@ -8,13 +8,16 @@
 
 #import "THScanPostViewController.h"
 
-#import <ZXingObjC/ZXingObjC.h>
+#import <ZBarSDK.h>
 #import "ScanPostViewModel.h"
 
-@interface THScanPostViewController () <ZXCaptureDelegate>
+@interface THScanPostViewController () <ZBarReaderViewDelegate>
+{
+    ZBarReaderView *readerView;
+    
+    ZBarCameraSimulator *cameraSim;
+}
 
-@property (nonatomic, strong) ZXCapture *capture;
-@property (nonatomic, strong)  UIView *scanRectView;
 
 
 @end
@@ -29,113 +32,106 @@
     }
     return self;
 }
+
+- (void)dealloc
+{
+    cameraSim = nil;
+    
+    readerView.readerDelegate = nil;
+    readerView = nil;
+}
 #pragma mark - View Controller Methods
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.capture = [[ZXCapture alloc] init];
-    self.capture.camera = self.capture.back;
-    self.capture.focusMode = AVCaptureFocusModeContinuousAutoFocus;
-    self.capture.rotation = 90.0f;
+    CGSize viewSize = self.view.frame.size;
     
-    self.capture.layer.frame = self.view.bounds;
-    [self.view.layer addSublayer:self.capture.layer];
+    ZBarCaptureReader * captureScanner = [ZBarCaptureReader new];
+    [captureScanner.scanner setSymbology: ZBAR_I25
+                                  config: ZBAR_CFG_ENABLE
+                                      to: 0];
     
-    self.scanRectView = [[UIView alloc] initWithFrame:self.view.bounds];
+    readerView = [[ZBarReaderView alloc] initWithImageScanner:captureScanner.scanner];
+    readerView.readerDelegate = self;
+    readerView.tracksSymbols = YES;
+    readerView.frame =CGRectMake(0, 0, viewSize.width, viewSize.height);
+    readerView.torchMode = 0;
     
-    [self.view bringSubviewToFront:self.scanRectView];
+    // the delegate receives decode results
+    readerView.readerDelegate = self;
+    
+    // ensure initial camera orientation is correctly set
+    UIApplication *app = [UIApplication sharedApplication];
+    [readerView willRotateToInterfaceOrientation: app.statusBarOrientation
+                                        duration: 0];
+    
+    // you can use this to support the simulator
+    if(TARGET_IPHONE_SIMULATOR) {
+        cameraSim = [[ZBarCameraSimulator alloc]
+                     initWithViewController: self];
+        cameraSim.readerView = readerView;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.capture.delegate = self;
-    self.capture.layer.frame = self.view.bounds;
+    // run the reader when the view is visible
+    [readerView start];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
     
-    CGAffineTransform captureSizeTransform = CGAffineTransformMakeScale(320 / self.view.frame.size.width, 480 / self.view.frame.size.height);
-    self.capture.scanRect = CGRectApplyAffineTransform(self.scanRectView.frame, captureSizeTransform);
+    [readerView stop];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
-    return toInterfaceOrientation == UIInterfaceOrientationPortrait;
+- (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) orient
+{
+    // auto-rotation is supported
+    return(YES);
 }
 
-#pragma mark - Private Methods
+- (void) willRotateToInterfaceOrientation: (UIInterfaceOrientation) orient
+                                 duration: (NSTimeInterval) duration
+{
+    // compensate for view rotation so camera preview is not rotated
+    [readerView willRotateToInterfaceOrientation: orient
+                                        duration: duration];
+}
 
-- (NSString *)barcodeFormatToString:(ZXBarcodeFormat)format {
-    switch (format) {
-        case kBarcodeFormatAztec:
-        return @"Aztec";
-        
-        case kBarcodeFormatCodabar:
-        return @"CODABAR";
-        
-        case kBarcodeFormatCode39:
-        return @"Code 39";
-        
-        case kBarcodeFormatCode93:
-        return @"Code 93";
-        
-        case kBarcodeFormatCode128:
-        return @"Code 128";
-        
-        case kBarcodeFormatDataMatrix:
-        return @"Data Matrix";
-        
-        case kBarcodeFormatEan8:
-        return @"EAN-8";
-        
-        case kBarcodeFormatEan13:
-        return @"EAN-13";
-        
-        case kBarcodeFormatITF:
-        return @"ITF";
-        
-        case kBarcodeFormatPDF417:
-        return @"PDF417";
-        
-        case kBarcodeFormatQRCode:
-        return @"QR Code";
-        
-        case kBarcodeFormatRSS14:
-        return @"RSS 14";
-        
-        case kBarcodeFormatRSSExpanded:
-        return @"RSS Expanded";
-        
-        case kBarcodeFormatUPCA:
-        return @"UPCA";
-        
-        case kBarcodeFormatUPCE:
-        return @"UPCE";
-        
-        case kBarcodeFormatUPCEANExtension:
-        return @"UPC/EAN extension";
-        
-        default:
-        return @"Unknown";
-    }
+- (void) willAnimateRotationToInterfaceOrientation: (UIInterfaceOrientation) orient
+                                          duration: (NSTimeInterval) duration
+{
+    // perform rotation in animation loop so camera preview does not move
+    // wrt device orientation
+    [readerView setNeedsLayout];
 }
 
 #pragma mark - ZXCaptureDelegate Methods
 
-- (void)captureResult:(ZXCapture *)capture result:(ZXResult *)result {
-    if (!result) return;
+
+- (void) readerView: (ZBarReaderView*) view
+     didReadSymbols: (ZBarSymbolSet*) syms
+          fromImage: (UIImage*) img
+{
+    NSString * resultString = nil;
     
-    [self.capture stop];
+    // do something useful with results
+    for(ZBarSymbol *sym in syms) {
+        resultString = sym.data;
+        break;
+    }
     
-    // We got a result. Display information about the result onscreen.
-    NSString *formatString = [self barcodeFormatToString:result.barcodeFormat];
-    NSString *display = [NSString stringWithFormat:@"Scanned!\n\nFormat: %@\n\nContents:\n%@", formatString, result.text];
-    
-    NSLog(@"%@", display);
+    NSLog(@"%@", resultString);
     
     // Vibrate
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 
     // Search for shop and open.
-    if (![self.viewModel isPostValid:display])
+    if (![self.viewModel isPostValid:resultString])
     {
         AMSmoothAlertView * alert = [[AMSmoothAlertView alloc] initDropAlertWithTitle:NSLocalizedString(@"错误", nil)
                                                                               andText:NSLocalizedString(@"未能解析快递单号", nil)
