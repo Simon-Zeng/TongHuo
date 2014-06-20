@@ -41,7 +41,7 @@
             }
         }
         
-        NSLog(@"++++++ Loaded savedMarkets: %@", savedMarkets);
+//        NSLog(@"++++++ Loaded savedMarkets: %@", savedMarkets);
     }];
 }
 

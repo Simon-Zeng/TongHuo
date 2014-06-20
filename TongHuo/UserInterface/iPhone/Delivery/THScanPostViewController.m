@@ -52,12 +52,20 @@
     
     CGSize viewSize = self.view.frame.size;
     
-    ZBarCaptureReader * captureScanner = [ZBarCaptureReader new];
-    [captureScanner.scanner setSymbology: ZBAR_I25
-                                  config: ZBAR_CFG_ENABLE
-                                      to: 0];
+    if (TARGET_IPHONE_SIMULATOR)
+    {
+        readerView = [[ZBarReaderView alloc] init];
+    }
+    else
+    {
+        ZBarCaptureReader * captureScanner = [ZBarCaptureReader new];
+        [captureScanner.scanner setSymbology: ZBAR_I25
+                                      config: ZBAR_CFG_ENABLE
+                                          to: 0];
+        
+        readerView = [[ZBarReaderView alloc] initWithImageScanner:captureScanner.scanner];
+    }
     
-    readerView = [[ZBarReaderView alloc] initWithImageScanner:captureScanner.scanner];
     readerView.readerDelegate = self;
     readerView.tracksSymbols = YES;
     readerView.frame =CGRectMake(0, 0, viewSize.width, viewSize.height);

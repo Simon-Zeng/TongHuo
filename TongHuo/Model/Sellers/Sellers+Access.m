@@ -41,7 +41,7 @@
                 }
             }
         }
-        NSLog(@"++++++ Loaded savedSellers: %@", savedSellers);
+//        NSLog(@"++++++ Loaded savedSellers: %@", savedSellers);
 
     }];
 }

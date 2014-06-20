@@ -40,7 +40,7 @@
                 }
             }
         }
-        NSLog(@"++++++ Loaded savedShops: %@", savedShops);
+//        NSLog(@"++++++ Loaded savedShops: %@", savedShops);
     }];
 }
 
