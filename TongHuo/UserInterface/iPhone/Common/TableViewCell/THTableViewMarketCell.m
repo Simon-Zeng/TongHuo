@@ -82,7 +82,7 @@
 
 - (void)updateWithMarket:(Markets *)market atIndexPath:(NSIndexPath *)indexPath
 {
-    self.indexLabel.text = [NSString stringWithFormat:@"%ld", indexPath.row + 1];
+    self.indexLabel.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
     self.titleLable.text = market.name;
     self.addressLabel.text = market.address;
     

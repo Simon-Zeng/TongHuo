@@ -83,7 +83,7 @@
 #pragma mark -
 - (void)updateWithShop:(Shops *)shop atIndexPath:(NSIndexPath *)indexPath
 {
-    self.indexLabel.text = [NSString stringWithFormat:@"%ld", indexPath.row + 1];
+    self.indexLabel.text = [NSString stringWithFormat:@"%d", indexPath.row + 1];
     self.titleLable.text = shop.name;
     self.addressLabel.text = shop.address;
     
