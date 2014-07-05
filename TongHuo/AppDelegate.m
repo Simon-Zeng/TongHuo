@@ -25,6 +25,11 @@
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 
+#import "Product.h"
+#import "Product+Access.h"
+#import "Orders.h"
+#import "Orders+Access.h"
+
 @interface AppDelegate ()
 
 @end
@@ -94,7 +99,8 @@
 
     [viewControllers addObject:_sidePanelController];
     
-    if (![THAuthorizer sharedAuthorizer].isLoggedIn)
+    THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
+    if (!authorizer.isLoggedIn)
     {
         THSignInViewController *signInViewController = [[THSignInViewController alloc] init];
         
@@ -109,6 +115,16 @@
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    // Schedule sync
+    @weakify(self);
+    [authorizer.updateSignal subscribeNext:^(id x) {
+        @strongify(self);
+        
+        if (x) {
+            [self scheduleOrdersUpdate];
+        }
+    }];
     
     return YES;
 }
@@ -146,13 +162,126 @@
     [[THCoreDataStack defaultStack] saveContext];
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    [[self refreshSignal] subscribeNext:^(id x) {
+        NSLog(@"--- Scheduled synchronization succeed!");
+    } error:^(NSError *error) {
+        NSLog(@"--- Scheduled synchronization error: %@", error);
+    }];
+}
+
+- (RACSignal *)refreshSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        THAPI * apiCenter = [THAPI apiCenter];
+        
+        return [RACObserve(apiCenter, accountUserIdentifier) subscribeNext:^(id x) {
+            if (x)
+            {
+                RACSignal * request = [[THAPI apiCenter] postAndGetOrders:[NSArray array]];
+                
+                [request subscribeNext:^(RACTuple * x) {
+                    NSDictionary * response = x[1];
+                    
+                    if (response && [response isKindOfClass:[NSDictionary class]])
+                    {
+                        NSArray * ordersInfo = [response objectForKey:@"fh"];
+                        NSArray * productsInfo = [response objectForKey:@"pro"];
+                        
+                        for (NSDictionary * aDict1 in ordersInfo)
+                        {
+                            [Orders objectFromDictionary:aDict1];
+                        }
+                        
+                        for (NSDictionary * aDict2 in productsInfo)
+                        {
+                            [Product objectFromDictionary:aDict2];
+                        }
+                    }
+                    
+                    [[THCoreDataStack defaultStack] saveContext];
+                    
+                    [subscriber sendNext:nil];
+                    [subscriber sendCompleted];
+                } error:^(NSError *error) {
+                    [subscriber sendError:error];
+                } completed:^{
+                    [subscriber sendNext:nil];
+                    [subscriber sendCompleted];
+                }];
+            }
+        }];
+    }];
+}
+
 + (void)logout
 {
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    
     [[THAuthorizer sharedAuthorizer] logout];
     
     THSignInViewController *signInViewController = [[THSignInViewController alloc] init];
     
     [[AppDelegate rootNavigationController] pushViewController:signInViewController animated:YES];
+}
+
+- (void)scheduleOrdersUpdate
+{
+    NSArray * scheduledNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    
+    if (scheduledNotifications.count == 0)
+    {
+        [self scheduleNotificationAt:13*3600 withMessage:@"亲，您该同步您的59订单了哦."];
+        [self scheduleNotificationAt:23*3600 withMessage:@"亲，您该同步您的59订单了哦."];
+    }
+}
+
+- (void)scheduleNotificationAt:(NSUInteger)tOffDay withMessage:(NSString *)message
+{
+    NSInteger alarmHour = (int)(floor(tOffDay)/3600);
+    NSInteger alarmMinute = (int)((int)floorf(tOffDay)%3600/60);
+    NSInteger alarmSecond = (int)((int)floorf(tOffDay)%60);
+    
+    NSDate * nowDate = [NSDate date];
+    
+    NSCalendarUnit flag = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSWeekdayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit;
+    NSDateComponents *componentsOfToday = [[NSCalendar currentCalendar] components:flag fromDate:nowDate];
+    
+    NSInteger dayOffset = 0;
+    //按日重复
+    if (tOffDay > (componentsOfToday.hour * 3600 + componentsOfToday.minute * 60 + componentsOfToday.second))
+    {
+        //在今天允许响
+        dayOffset = 0;
+    }
+    else
+    {
+        //明天及以后允许
+        dayOffset = 1;
+    }
+    
+    NSDateComponents * components = [[NSCalendar currentCalendar] components:flag fromDate:[nowDate dateByAddingTimeInterval:3600 * 24 * dayOffset]];
+    components.hour = alarmHour;
+    components.minute = alarmMinute;
+    components.second = alarmSecond;
+    
+    NSDate * alarmDate = [[NSCalendar currentCalendar] dateFromComponents:components];
+    
+    
+    UILocalNotification * syncNotification = [[UILocalNotification alloc] init];
+    syncNotification.repeatCalendar = [NSCalendar currentCalendar];
+    syncNotification.repeatInterval = NSDayCalendarUnit;
+    syncNotification.hasAction = YES;
+    syncNotification.soundName = UILocalNotificationDefaultSoundName;
+    syncNotification.fireDate = alarmDate;
+    syncNotification.userInfo = @{@"alarmName":@"reminder", @"alarmTime":[NSNumber numberWithDouble:tOffDay]};
+    syncNotification.alertBody = message;
+    syncNotification.alertLaunchImage = nil;
+    syncNotification.alertAction = @"知道了";
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:syncNotification];
+
 }
 
 @end

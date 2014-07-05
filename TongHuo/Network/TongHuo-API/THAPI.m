@@ -329,7 +329,7 @@
                                                                                              error:NULL]
                                                   encoding:NSUTF8StringEncoding];
     
-    NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%d/%@", _accountUserIdentifier, ordersJson.length, kSecret];
+    NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%lu/%@", _accountUserIdentifier, (unsigned long)ordersJson.length, kSecret];
     
     CocoaSecurityResult * encrypted = [CocoaSecurity md5:baseSecret];
     
@@ -418,7 +418,7 @@
                                                                                                error:NULL]
                                                     encoding:NSUTF8StringEncoding];
     
-    NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%d/%@", _accountUserIdentifier, productsJson.length, kSecret];
+    NSString * baseSecret = [NSString stringWithFormat:@"%@/do/%lu/%@", _accountUserIdentifier, (unsigned long)productsJson.length, kSecret];
     
     CocoaSecurityResult * encrypted = [CocoaSecurity md5:baseSecret];
     
