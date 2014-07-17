@@ -16,7 +16,9 @@
 #import "MenuViewModel.h"
 #import "THTableViewMenuCell.h"
 #import "THSignInViewController.h"
-#import "UMSocial.h"
+
+#import "UMSocialSnsPlatformManager.h"
+#import "UMSocialSnsService.h"
 
 @interface THMenuViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -180,7 +182,7 @@
             NSString * shareMessage = NSLocalizedString(@"全国最大的在线服装批发市场，59批发，http://www.59pi.com", nil);
             NSArray * shareNames = [NSArray arrayWithObjects:UMShareToWechatSession,UMShareToSina,UMShareToEmail,UMShareToSms,nil];
             [UMSocialSnsService presentSnsIconSheetView:self.parentViewController
-                                                 appKey:nil
+                                                 appKey:kUMengAppKey
                                               shareText:shareMessage
                                              shareImage:[UIImage imageNamed:@"icon.png"]
                                         shareToSnsNames:shareNames

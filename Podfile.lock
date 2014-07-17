@@ -92,7 +92,7 @@ DEPENDENCIES:
   - SVProgressHUD
   - UICKeyChainStore
   - UIColor-Utilities
-  - UMengSocial
+  - UMengSocial (~> 4.0)
   - YLMoment
   - ZBarSDK
 

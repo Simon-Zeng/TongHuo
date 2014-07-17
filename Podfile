@@ -29,7 +29,7 @@ target :TongHuo do
   pod 'SVProgressHUD'
   pod 'UICKeyChainStore'
   pod 'UIColor-Utilities'
-  pod 'UMengSocial'
+  pod 'UMengSocial','~> 4.0'
   pod 'YLMoment'
   pod 'ZBarSDK'
   #pod 'ZXingObjC'
