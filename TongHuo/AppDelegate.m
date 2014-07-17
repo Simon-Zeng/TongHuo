@@ -22,7 +22,7 @@
 #import "SignInViewModel.h"
 #import "ProductsViewModel.h"
 
-//#import "UMSocial.h"
+#import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 
 #import "Product.h"
@@ -47,7 +47,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-//    [UMSocialData setAppKey:kUMengAppKey];
+    [UMSocialData setAppKey:kUMengAppKey];
 
     //设置微信AppId，和分享url
     [UMSocialWechatHandler setWXAppId:kWeChatAppID url:kWeChatCallBackURL];

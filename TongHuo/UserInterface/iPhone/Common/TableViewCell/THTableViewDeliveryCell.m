@@ -111,7 +111,7 @@
 
 - (void)updateWithProduct:(Product *)product atIndexPath:(NSIndexPath *)indexPath
 {
-    [self.iconView setImageWithURL:[NSURL URLWithString:product.pimage]
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:product.pimage]
                   placeholderImage:[UIImage imageNamed:@"DefaultImage"]];
     
     Orders * order = [Orders orderWithId:@(product.pid.longLongValue)];

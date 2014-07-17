@@ -90,7 +90,7 @@
 
 - (void)updateWithGood:(Goods *)good atIndexPath:(NSIndexPath *)indexPath
 {
-    [self.iconView setImageWithURL:[NSURL URLWithString:good.picUrl]
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:good.picUrl]
                   placeholderImage:[UIImage imageNamed:@"DefaultImage"]];
     
     self.titleLabel.text = good.numIid.description;

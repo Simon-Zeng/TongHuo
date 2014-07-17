@@ -167,7 +167,7 @@
 {
     self.product = product;
     
-    [self.iconView setImageWithURL:[NSURL URLWithString:product.pimage]
+    [self.iconView sd_setImageWithURL:[NSURL URLWithString:product.pimage]
                   placeholderImage:[UIImage imageNamed:@"DefaultImage"]];
     
     self.titleLable.text = product.buyer;
@@ -180,7 +180,7 @@
 - (void)showDetailImage:(UITapGestureRecognizer *)recognizer
 {
     UIImageView * imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 84, 280, self.window.bounds.size.height - 104)];
-    [imageView setImageWithURL:[NSURL URLWithString:self.product.pimage]
+    [imageView sd_setImageWithURL:[NSURL URLWithString:self.product.pimage]
               placeholderImage:[UIImage imageNamed:@"DefaultImage"]];
     
     CGRect startRect = [self.iconView convertRect:self.iconView.frame toView:self.window];
