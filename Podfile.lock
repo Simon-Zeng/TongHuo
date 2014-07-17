@@ -50,29 +50,21 @@ PODS:
     - ReactiveCocoa
   - ReactiveViewModel (0.2):
     - ReactiveCocoa (~> 2.1)
-  - SDWebImage (3.6):
+  - SDWebImage (3.7.0):
     - SDWebImage/Core
-  - SDWebImage/Core (3.6)
+  - SDWebImage/Core (3.7.0)
   - SimpleSyncService (1.2.3):
     - ObjectiveRecord
-  - SLCoreDataStack (0.5.0)
-  - SLRESTfulCoreData (1.8.2):
-    - SLRESTfulCoreData/Complete
-  - SLRESTfulCoreData/AFRESTfulCoreDataBackgroundQueue (1.8.2):
-    - AFNetworking (~> 2.1)
-    - SLRESTfulCoreData/Core
-  - SLRESTfulCoreData/Complete (1.8.2):
-    - AFNetworking (~> 2.1)
-    - SLCoreDataStack (>= 0.2.0)
-    - SLRESTfulCoreData/AFRESTfulCoreDataBackgroundQueue
-    - SLRESTfulCoreData/Core
-  - SLRESTfulCoreData/Core (1.8.2)
-  - SLRESTfulCoreDataUI (1.11.6):
+  - SLCoreDataStack (0.6.0)
+  - SLRESTfulCoreData (1.9.1):
+    - AFNetworking (~> 2.3.1)
+    - SLCoreDataStack (~> 0.6.0)
+  - SLRESTfulCoreDataUI (1.11.8):
     - SLRESTfulCoreData (>= 1.0.0)
   - SVProgressHUD (1.0)
   - UICKeyChainStore (1.0.5)
   - UIColor-Utilities (1.0.1)
-  - UMengSocial (3.3.7.1)
+  - UMengSocial (4.0)
   - YLMoment (0.5.1)
   - ZBarSDK (1.3.1)
 
@@ -122,15 +114,15 @@ SPEC CHECKSUMS:
   ReactiveCocoa: dca75777b9d18990c8714a3a6f2149f29b4d1462
   ReactiveCoreData: db76ace53a7ab70ba2cad54eaae32b2f960cae8c
   ReactiveViewModel: 78387196df2e7535bb2776c41df15dbb17300f8a
-  SDWebImage: c6989652c1cdf27cbdf3f56957e2030f825af5bc
+  SDWebImage: 791cb0f588046cb0bb7802ae8ae8f5462947b773
   SimpleSyncService: ddd84adf51a6e7d25647a63aa1a7cd0183c14141
-  SLCoreDataStack: 18c6fb041fa421ac6957185732e936fea512d470
-  SLRESTfulCoreData: 388f8305ff312cee5f23d41d7039357b23b06718
-  SLRESTfulCoreDataUI: 4921b6f5b0db1ce9f297bf5517c1da2a6eb78fb9
+  SLCoreDataStack: 3cbb4bc9ea1f0ba6d7a3a382b1d0cf879b5f3cd4
+  SLRESTfulCoreData: 4933bf01fc97fdd3c50c7786fdda6c483f1136c3
+  SLRESTfulCoreDataUI: 44473a5e278ed5f9654e48544f0e1b9607e442e7
   SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
   UICKeyChainStore: 4f9719600cc70025064e26f28f1210bcfc3b0c35
   UIColor-Utilities: 3f13aebe447f5e19c8d3aa18c194c53116b23537
-  UMengSocial: 32d71ac86792afdc411eccb736fd5845716b4624
+  UMengSocial: 981fc7f4c24546d20d01430ff551e3e7c5d46eb9
   YLMoment: a5e6733c66490fd736db325f5d339cb511bdfb54
   ZBarSDK: 3ed560856963f765b66d834f464590bd6ba13b44
 

@@ -1120,21 +1120,19 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9995BA8C9E78466BB9DCC872 /* Pods-TongHuo.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wang Xiaolong (VQYL6XWRDD)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
 				INFOPLIST_FILE = "TongHuo/TongHuo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_3.3.7.1/**",
-					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/",
-					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_Extra_Frameworks/Wechat/**",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0004E49C-9469-475B-8293-DB8AE1A8C8BF";
+				PROVISIONING_PROFILE = "2B1DA5A0-2E1F-43F7-BC1D-391A8CB3D969";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1143,21 +1141,19 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9995BA8C9E78466BB9DCC872 /* Pods-TongHuo.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Wang Xiaolong (VQYL6XWRDD)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wang Xiaolong (SXDA35MS33)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
 				INFOPLIST_FILE = "TongHuo/TongHuo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				LIBRARY_SEARCH_PATHS = (
-					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_3.3.7.1/**",
-					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI/",
-					"$(PODS_ROOT)/UmengSocial/umeng_ios_social_sdk_3.3.7.1_custom/UMSocial_Sdk_Extra_Frameworks/Wechat/**",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0004E49C-9469-475B-8293-DB8AE1A8C8BF";
+				PROVISIONING_PROFILE = "C7F82F81-884C-434F-92C9-F1EAF2862633";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -40,7 +40,7 @@
     
 //    RACSignal * signal = [apiCenter signInWithUsername:@"zengconggen" password:@"123456"];
 
-    RACSignal * signal = [apiCenter signInWithUsername:@"miukoo" password:@"miukoo"];
+    RACSignal * signal = [apiCenter signInWithUsername:@"miukoo" password:@"123456"];
  
     [signal subscribeNext:^(RACTuple *result) {
         NSLog(@"--- Result: %@", result);
