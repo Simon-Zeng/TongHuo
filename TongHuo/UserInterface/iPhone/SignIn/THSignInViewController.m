@@ -139,9 +139,9 @@
     // When the load command is executed, update our view accordingly
     [self.signInViewModel.signInCommand.executionSignals subscribeNext:^(id signal) {
         
-        [signal subscribeNext:^(RACTuple * x) {
-            AFHTTPRequestOperation * operation = x[0];
-            NSLog(@"----- Sign in response: %@", operation.responseString);
+        [signal subscribeNext:^(id x) {
+            NSString * responseString = x;
+            NSLog(@"----- Sign in response: %@", responseString);
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 @strongify(self);

@@ -9,11 +9,11 @@
 #import "THNetwork.h"
 
 //
-//#define kBaseURLDomain @"www.59pi.com"
-//#define kAdminURLDomain @"admin.59pi.com"
+#define kBaseURLDomain @"www.59pi.com"
+#define kAdminURLDomain @"admin.59pi.com"
 
-#define kBaseURLDomain @"www.gjsm.cn"
-#define kAdminURLDomain @"www.gjsm.cn"
+//#define kBaseURLDomain @"www.gjsm.cn"
+//#define kAdminURLDomain @"www.gjsm.cn"
 
 
 @implementation THNetwork

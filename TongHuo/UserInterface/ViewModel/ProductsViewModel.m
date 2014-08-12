@@ -79,8 +79,8 @@
             {
                 RACSignal * request = [[THAPI apiCenter] postAndGetOrders:[NSArray array]];
                 
-                [request subscribeNext:^(RACTuple * x) {
-                    NSDictionary * response = x[1];
+                [request subscribeNext:^(id x) {
+                    NSDictionary * response = x;
                     
                     if (response && [response isKindOfClass:[NSDictionary class]])
                     {
@@ -126,8 +126,8 @@
         
         RACSignal * request = [[THAPI apiCenter] postAndGetOrders:changedProducts];
         
-        [request subscribeNext:^(RACTuple * x) {
-            NSDictionary * response = x[1];
+        [request subscribeNext:^(id x) {
+            NSDictionary * response = x;
             
             if (response && [response isKindOfClass:[NSDictionary class]])
             {

@@ -62,17 +62,22 @@
         self.price = goods.price.description;
         
         @weakify(self);
-        [[[THAPI apiCenter] getSellerCodeFor:goods.numIid] subscribeNext:^(RACTuple * x) {
+        [[[THAPI apiCenter] getSellerCodeFor:goods.numIid] subscribeNext:^(id x) {
             @strongify(self);
             
-            AFHTTPRequestOperation * operation = x[0];
-//            id response = x[1];
+            NSString * responseString = x;
+            if ([x isKindOfClass:[NSData class]])
+            {
+                responseString = [[NSString alloc] initWithData:x encoding:NSUTF8StringEncoding];
+            }
             
-            NSLog(@"---- Reponse String: %@", operation.responseString);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.sellerCode = operation.responseString;
-            });
-            //            NSLog(@"---- Response: %@", response);
+            NSLog(@"---- Reponse String: %@", responseString);
+            
+            if (responseString && [responseString isKindOfClass:[NSString class]])
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.sellerCode = responseString;
+                });            }
         } error:^(NSError *error) {
             NSLog(@"---- error: %@", error);
         }];

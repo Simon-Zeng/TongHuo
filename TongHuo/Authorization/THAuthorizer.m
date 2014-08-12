@@ -182,8 +182,8 @@
     signal = [api signInWithUsername:_username password:_password];
     
     @weakify(self);
-    RACSignal * newSignal = [signal doNext:^(RACTuple * x) {
-        id responseObject = x[1];
+    RACSignal * newSignal = [signal doNext:^(id x) {
+        id responseObject = x;
         
         @strongify(self);
         if ([responseObject isKindOfClass:[NSDictionary class]])
@@ -218,10 +218,10 @@
     signal = [api getTBAuthenticationFor:accountUserIdentifier];
     
     @weakify(self);
-    [signal subscribeNext:^(RACTuple * x) {
+    [signal subscribeNext:^(id x) {
         @strongify(self);
         
-        NSDictionary * response = x[1];
+        NSDictionary * response = x;
         
         if (response && [response isKindOfClass:[NSDictionary class]])
         {

@@ -74,8 +74,8 @@
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         RACSignal * request = [[THAPI apiCenter] getMarkets];
         
-        [request subscribeNext:^(RACTuple * x) {
-            NSArray * response = x[1];
+        [request subscribeNext:^(id x) {
+            NSDictionary * response = x;
             
             if (response && [response isKindOfClass:[NSArray class]])
             {

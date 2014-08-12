@@ -212,9 +212,9 @@
     // When the load command is executed, update our view accordingly
     [self.viewModel.uploadCommand.executionSignals subscribeNext:^(id signal) {
         
-        [signal subscribeNext:^(RACTuple * x) {
-            AFHTTPRequestOperation * operation = x[0];
-            NSLog(@"----- Upload response: %@", operation.responseString);
+        [signal subscribeNext:^(id x) {
+            NSString * responseString = x;
+            NSLog(@"----- Upload response: %@", responseString);
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 @strongify(self);
