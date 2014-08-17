@@ -17,8 +17,15 @@
 
 #define kUsernameKey @"username"
 #define kPasswordKey @"password"
+#define kUserIdentifier @"userIdentifier"
 
 @interface THAuthorizer ()
+
+
+@property (nonatomic, strong, readwrite) NSNumber * userIdentifier;
+@property (nonatomic, strong, readwrite) NSString * username;
+@property (nonatomic, strong, readwrite) NSString * password;
+
 
 @property (nonatomic, readwrite) NSManagedObjectID * currentAccountID;
 @property (nonatomic, strong) NSArray * platforms;
@@ -56,10 +63,11 @@
 {
     if (self = [super init])
     {
+        _userIdentifier = nil;
         _username = nil;
         _password = nil;
         
-        _autoSignInEnabled = NO;
+        _autoSignInEnabled = YES;
         
         _currentAccountID = nil;
         
@@ -71,6 +79,7 @@
 
 #pragma mark - Public
 
+@synthesize userIdentifier = _userIdentifier;
 @synthesize username = _username;
 @synthesize password = _password;
 
@@ -80,7 +89,7 @@
 {
     RACSignal * signInSignal = [RACSignal empty];
     
-    if (![_username isEqual:username] || ![_password isEqual:password])
+    if (_userIdentifier.longLongValue == 0)
     {
         _username = username;
         _password = password;
@@ -107,6 +116,7 @@
 {
     [self removeAuthentication];
     
+    _userIdentifier = nil;
     _username = nil;
     _password = nil;
     
@@ -136,8 +146,18 @@
 {
     UICKeyChainStore * keyChain = [UICKeyChainStore keyChainStoreWithService:kServericeName];
     
+    NSNumber * userIdentifier = @([[keyChain stringForKey:kUserIdentifier] longLongValue]);
     NSString * username = [keyChain stringForKey:kUsernameKey];
     NSString * password = [keyChain stringForKey:kPasswordKey];
+    
+    if (userIdentifier.longLongValue > 0)
+    {
+        _userIdentifier = userIdentifier;
+        
+        Account * currentAccount = [Account accountWithId:_userIdentifier];
+        
+        self.currentAccountID = [currentAccount objectID];
+    }
     
     if (username)
     {
@@ -147,11 +167,17 @@
     if (password) {
         _password = password;
     }
+    
 }
 
 - (void) saveAuthentication
 {
     UICKeyChainStore * keyChain = [UICKeyChainStore keyChainStoreWithService:kServericeName];
+    
+    if (_userIdentifier)
+    {
+        [keyChain setString:_userIdentifier.stringValue forKey:kUserIdentifier];
+    }
     
     [keyChain setString:_username forKey:kUsernameKey];
     [keyChain setString:_password forKey:kPasswordKey];
@@ -163,6 +189,7 @@
 {
     UICKeyChainStore * keyChain = [UICKeyChainStore keyChainStoreWithService:kServericeName];
     
+    [keyChain removeItemForKey:kUserIdentifier];
     [keyChain removeItemForKey:kUsernameKey];
     [keyChain removeItemForKey:kPasswordKey];
     
@@ -189,6 +216,9 @@
         if ([responseObject isKindOfClass:[NSDictionary class]])
         {
              Account * currentAccount = [Account objectFromDictionary:responseObject];
+            self.userIdentifier = currentAccount.identifier;
+            
+            [self saveAuthentication];
             
             [self refreshTBAuthenticationFor:currentAccount.identifier];
             

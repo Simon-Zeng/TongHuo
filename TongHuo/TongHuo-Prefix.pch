@@ -45,5 +45,5 @@
 #define kUMengAppKey @"53526bc156240b09ef0853af"
 
 #define kWeChatAppID @"wx793ae5a616200019"
-#define kWeChatCallBackURL @"http://www.umeng.com/social"
+#define kWeChatCallBackURL @"http://www.59pi.com/"
 

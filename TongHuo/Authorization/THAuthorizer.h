@@ -14,6 +14,7 @@
 
 @interface THAuthorizer : NSObject
 
+@property (nonatomic, readonly) NSNumber * userIdentifier;
 @property (nonatomic, readonly) NSString * username;
 @property (nonatomic, readonly) NSString * password;
 

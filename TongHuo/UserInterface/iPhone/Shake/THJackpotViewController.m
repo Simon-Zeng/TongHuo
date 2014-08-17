@@ -38,21 +38,29 @@
     
     @weakify(self);
     [self.viewModel.shakeCommand.executionSignals subscribeNext:^(RACSignal * signal) {
-        [signal subscribeNext:^(RACTuple *result) {
-            RACTupleUnpack(AFHTTPRequestOperation *httpRequest) = result;
-            
+        [signal subscribeNext:^(id x) {
             @strongify(self);
             
-            NSString * response = httpRequest.responseString;
-            
-            NSArray * jackpots = [response componentsSeparatedByString:@"-"];
-            
-            if (2 == jackpots.count)
+            NSString * responseString = x;
+            if ([x isKindOfClass:[NSData class]])
             {
-                [self showJackpotResult:jackpots];
+                responseString = [[NSString alloc] initWithData:x encoding:NSUTF8StringEncoding];
             }
             
-            NSLog(@"----- Jackpot Response: %@", httpRequest.responseString);
+            NSLog(@"---- Reponse String: %@", responseString);
+            
+            if (responseString && [responseString isKindOfClass:[NSString class]])
+            {
+                
+                NSArray * jackpots = [responseString componentsSeparatedByString:@"-"];
+                
+                if (2 == jackpots.count)
+                {
+                    [self showJackpotResult:jackpots];
+                }
+            }
+            
+            NSLog(@"----- Jackpot Response: %@", responseString);
         } error:^(NSError *error) {
             NSLog(@"----- Jackpot error: %@", error);
         } completed:^{
