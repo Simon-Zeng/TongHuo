@@ -72,6 +72,7 @@
 		532DC956192ED83700C07757 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 532DC954192ED83700C07757 /* InfoPlist.strings */; };
 		5349B353195092E900E0564D /* THScanPostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5349B352195092E900E0564D /* THScanPostViewController.m */; };
 		5349B3561950937F00E0564D /* ScanPostViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5349B3551950937F00E0564D /* ScanPostViewModel.m */; };
+		5355047319A241BB002EDE19 /* JackpotResultView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5355047219A241BB002EDE19 /* JackpotResultView.m */; };
 		537F7B6B1942D93500CE1703 /* Account+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B6A1942D93500CE1703 /* Account+Access.m */; };
 		537F7B6E1942D94700CE1703 /* Goods+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B6D1942D94700CE1703 /* Goods+Access.m */; };
 		537F7B711942D95900CE1703 /* Markets+Access.m in Sources */ = {isa = PBXBuildFile; fileRef = 537F7B701942D95900CE1703 /* Markets+Access.m */; };
@@ -217,6 +218,8 @@
 		5349B352195092E900E0564D /* THScanPostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THScanPostViewController.m; sourceTree = "<group>"; };
 		5349B3541950937F00E0564D /* ScanPostViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanPostViewModel.h; sourceTree = "<group>"; };
 		5349B3551950937F00E0564D /* ScanPostViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanPostViewModel.m; sourceTree = "<group>"; };
+		5355047119A241BB002EDE19 /* JackpotResultView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JackpotResultView.h; sourceTree = "<group>"; };
+		5355047219A241BB002EDE19 /* JackpotResultView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JackpotResultView.m; sourceTree = "<group>"; };
 		537F7B691942D93500CE1703 /* Account+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Account+Access.h"; sourceTree = "<group>"; };
 		537F7B6A1942D93500CE1703 /* Account+Access.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Account+Access.m"; sourceTree = "<group>"; };
 		537F7B6C1942D94700CE1703 /* Goods+Access.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Goods+Access.h"; sourceTree = "<group>"; };
@@ -393,6 +396,7 @@
 		531824661938D3E700AA1564 /* Shake */ = {
 			isa = PBXGroup;
 			children = (
+				5355047019A241A7002EDE19 /* Components */,
 				5318247A1938D53600AA1564 /* THJackpotViewController.h */,
 				5318247B1938D53600AA1564 /* THJackpotViewController.m */,
 			);
@@ -687,6 +691,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5355047019A241A7002EDE19 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				5355047119A241BB002EDE19 /* JackpotResultView.h */,
+				5355047219A241BB002EDE19 /* JackpotResultView.m */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		537F7AC61942C7C900CE1703 /* Extern */ = {
 			isa = PBXGroup;
 			children = (
@@ -962,6 +975,7 @@
 				530FC0F81941F1F3007B55F2 /* UINavigationBar+statusBarColor.m in Sources */,
 				532DC943192ED83600C07757 /* AppDelegate.m in Sources */,
 				531824821938D56900AA1564 /* THMarketsViewController.m in Sources */,
+				5355047319A241BB002EDE19 /* JackpotResultView.m in Sources */,
 				531824881938D58100AA1564 /* THGoodsViewController.m in Sources */,
 				531824761938D50900AA1564 /* THProductsViewController.m in Sources */,
 				532D134C193F50E700CC0399 /* THTableViewShopCell.m in Sources */,

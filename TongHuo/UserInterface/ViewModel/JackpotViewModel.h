@@ -12,4 +12,6 @@
 
 @property (nonatomic, readonly) RACCommand * shakeCommand;
 
+@property (nonatomic, strong) NSNumber * total;
+
 @end

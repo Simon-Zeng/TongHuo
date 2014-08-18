@@ -9,10 +9,12 @@
 #import "THJackpotViewController.h"
 
 #import "JackpotViewModel.h"
+#import "JackpotResultView.h"
 
 @interface THJackpotViewController ()
 
-@property (nonatomic, readonly) UIImageView * shakeView;
+@property (nonatomic, strong) UIImageView * shakeView;
+@property (nonatomic, strong) JackpotResultView * resultView;
 
 @end
 
@@ -35,6 +37,9 @@
     
     // Do any additional setup after loading the view.
     [self.view addSubview:self.shakeView];
+    [self.view addSubview:self.resultView];
+    
+    [self.resultView updateJackpotResultWithTotal:self.viewModel.total last:nil];
     
     @weakify(self);
     [self.viewModel.shakeCommand.executionSignals subscribeNext:^(RACSignal * signal) {
@@ -88,12 +93,30 @@
 
 - (UIImageView *)shakeView
 {
-    UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Shake"]];
-    imageView.center = self.view.center;
+    if (!_shakeView)
+    {
+        
+        UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Shake"]];
+        imageView.center = CGPointApplyAffineTransform(self.view.center, CGAffineTransformMakeTranslation(0, -30)) ;
+        
+        [imageView.layer addAnimation:[THHelper shakeAnimationWithDuration:0.5] forKey:@"shake"];
+        
+        _shakeView = imageView;
+    }
     
-    [imageView.layer addAnimation:[THHelper shakeAnimationWithDuration:0.5] forKey:@"shake"];
+    return _shakeView;
+}
+
+- (JackpotResultView *)resultView
+{
+    if (!_resultView)
+    {
+        JackpotResultView * jackpotView = [[JackpotResultView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.shakeView.frame)-20, 320, 60)];
+        
+        _resultView = jackpotView;
+    }
     
-    return imageView;
+    return _resultView;
 }
 
 #pragma mark - Shake
@@ -116,12 +139,15 @@
 {
     if (result.count >=2)
     {
-//        NSDecimalNumber * total = [NSDecimalNumber decimalNumberWithString:result[0]];
+        NSDecimalNumber * total = [NSDecimalNumber decimalNumberWithString:result[0]];
         NSDecimalNumber * last = [NSDecimalNumber decimalNumberWithString:result[1]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [SVProgressHUD dismiss];
+            
+            self.viewModel.total = total;
+            [self.resultView updateJackpotResultWithTotal:total last:last];
             
             NSString * title = nil;
             NSString * message = nil;
