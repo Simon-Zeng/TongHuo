@@ -73,44 +73,48 @@
 - (RACSignal *)refreshSignal
 {
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        NSNumber * uid = self.uid;
         
-        THAPI * apiCenter = [THAPI apiCenter];
-        
-        return [RACObserve(apiCenter, accountUserIdentifier) subscribeNext:^(id x) {
-            if (x)
-            {
-                RACSignal * request = [[THAPI apiCenter] getMarkets];
+        if (uid)
+        {
+            RACSignal * request = [[THAPI apiCenter] getMarkets];
+            
+            return [request subscribeNext:^(id x) {
+                NSDictionary * response = x;
                 
-                [request subscribeNext:^(id x) {
-                    NSDictionary * response = x;
+                if (response && [response isKindOfClass:[NSDictionary class]])
+                {
+                    NSArray * ordersInfo = [response objectForKey:@"fh"];
+                    NSArray * productsInfo = [response objectForKey:@"pro"];
                     
-                    if (response && [response isKindOfClass:[NSDictionary class]])
+                    for (NSDictionary * aDict1 in ordersInfo)
                     {
-                        NSArray * ordersInfo = [response objectForKey:@"fh"];
-                        NSArray * productsInfo = [response objectForKey:@"pro"];
-                        
-                        for (NSDictionary * aDict1 in ordersInfo)
-                        {
-                            [Orders objectFromDictionary:aDict1];
-                        }
-                        
-                        for (NSDictionary * aDict2 in productsInfo)
-                        {
-                            [Product objectFromDictionary:aDict2];
-                        }
+                        [Orders objectFromDictionary:aDict1];
                     }
-                    [[THCoreDataStack defaultStack] saveContext];
                     
-                    [subscriber sendNext:nil];
-                    [subscriber sendCompleted];
-                } error:^(NSError *error) {
-                    [subscriber sendError:error];
-                } completed:^{
-                    [subscriber sendNext:nil];
-                    [subscriber sendCompleted];
-                }];
-            }
-        }];
+                    for (NSDictionary * aDict2 in productsInfo)
+                    {
+                        [Product objectFromDictionary:aDict2];
+                    }
+                }
+                [[THCoreDataStack defaultStack] saveContext];
+                
+                [subscriber sendNext:nil];
+                [subscriber sendCompleted];
+            } error:^(NSError *error) {
+                [subscriber sendError:error];
+            } completed:^{
+                [subscriber sendNext:nil];
+                [subscriber sendCompleted];
+            }];
+        }
+        else
+        {
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+            
+            return nil;
+        }
     }];
 }
 
@@ -120,54 +124,62 @@
 
         NSNumber * uid = self.uid;
         
-        NSArray * changedOrders = [Orders getAllOrdersWithCriteria:(@{
-                                                                      @"uid": uid,
-                                                                      @"state": @3,
-                                                                      @"tb": @0
-                                                                      })];
-        
-        RACSignal * request = [[THAPI apiCenter] postOrders:changedOrders];
-        
-        [request subscribeNext:^(id x) {
-            NSDictionary * response = x;
+        if (uid)
+        {
+            NSArray * changedOrders = [Orders getAllOrdersWithCriteria:(@{
+                                                                          @"uid": uid,
+                                                                          @"state": @3,
+                                                                          @"tb": @0
+                                                                          })];
             
-            if (response && [response isKindOfClass:[NSDictionary class]])
-            {
-                NSLog(@"---- Post Orders: %@", response);
+            RACSignal * request = [[THAPI apiCenter] postOrders:changedOrders];
+            
+            return [request subscribeNext:^(id x) {
+                NSDictionary * response = x;
                 
-                NSString * ids = [response objectForKey:@"ids"];
-                
-                if (ids.length > 0)
+                if (response && [response isKindOfClass:[NSDictionary class]])
                 {
-                    NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
+                    NSLog(@"---- Post Orders: %@", response);
                     
-                    [mainContext performBlock:^{
-                        NSArray * idsArray = [ids componentsSeparatedByString:@","];
+                    NSString * ids = [response objectForKey:@"ids"];
+                    
+                    if (ids.length > 0)
+                    {
+                        NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
                         
-                        for (NSString * oid in idsArray)
-                        {
-                            NSNumber * identifier = @(oid.integerValue);
+                        [mainContext performBlock:^{
+                            NSArray * idsArray = [ids componentsSeparatedByString:@","];
                             
-                            Orders * order = [Orders orderWithId:identifier];
+                            for (NSString * oid in idsArray)
+                            {
+                                NSNumber * identifier = @(oid.integerValue);
+                                
+                                Orders * order = [Orders orderWithId:identifier];
+                                
+                                order.tb = @1;
+                            }
                             
-                            order.tb = @1;
-                        }
-                        
-                        [[THCoreDataStack defaultStack] saveContext];
-                    }];
+                            [[THCoreDataStack defaultStack] saveContext];
+                        }];
+                    }
                 }
-            }
+                
+                [subscriber sendNext:nil];
+                [subscriber sendCompleted];
+            } error:^(NSError *error) {
+                [subscriber sendError:error];
+            } completed:^{
+                [subscriber sendNext:nil];
+                [subscriber sendCompleted];
+            }];
+        }
+        else
+        {
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
             
-            [subscriber sendNext:nil];
-            [subscriber sendCompleted];
-        } error:^(NSError *error) {
-            [subscriber sendError:error];
-        } completed:^{
-            [subscriber sendNext:nil];
-            [subscriber sendCompleted];
-        }];
-        
-        return nil;
+            return nil;
+        }
     }];
 }
 

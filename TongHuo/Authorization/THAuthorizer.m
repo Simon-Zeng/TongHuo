@@ -152,22 +152,24 @@
     
     if (userIdentifier.longLongValue > 0)
     {
-        _userIdentifier = userIdentifier;
+        Account * currentAccount = [Account accountWithId:userIdentifier];
         
-        Account * currentAccount = [Account accountWithId:_userIdentifier];
-        
-        self.currentAccountID = [currentAccount objectID];
+        if (currentAccount.name)
+        {
+            self.currentAccountID = [currentAccount objectID];
+        }
     }
     
-    if (username)
+    if (self.currentAccountID)
     {
+        _userIdentifier = userIdentifier;
         _username = username;
-    }
-    
-    if (password) {
         _password = password;
     }
-    
+    else
+    {
+        [self removeAuthentication];
+    }
 }
 
 - (void) saveAuthentication

@@ -240,7 +240,10 @@
         JASidePanelController * sidePanelController = [(AppDelegate *)[UIApplication sharedApplication].delegate sidePanelController];
         
         UINavigationController * centerPanel = (UINavigationController *)sidePanelController.centerPanel;
-        [centerPanel setViewControllers:@[controller]];
+        if (centerPanel.topViewController.class != controller.class)
+        {
+            [centerPanel setViewControllers:@[controller]];
+        }
         
         [sidePanelController showCenterPanelAnimated:YES];
         

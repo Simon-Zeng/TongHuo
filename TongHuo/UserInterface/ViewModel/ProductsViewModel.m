@@ -72,71 +72,20 @@
 - (RACSignal *)refreshSignal
 {
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        THAPI * apiCenter = [THAPI apiCenter];
-        
-        return [RACObserve(apiCenter, accountUserIdentifier) subscribeNext:^(id x) {
-            if (x)
-            {
-                RACSignal * request = [[THAPI apiCenter] postAndGetOrders:[NSArray array]];
-                
-                [request subscribeNext:^(id x) {
-                    NSDictionary * response = x;
-                    
-                    if (response && [response isKindOfClass:[NSDictionary class]])
-                    {
-                        NSArray * ordersInfo = [response objectForKey:@"fh"];
-                        NSArray * productsInfo = [response objectForKey:@"pro"];
-                        
-                        for (NSDictionary * aDict1 in ordersInfo)
-                        {
-                            [Orders objectFromDictionary:aDict1];
-                        }
-                        
-                        for (NSDictionary * aDict2 in productsInfo)
-                        {
-                            [Product objectFromDictionary:aDict2];
-                        }
-                    }
-                    
-                    [[THCoreDataStack defaultStack] saveContext];
-                    
-                    [subscriber sendNext:nil];
-                    [subscriber sendCompleted];
-                } error:^(NSError *error) {
-                    [subscriber sendError:error];
-                } completed:^{
-                    [subscriber sendNext:nil];
-                    [subscriber sendCompleted];
-                }];
-            }
-        }];
-    }];
-}
-
-- (RACSignal *)synchronizeSignal
-{
-    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-     
         NSNumber * uid = self.uid;
         
-        NSArray * changedProducts = [Product getAllOrdersWithCriteria:(@{
-                                                                         @"uid": uid,
-                                                                         @"state": @1,
-                                                                         })];
-        
-        RACSignal * request = [[THAPI apiCenter] postAndGetOrders:changedProducts];
-        
-        [request subscribeNext:^(id x) {
-            NSDictionary * response = x;
+        if (uid)
+        {
+            RACSignal * request = [[THAPI apiCenter] postAndGetOrders:[NSArray array]];
             
-            if (response && [response isKindOfClass:[NSDictionary class]])
-            {
-                NSArray * ordersInfo = [response objectForKey:@"fh"];
-                NSArray * productsInfo = [response objectForKey:@"pro"];
+            return [request subscribeNext:^(id x) {
+                NSDictionary * response = x;
                 
-                NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
-                
-                [mainContext performBlock:^{
+                if (response && [response isKindOfClass:[NSDictionary class]])
+                {
+                    NSArray * ordersInfo = [response objectForKey:@"fh"];
+                    NSArray * productsInfo = [response objectForKey:@"pro"];
+                    
                     for (NSDictionary * aDict1 in ordersInfo)
                     {
                         [Orders objectFromDictionary:aDict1];
@@ -146,21 +95,85 @@
                     {
                         [Product objectFromDictionary:aDict2];
                     }
-                    
-                    [[THCoreDataStack defaultStack] saveContext];
-                }];
-            }
+                }
+                
+                [[THCoreDataStack defaultStack] saveContext];
+                
+                [subscriber sendNext:nil];
+                [subscriber sendCompleted];
+            } error:^(NSError *error) {
+                [subscriber sendError:error];
+            } completed:^{
+                [subscriber sendNext:nil];
+                [subscriber sendCompleted];
+            }];
+        }
+        else
+        {
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
             
-            [subscriber sendNext:nil];
-            [subscriber sendCompleted];
-        } error:^(NSError *error) {
-            [subscriber sendError:error];
-        } completed:^{
-            [subscriber sendNext:nil];
-            [subscriber sendCompleted];
-        }];
+            return nil;
+        }
+    }];
+}
+
+- (RACSignal *)synchronizeSignal
+{
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+     
+        NSNumber * uid = self.uid;
         
-        return nil;
+        if (uid)
+        {
+            NSArray * changedProducts = [Product getAllOrdersWithCriteria:(@{
+                                                                             @"uid": uid,
+                                                                             @"state": @1,
+                                                                             })];
+            
+            RACSignal * request = [[THAPI apiCenter] postAndGetOrders:changedProducts];
+            
+            return [request subscribeNext:^(id x) {
+                NSDictionary * response = x;
+                
+                if (response && [response isKindOfClass:[NSDictionary class]])
+                {
+                    NSArray * ordersInfo = [response objectForKey:@"fh"];
+                    NSArray * productsInfo = [response objectForKey:@"pro"];
+                    
+                    NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
+                    
+                    [mainContext performBlock:^{
+                        for (NSDictionary * aDict1 in ordersInfo)
+                        {
+                            [Orders objectFromDictionary:aDict1];
+                        }
+                        
+                        for (NSDictionary * aDict2 in productsInfo)
+                        {
+                            [Product objectFromDictionary:aDict2];
+                        }
+                        
+                        [[THCoreDataStack defaultStack] saveContext];
+                    }];
+                }
+                
+                [subscriber sendNext:nil];
+                [subscriber sendCompleted];
+            } error:^(NSError *error) {
+                [subscriber sendError:error];
+            } completed:^{
+                [subscriber sendNext:nil];
+                [subscriber sendCompleted];
+            }];
+        }
+        else
+        {
+            [subscriber sendNext:nil];
+            [subscriber sendCompleted];
+            
+            return nil;
+        }
     }];
 }
 
