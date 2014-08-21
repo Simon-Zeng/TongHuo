@@ -10,7 +10,7 @@
 
 @implementation Account (Access)
 
-+ (instancetype)accountWithId:(NSNumber *)identifier
++ (instancetype)accountWithId:(NSNumber *)identifier createNewIfNotExits:(BOOL)create
 {
     Account * account = nil;
     
@@ -28,7 +28,7 @@
     
     if (executeFetchError) {
         NSLog(@"[%@, %@] error looking up user with id: %i with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [identifier intValue], [executeFetchError localizedDescription]);
-    } else if (!account) {
+    } else if (!account && create) {
         account = [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
                                                 inManagedObjectContext:context];
     }
@@ -72,7 +72,7 @@
     
     if (identifier && email)
     {
-        Account * account = [Account accountWithId:identifier];
+        Account * account = [Account accountWithId:identifier createNewIfNotExits:YES];
         
         account.identifier = identifier;
         account.email = email;

@@ -152,7 +152,7 @@
     
     if (userIdentifier.longLongValue > 0)
     {
-        Account * currentAccount = [Account accountWithId:userIdentifier];
+        Account * currentAccount = [Account accountWithId:userIdentifier createNewIfNotExits:NO];
         
         if (currentAccount.name)
         {

@@ -10,7 +10,7 @@
 
 @interface Account (Access)
 
-+ (instancetype)accountWithId:(NSNumber *)identifier;
++ (instancetype)accountWithId:(NSNumber *)identifier createNewIfNotExits:(BOOL)create;
 
 + (instancetype)objectFromDictionary:(NSDictionary *)dict;
 
