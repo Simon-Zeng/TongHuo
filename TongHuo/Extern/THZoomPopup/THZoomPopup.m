@@ -36,7 +36,7 @@
 
 /**
  *  To use the class as a singleton
-*/
+ */
 + (THZoomPopup *)sharedInstance {
 	static THZoomPopup *_sharedInstance;
 	if (!_sharedInstance) {
@@ -96,17 +96,17 @@
 - (void)showPopup:(UIView *)viewToDisplay {
     
     if (!isPresenting) {
-    
+        
     	CGFloat width, height;
-    
+        
     	if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].keyWindow.rootViewController.interfaceOrientation)) {
-	 	width = MIN(mainView.frame.size.width, mainView.frame.size.height);
+            width = MIN(mainView.frame.size.width, mainView.frame.size.height);
         	height = MAX(mainView.frame.size.width, mainView.frame.size.height);
     	} else {
-		width = MAX(mainView.frame.size.width, mainView.frame.size.height);
+            width = MAX(mainView.frame.size.width, mainView.frame.size.height);
         	height = MIN(mainView.frame.size.width, mainView.frame.size.height);
     	}
-    
+        
     	darkView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width , height)];
     	darkView.userInteractionEnabled = YES;
     	darkView.autoresizingMask = UIViewAutoresizingFlexibleHeight + UIViewAutoresizingFlexibleWidth;
@@ -116,77 +116,83 @@
         	darkView.image = [self imageWithView:mainView crop:mainView.bounds ];
         	darkView.image = [darkView.image stackBlur:_blurRadius];
     	}
-    
-	popupView = [[UIView alloc] initWithFrame:CGRectInset(viewToDisplay.frame, -_borderSize, -_borderSize)];
-	popupView.backgroundColor = _borderColor;
-	viewToDisplay.center = CGPointMake(viewToDisplay.bounds.size.width / 2 + _borderSize, viewToDisplay.bounds.size.height / 2 + _borderSize);
-	[popupView addSubview:viewToDisplay];
+        
+        popupView = [[UIView alloc] initWithFrame:CGRectInset(viewToDisplay.frame, -_borderSize, -_borderSize)];
+        popupView.backgroundColor = _borderColor;
+        viewToDisplay.center = CGPointMake(viewToDisplay.bounds.size.width / 2 + _borderSize, viewToDisplay.bounds.size.height / 2 + _borderSize);
+        [popupView addSubview:viewToDisplay];
     	popupView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin + UIViewAutoresizingFlexibleLeftMargin  + UIViewAutoresizingFlexibleRightMargin;
     	popupView.center = darkView.center;
-
-	if (_showCloseButton) {
-		closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-		[closeButton addTarget:self action:@selector(closePopup) forControlEvents:UIControlEventTouchUpInside];
         
-        
-		UIImage *closeButtonImage = [UIImage imageNamed:@"zoomPopupClose"];
-        if (closeButtonImage) {
-            //CGSize closeButtonImageSize = CGSizeMake(closeButtonImage.size.width / [[UIScreen mainScreen] scale], closeButtonImage.size.height / [[UIScreen mainScreen] scale]);
-            CGSize closeButtonImageSize = closeButtonImage.size;
-            closeButton.bounds = CGRectMake(0, 0, closeButtonImageSize.width, closeButtonImageSize.height);
-            [closeButton setImage:closeButtonImage forState:UIControlStateNormal];
+        CGSize closeButtonImageSize = CGSizeZero;
+        if (_showCloseButton) {
+            closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [closeButton addTarget:self action:@selector(closePopup) forControlEvents:UIControlEventTouchUpInside];
             
-            closeButton.center = CGPointMake(popupView.bounds.size.width - (closeButtonImageSize.width / 6),  (closeButtonImageSize.height / 6));
-        } else {
-            _showCloseButton = NO; // No zoomPopupClose@2x.png or zoomPopupClose.png => no close button
+            
+            UIImage *closeButtonImage = [UIImage imageNamed:@"zoomPopupClose"];
+            if (closeButtonImage) {
+                //CGSize closeButtonImageSize = CGSizeMake(closeButtonImage.size.width / [[UIScreen mainScreen] scale], closeButtonImage.size.height / [[UIScreen mainScreen] scale]);
+                closeButtonImageSize = CGSizeApplyAffineTransform(closeButtonImage.size, CGAffineTransformMakeScale(2.0, 2.0));
+                closeButton.bounds = CGRectMake(0, 0, closeButtonImageSize.width, closeButtonImageSize.height);
+                [closeButton setImage:closeButtonImage forState:UIControlStateNormal];
+            } else {
+                _showCloseButton = NO; // No zoomPopupClose@2x.png or zoomPopupClose.png => no close button
+            }
         }
-	}
-    
-    
-	UIImage *imgSrc = [self imageWithView:mainView crop:mainViewStartRect];
-	UIImage *imgDest = [self imageWithView:popupView crop:popupView.bounds];
-    
-	sourceImageView = [[UIImageView alloc] initWithFrame:mainViewStartRect];
-	destImageView = [[UIImageView alloc] initWithFrame:mainViewStartRect];
-	[sourceImageView setImage:imgSrc];
-	[destImageView setImage:imgDest];
-	sourceImageView.alpha = 1.0;
-	destImageView.alpha = 0.0;
-	[mainView addSubview:darkView];
-	[mainView addSubview:destImageView];
-	[mainView addSubview:sourceImageView];
-    
-	darkView.alpha = 0;
-	// darkView.blurRadius = 0;
-	CFRunLoopRunInMode(CFRunLoopCopyCurrentMode(CFRunLoopGetCurrent()), 0, FALSE);
-    
-    
-    
-	[UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations: ^(void) {
-	    destImageView.alpha = 1.0;
-	    destImageView.frame = popupView.frame;
-	    sourceImageView.alpha = 0.0;
-	    sourceImageView.frame = popupView.frame;
-	    // darkView.blurRadius = _blur;
-        if (_blurRadius == 0) {
-            darkView.alpha = _backGroundAlpha;
-        } else {
-            darkView.alpha = 1;
+        
+        
+        UIImage *imgSrc = [self imageWithView:mainView crop:mainViewStartRect];
+        UIImage *imgDest = [self imageWithView:popupView crop:popupView.bounds];
+        
+        sourceImageView = [[UIImageView alloc] initWithFrame:mainViewStartRect];
+        destImageView = [[UIImageView alloc] initWithFrame:mainViewStartRect];
+        [sourceImageView setImage:imgSrc];
+        [destImageView setImage:imgDest];
+        sourceImageView.alpha = 1.0;
+        destImageView.alpha = 0.0;
+        [mainView addSubview:darkView];
+        [mainView addSubview:destImageView];
+        [mainView addSubview:sourceImageView];
 
-        }
-	}                completion: ^(BOOL finished) {
-        sourceImageView.alpha = 0;
-        destImageView.alpha = 0;
-	    [mainView addSubview:popupView];
-	    if (_showCloseButton) [popupView addSubview:closeButton];
-	    popupView.layer.masksToBounds = NO;
-	    popupView.layer.cornerRadius = 0; // if you like rounded corners
-	    popupView.layer.shadowOffset = CGSizeMake(0, 0);
-	    popupView.layer.shadowOpacity = 0.5;
-	    popupView.layer.shadowRadius = _shadowRadius;
-	}];
-	
-	isPresenting = TRUE;
+        darkView.alpha = 0;
+        // darkView.blurRadius = 0;
+        CFRunLoopRunInMode(CFRunLoopCopyCurrentMode(CFRunLoopGetCurrent()), 0, FALSE);
+        
+        
+        
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations: ^(void) {
+            destImageView.alpha = 1.0;
+            destImageView.frame = popupView.frame;
+            sourceImageView.alpha = 0.0;
+            sourceImageView.frame = popupView.frame;
+            // darkView.blurRadius = _blur;
+            if (_blurRadius == 0) {
+                darkView.alpha = _backGroundAlpha;
+            } else {
+                darkView.alpha = 1;
+                
+            }
+        }                completion: ^(BOOL finished) {
+            sourceImageView.alpha = 0;
+            destImageView.alpha = 0;
+            [mainView addSubview:popupView];
+            
+            CGPoint centerToPopup = CGPointMake(popupView.bounds.size.width - (closeButtonImageSize.width / 6),  (closeButtonImageSize.height / 6));
+            
+            CGPoint closeCenter = [mainView convertPoint:centerToPopup fromView:popupView];
+            
+            if (_showCloseButton) [mainView addSubview:closeButton];
+            closeButton.center = closeCenter;
+            
+            popupView.layer.masksToBounds = NO;
+            popupView.layer.cornerRadius = 0; // if you like rounded corners
+            popupView.layer.shadowOffset = CGSizeMake(0, 0);
+            popupView.layer.shadowOpacity = 0.5;
+            popupView.layer.shadowRadius = _shadowRadius;
+        }];
+        
+        isPresenting = TRUE;
     }
 }
 
@@ -234,8 +240,6 @@
 +(void) showCloseButton: (BOOL) showCloseButton{
     [THZoomPopup sharedInstance].showCloseButton = showCloseButton;
 }
-
-
 
 /**
  *  imageWithView   -  Get an UIImage of a view in the specified area (Screenshot)

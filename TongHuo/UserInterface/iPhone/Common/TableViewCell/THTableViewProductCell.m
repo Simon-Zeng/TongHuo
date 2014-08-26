@@ -64,13 +64,11 @@
         self.titleLable.font = [UIFont boldFlatFontOfSize:16];
         self.titleLable.numberOfLines = 1;
         self.titleLable.userInteractionEnabled = YES;
-        // Tap
-        UITapGestureRecognizer * tap2Recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                         action:@selector(showOrderInfo:)];
-        tap2Recognizer.numberOfTapsRequired = 1;
-        tap2Recognizer.numberOfTouchesRequired = 1;
-        [self.titleLable addGestureRecognizer:tap2Recognizer];
         
+        self.titleLable.textColor = [UIColor colorWithRed:248.0/255
+                                                    green:254.0/255
+                                                     blue:183.0/255
+                                                    alpha:1.0];
         
         [self.contentView addSubview:self.titleLable];
         
@@ -78,6 +76,7 @@
         self.infoLabel.backgroundColor = [UIColor clearColor];
         self.infoLabel.font = [UIFont boldFlatFontOfSize:14];
         self.infoLabel.numberOfLines = 1;
+        self.infoLabel.textColor = [UIColor whiteColor];
         
         [self.contentView addSubview:self.infoLabel];
         
@@ -94,7 +93,7 @@
         [self.contentView addSubview:self.countLabel];
         
         self.deliveredButton  = [FUIButton buttonWithType:UIButtonTypeCustom];
-        self.deliveredButton.frame = CGRectMake(self.frame.size.width - 118, 8, 55, 31.0);
+        self.deliveredButton.frame = CGRectMake(self.frame.size.width - 118, 35, 55, 31.0);
         self.deliveredButton.buttonColor = [UIColor colorWithRed:242.0/255
                                                           green:39.0/255
                                                            blue:131.0/255
@@ -120,7 +119,7 @@
 
         
         self.undeliveredButton  = [FUIButton buttonWithType:UIButtonTypeCustom];
-        self.undeliveredButton.frame = CGRectMake(self.frame.size.width - 63, 8, 55, 31.0);
+        self.undeliveredButton.frame = CGRectMake(self.frame.size.width - 63, 35, 55, 31.0);
         self.undeliveredButton.buttonColor = [UIColor colorWithRed:131.0/255
                                                           green:139.0/255
                                                            blue:131.0/255
@@ -170,9 +169,18 @@
     [self.iconView sd_setImageWithURL:[NSURL URLWithString:product.pimage]
                   placeholderImage:[UIImage imageNamed:@"DefaultImage"]];
     
-    self.titleLable.text = product.buyer;
+    self.titleLable.text = product.no;
     self.infoLabel.text = [NSString stringWithFormat:@"%@, %@", product.color, product.size];
     self.countLabel.text = [NSString stringWithFormat:@"%@ 件", product.count];
+    
+    if (product.state.longLongValue == 1)
+    {
+        self.undeliveredButton.hidden = YES;
+    }
+    else
+    {
+        self.undeliveredButton.hidden = NO;
+    }
     
     [self layoutSubviews];
 }
@@ -187,64 +195,6 @@
     
     [THZoomPopup initWithMainview:self.window andStartRect:startRect];
     [THZoomPopup showPopup:imageView];
-}
-
-- (void)showOrderInfo:(UITapGestureRecognizer *)recognizer
-{
-    Orders * order = [Orders orderWithId:@(self.product.pid.longLongValue)];
-    
-    UIView * infoView = [[UIView alloc] initWithFrame:CGRectMake(30, 84, 260, 200)];
-    
-    UILabel * nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, 250, 31)];
-    nameLabel.font = [UIFont boldFlatFontOfSize:18.0];
-    nameLabel.text = [NSString stringWithFormat:@"%@ - %@", self.product.buyer, order.cs];
-    
-    [infoView addSubview:nameLabel];
-    
-    UILabel * telLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 50, 250, 31)];
-    telLabel.font = [UIFont boldFlatFontOfSize:18.0];
-    telLabel.text = [NSString stringWithFormat:@"%@", self.product.tel];
-    
-    [infoView addSubview:telLabel];
-
-    
-    FUIButton * callButton  = [FUIButton buttonWithType:UIButtonTypeCustom];
-    callButton.frame = CGRectMake(10, 98, 250, 31.0);
-    callButton.buttonColor = [UIColor colorWithRed:131.0/255
-                                                         green:139.0/255
-                                                          blue:131.0/255
-                                                         alpha:1.0];
-    callButton.shadowColor = [UIColor colorWithRed:175.0/255
-                                                         green:179.0/255
-                                                          blue:190.0/255
-                                                         alpha:1.0];
-    callButton.shadowHeight = 2.0f;
-    callButton.highlightedColor = [UIColor colorWithRed:204.0/255
-                                                              green:205.0/255
-                                                               blue:210.0/255
-                                                              alpha:1.0];
-    callButton.cornerRadius = 4.0f;
-    
-    [callButton setTitle:NSLocalizedString(@"打电话", nil)
-                            forState:UIControlStateNormal];
-    callButton.titleLabel.font = [UIFont flatFontOfSize:18];
-    [callButton addTarget:self
-                               action:@selector(call:)
-                     forControlEvents:UIControlEventTouchUpInside];
-    [infoView addSubview:callButton];
-    
-    
-    CGRect startRect = [self.titleLable convertRect:self.titleLable.frame toView:self.window];
-    
-    [THZoomPopup initWithMainview:self.window andStartRect:startRect];
-    [THZoomPopup showPopup:infoView];
-}
-
-- (void)call:(id)sender
-{
-    NSString * tel = [NSString stringWithFormat:@"tel://%@", self.product.tel];
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:tel]];
 }
 
 - (void)deliveredProduct:(id)sender

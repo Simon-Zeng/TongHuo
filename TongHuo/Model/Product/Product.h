@@ -2,13 +2,14 @@
 //  Product.h
 //  TongHuo
 //
-//  Created by zeng songgen on 14-6-11.
+//  Created by zeng songgen on 14-8-26.
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Orders;
 
 @interface Product : NSManagedObject
 
@@ -38,5 +39,16 @@
 @property (nonatomic, retain) NSString * ptitle;
 @property (nonatomic, retain) NSString * tel;
 @property (nonatomic, retain) NSNumber * uid;
+
+@property (nonatomic, retain) NSSet *orders;
+
+@end
+
+@interface Product (CoreDataGeneratedAccessors)
+
+- (void)addOrdersObject:(Orders *)value;
+- (void)removeOrdersObject:(Orders *)value;
+- (void)addOrders:(NSSet *)values;
+- (void)removeOrders:(NSSet *)values;
 
 @end

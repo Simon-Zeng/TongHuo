@@ -33,7 +33,7 @@
             for (Product * aProduct in productArray)
             {
                 NSManagedObjectID * objectID = [aProduct objectID];
-                NSNumber * uniqueKey = [aProduct identifier];
+                NSString * uniqueKey = [aProduct courier];
                 
                 if (uniqueKey && objectID)
                 {
@@ -93,7 +93,7 @@
 
 #pragma mark - Public
 
-+ (instancetype)productWithCourier:(NSString *)courier
++ (instancetype)productWithCourier:(NSString *)courier create:(BOOL)create
 {
     Product * product = nil;
     
@@ -106,7 +106,7 @@
     {
         product = (Product *)[context objectWithID:objectID];
     }
-    else
+    else if (create)
     {
         product = [NSEntityDescription insertNewObjectForEntityForName:[[self class] entityName]
                                                inManagedObjectContext:context];
@@ -150,7 +150,7 @@
 
     if (courier)
     {
-        Product * product = [Product productWithCourier:courier];
+        Product * product = [Product productWithCourier:courier create:YES];
         
         product.identifier = CNil(identifier);
         product.no = CNil(no);

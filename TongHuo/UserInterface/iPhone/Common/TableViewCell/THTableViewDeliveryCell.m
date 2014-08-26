@@ -15,6 +15,10 @@
 
 @interface THTableViewDeliveryCell ()
 
+@property (nonatomic, strong, readwrite) RACSubject * scanPostSignal;
+
+@property (nonatomic, strong) Orders * anOrder;
+
 @property (nonatomic, strong) UIImageView * iconView;
 @property (nonatomic, strong) UILabel * titleLable;
 @property (nonatomic, strong) UILabel * infoLabel;
@@ -35,7 +39,7 @@
         self.selectedBackgroundView.backgroundColor = [[UIColor colorWithPatternImage:[UIImage imageNamed:@"FaHuoCellBackground"]] colorWithAlphaComponent:0.5];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 3, 55, 55)];
+        self.iconView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 65, 65)];
         self.iconView.contentMode = UIViewContentModeScaleAspectFit;
         self.iconView.backgroundColor = [UIColor clearColor];
         self.iconView.layer.borderColor = [UIColor grayColor].CGColor;
@@ -45,26 +49,34 @@
         
         [self.contentView addSubview:self.iconView];
 
-        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(65, 8, 200, 20)];
+        self.titleLable = [[UILabel alloc] initWithFrame:CGRectMake(75, 8, 200, 20)];
         self.titleLable.backgroundColor = [UIColor clearColor];
         self.titleLable.font = [UIFont boldFlatFontOfSize:16];
         self.titleLable.numberOfLines = 1;
+        self.titleLable.textColor = [UIColor colorWithRed:248.0/255
+                                                    green:254.0/255
+                                                     blue:183.0/255
+                                                    alpha:1.0];
         
         [self.contentView addSubview:self.titleLable];
         
-        self.infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(65, 37, 200, 18)];
+        self.infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 37, 200, 18)];
         self.infoLabel.backgroundColor = [UIColor clearColor];
         self.infoLabel.font = [UIFont boldFlatFontOfSize:14];
         self.infoLabel.numberOfLines = 1;
+        self.infoLabel.textColor = [UIColor whiteColor];
         
         [self.contentView addSubview:self.infoLabel];
 
         
-        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, 60, 260, 45)];
+        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, 65, 260, 45)];
         self.addressLabel.backgroundColor = [UIColor clearColor];
         self.addressLabel.numberOfLines = 2;
         self.addressLabel.font = [UIFont boldFlatFontOfSize:13];
-        self.addressLabel.textColor = [UIColor grayColor];
+        self.addressLabel.textColor = [UIColor colorWithRed:248.0/255
+                                                    green:254.0/255
+                                                     blue:183.0/255
+                                                    alpha:1.0];
         
         [self.contentView addSubview:self.addressLabel];
         
@@ -90,8 +102,14 @@
         self.deliveryButton.titleLabel.font = [UIFont flatFontOfSize:14];
         [self.contentView addSubview:self.deliveryButton];
         
+        [self.deliveryButton addTarget:self
+                                action:@selector(deliveryOrder:)
+                      forControlEvents:UIControlEventTouchUpInside];
+        
         self.contentView.backgroundColor = [UIColor clearColor];
         self.contentView.superview.backgroundColor = [UIColor clearColor]; // ScrollView is added in iOS7
+        
+        _scanPostSignal = [RACSubject subject];
 
     }
     return self;
@@ -109,18 +127,20 @@
     // Configure the view for the selected state
 }
 
-- (void)updateWithProduct:(Product *)product atIndexPath:(NSIndexPath *)indexPath
+- (void)updateWithOrder:(Orders *)anOrder atIndexPath:(NSIndexPath *)indexPath
 {
+    self.anOrder = anOrder;
+    
+    Product * product = [Product productWithCourier:anOrder.tno create:NO];
+    
     [self.iconView sd_setImageWithURL:[NSURL URLWithString:product.pimage]
                   placeholderImage:[UIImage imageNamed:@"DefaultImage"]];
     
-    Orders * order = [Orders orderWithId:@(product.pid.longLongValue)];
+    self.titleLable.text = [NSString stringWithFormat:@"%@ - %@", anOrder.name, anOrder.cs];
+    self.infoLabel.text = [NSString stringWithFormat:@"%@, %@, %@", anOrder.sf, anOrder.color, anOrder.size];
+    self.addressLabel.text = [NSString stringWithFormat:@"%@ (%@)", anOrder.address, anOrder.tel];
     
-    self.titleLable.text = [NSString stringWithFormat:@"%@ - %@", product.buyer, order.cs];
-    self.infoLabel.text = [NSString stringWithFormat:@"%@ %@, %@", order.sf, product.color, product.size];
-    self.addressLabel.text = [NSString stringWithFormat:@"%@ (%@)", order.address, order.tel];
-    
-    if (1 == order.state.longLongValue)
+    if (1 == anOrder.state.longLongValue)
     {
         self.deliveryButton.hidden = YES;
     }
@@ -130,6 +150,11 @@
     }
     
     [self layoutSubviews];
+}
+
+- (void)deliveryOrder:(id)sender
+{
+    [(RACSubject *)_scanPostSignal sendNext:self.anOrder];
 }
 
 

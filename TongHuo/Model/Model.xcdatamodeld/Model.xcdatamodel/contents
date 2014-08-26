@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="identifier" attributeType="Integer 64" indexed="YES" syncable="YES"/>
@@ -63,11 +63,13 @@
         <attribute name="shopId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="shopName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="size" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="state" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="tb" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="tel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tno" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Product" inverseName="orders" inverseEntity="Product" syncable="YES"/>
     </entity>
     <entity name="Platforms" representedClassName="Platforms" syncable="YES">
         <attribute name="accessToken" optional="YES" attributeType="String" syncable="YES"/>
@@ -100,9 +102,10 @@
         <attribute name="shopId" optional="YES" attributeType="Integer 64" defaultValueString="0.0" syncable="YES"/>
         <attribute name="shopName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="size" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="state" optional="YES" attributeType="Integer 16" syncable="YES"/>
+        <attribute name="state" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="tel" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="orders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Orders" inverseName="product" inverseEntity="Orders" syncable="YES"/>
     </entity>
     <entity name="Sellers" representedClassName="Sellers" syncable="YES">
         <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
@@ -124,9 +127,9 @@
         <element name="Account" positionX="-243" positionY="0" width="128" height="135"/>
         <element name="Goods" positionX="-360" positionY="90" width="128" height="405"/>
         <element name="Markets" positionX="-137" positionY="-153" width="128" height="135"/>
-        <element name="Orders" positionX="-234" positionY="9" width="128" height="418"/>
+        <element name="Orders" positionX="-234" positionY="9" width="128" height="448"/>
         <element name="Platforms" positionX="-369" positionY="-151" width="128" height="120"/>
-        <element name="Product" positionX="-243" positionY="0" width="128" height="433"/>
+        <element name="Product" positionX="-243" positionY="0" width="128" height="448"/>
         <element name="Sellers" positionX="-225" positionY="18" width="128" height="90"/>
         <element name="Shops" positionX="-128" positionY="32" width="128" height="180"/>
     </elements>

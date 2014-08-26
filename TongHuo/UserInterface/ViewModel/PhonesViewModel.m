@@ -1,23 +1,22 @@
 //
-//  TongHuoViewModel.m
+//  PhonesViewModel.m
 //  TongHuo
 //
-//  Created by zeng songgen on 14-5-30.
+//  Created by zeng songgen on 14-8-26.
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
-#import "ProductsViewModel.h"
+#import "PhonesViewModel.h"
 
 #import "Orders+Access.h"
 #import "Product+Access.h"
 #import "ModelService.h"
 
-@interface ProductsViewModel ()
+@interface PhonesViewModel ()
 
 @end
 
-@implementation ProductsViewModel
-
+@implementation PhonesViewModel
 - (id)init
 {
     if (self = [super init])
@@ -40,16 +39,12 @@
 
 - (void)commandInit
 {
-    self.state = @0;
-    
     @weakify(self);
     [[RACSignal merge:@[
-                        RACObserve(self, state),
-                        RACObserve(self, searchString)
+                        RACObserve(self, product)
                         ]]
      subscribeNext:^(id x) {
          @strongify(self);
-         
          NSNumber * uid = self.uid;
          if (uid)
          {
@@ -64,82 +59,11 @@
                  NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
                  abort();
              }
+             
              [(RACSubject *)self.updatedContentSignal sendNext:nil];
+             
          }
      }];
-}
-
-
-- (RACSignal *)refreshSignal
-{
-    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        NSNumber * uid = self.uid;
-        
-        if (uid)
-        {
-            RACSignal * request = [[THAPI apiCenter] postAndGetOrders:[NSArray array]];
-            
-            return [request subscribeNext:^(id x) {
-                NSDictionary * response = x;
-                
-                [ModelService parseAndSaveOrders:response];
-                
-                [subscriber sendNext:nil];
-                [subscriber sendCompleted];
-            } error:^(NSError *error) {
-                [subscriber sendError:error];
-            } completed:^{
-                [subscriber sendNext:nil];
-                [subscriber sendCompleted];
-            }];
-        }
-        else
-        {
-            [subscriber sendNext:nil];
-            [subscriber sendCompleted];
-            
-            return nil;
-        }
-    }];
-}
-
-- (RACSignal *)synchronizeSignal
-{
-    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-     
-        NSNumber * uid = self.uid;
-        
-        if (uid)
-        {
-            NSArray * changedProducts = [Product getAllOrdersWithCriteria:(@{
-                                                                             @"uid": uid,
-                                                                             @"state": @1,
-                                                                             })];
-            
-            RACSignal * request = [[THAPI apiCenter] postAndGetOrders:changedProducts];
-            
-            return [request subscribeNext:^(id x) {
-                NSDictionary * response = x;
-                
-                [ModelService parseAndSaveOrders:response];
-                
-                [subscriber sendNext:nil];
-                [subscriber sendCompleted];
-            } error:^(NSError *error) {
-                [subscriber sendError:error];
-            } completed:^{
-                [subscriber sendNext:nil];
-                [subscriber sendCompleted];
-            }];
-        }
-        else
-        {
-            [subscriber sendNext:nil];
-            [subscriber sendCompleted];
-            
-            return nil;
-        }
-    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -170,14 +94,14 @@
 -(NSString *)titleForSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
     NSArray *sectionObjects = [sectionInfo objects];
-    Product *representativeObject = [sectionObjects firstObject];
+    Orders *representativeObject = [sectionObjects firstObject];
     
-    return representativeObject.shopName;
+    return representativeObject.pid.stringValue;
 }
 
 #pragma mark - Private Methods
 
--(Product *)productAtIndexPath:(NSIndexPath *)indexPath {
+-(Orders *)orderAtIndexPath:(NSIndexPath *)indexPath {
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
@@ -185,15 +109,16 @@
 
 - (NSFetchRequest *)fetchRequest
 {
-    NSString * entityName = [Product entityName];
+    NSString * entityName = [Orders entityName];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
     NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.model];
     [fetchRequest setEntity:entity];
-        
+    
+    
     // Set the batch size to a suitable number.
-//    [fetchRequest setFetchBatchSize:20];
+    //    [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createtime" ascending:NO];
@@ -206,8 +131,6 @@
 
 - (void)updateFetchRequest
 {
-    NSString * s = [self.searchString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@" \n\r\t"]];
-    
     NSMutableDictionary * criteria = [[NSMutableDictionary alloc] init];
     
     NSNumber * uid = self.uid;
@@ -216,21 +139,10 @@
         [criteria setObject:uid forKey:@"uid"];
     }
     
-    if (self.state)
+    if (self.product)
     {
-        [criteria setObject:self.state forKey:@"state"];
+        [criteria setObject:self.product.courier forKey:@"tno"];
     }
-    
-    if (s && s.length > 0)
-    {
-        NSArray * r = @[s, @"CONTAINS[cd]"];
-        [criteria setObject:r forKey:@"no"];
-    }
-    
-    NSTimeInterval time = [ModelService timeForQuery];
-    
-    NSArray * rt = @[@((long long)time), @" <= "];
-    [criteria setObject:rt forKey:@"createtime"];
     
     [self updateFetchRequestWithCriteria:criteria];
 }

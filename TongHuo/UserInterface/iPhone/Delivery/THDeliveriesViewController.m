@@ -44,7 +44,7 @@
     
     UIView * view = [[UIView alloc] initWithFrame:windowFrame];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, windowFrame.size.width, windowFrame.size.height - 44)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, windowFrame.size.width, windowFrame.size.height)];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor clearColor];
@@ -80,7 +80,7 @@
     self.navigationItem.titleView = self.stateControl;
     
     self.stateControl.selectedSegmentIndex = 0;
-    self.viewModel.state = @(2);
+    self.viewModel.state = @(self.stateControl.selectedSegmentIndex);
     
     self.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"同步", nil)
                                                                style:UIBarButtonItemStylePlain
@@ -89,26 +89,26 @@
     //    self.navigationItem.rightBarButtonItem = rightBarButtonItem;
 
     
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-    searchBar.showsCancelButton = NO;
-    searchBar.text = nil;
-    searchBar.placeholder = NSLocalizedString(@"搜索", nil);
-    searchBar.delegate = self;
-    [self.view addSubview:searchBar];
-    
-    self.searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-    self.searchDisplayVC.delegate = self;
-    self.searchDisplayVC.searchResultsDataSource = self;
-    self.searchDisplayVC.searchResultsDelegate = self;
-    [self.searchDisplayVC setActive:NO];
-    
+//    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+//    searchBar.showsCancelButton = NO;
+//    searchBar.text = nil;
+//    searchBar.placeholder = NSLocalizedString(@"搜索", nil);
+//    searchBar.delegate = self;
+//    [self.view addSubview:searchBar];
+//    
+//    self.searchDisplayVC = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+//    self.searchDisplayVC.delegate = self;
+//    self.searchDisplayVC.searchResultsDataSource = self;
+//    self.searchDisplayVC.searchResultsDelegate = self;
+//    [self.searchDisplayVC setActive:NO];
+//    
     [self.tableView registerClass:[THTableViewDeliveryCell class]
            forCellReuseIdentifier:@"Cell"];
-    [self.searchDisplayVC.searchResultsTableView registerClass:[THTableViewDeliveryCell class]
-                                        forCellReuseIdentifier:@"Cell"];
-    self.searchDisplayVC.searchResultsTableView.backgroundColor = [UIColor clearColor];
-    self.searchDisplayVC.searchResultsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    self.searchDisplayVC.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [self.searchDisplayVC.searchResultsTableView registerClass:[THTableViewDeliveryCell class]
+//                                        forCellReuseIdentifier:@"Cell"];
+//    self.searchDisplayVC.searchResultsTableView.backgroundColor = [UIColor clearColor];
+//    self.searchDisplayVC.searchResultsTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+//    self.searchDisplayVC.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
     
     @weakify(self);
@@ -167,7 +167,7 @@
 #pragma mark - 
 - (void)stateControlDidChangeValue:(FUISegmentedControl *)control
 {
-    NSNumber * index = @(control.selectedSegmentIndex + 2);
+    NSNumber * index = @(control.selectedSegmentIndex);
     
     self.viewModel.state = index;
 }
@@ -200,6 +200,22 @@
 {
     THTableViewDeliveryCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
+    
+    @weakify(self);
+    [cell.scanPostSignal subscribeNext:^(Orders * anOrder) {
+        @strongify(self);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            ScanPostViewModel * scanpostViewModel = [[ScanPostViewModel alloc] initWithModel:self.viewModel.model];
+            scanpostViewModel.order = anOrder;
+            
+            THScanPostViewController * scanpostViewController = [[THScanPostViewController alloc] init];
+            scanpostViewController.viewModel = scanpostViewModel;
+            
+            [self.navigationController pushViewController:scanpostViewController
+                                                 animated:YES];
+        });
+    }];
+    
     return cell;
 }
 
@@ -222,16 +238,16 @@
 //}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Product * product = [self.viewModel productAtIndexPath:indexPath];
-    
-    ScanPostViewModel * scanpostViewModel = [[ScanPostViewModel alloc] initWithModel:self.viewModel.model];
-    scanpostViewModel.product = product;
-    
-    THScanPostViewController * scanpostViewController = [[THScanPostViewController alloc] init];
-    scanpostViewController.viewModel = scanpostViewModel;
-    
-    [self.navigationController pushViewController:scanpostViewController
-                                         animated:YES];
+//    Orders * order = [self.viewModel orderAtIndexPath:indexPath];
+//    
+//    ScanPostViewModel * scanpostViewModel = [[ScanPostViewModel alloc] initWithModel:self.viewModel.model];
+//    scanpostViewModel.order = order;
+//    
+//    THScanPostViewController * scanpostViewController = [[THScanPostViewController alloc] init];
+//    scanpostViewController.viewModel = scanpostViewModel;
+//    
+//    [self.navigationController pushViewController:scanpostViewController
+//                                         animated:YES];
 }
 
 #pragma mark
@@ -257,9 +273,9 @@
 
 - (void)configureCell:(THTableViewDeliveryCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    Product * product = [self.viewModel productAtIndexPath:indexPath];
+    Orders * order = [self.viewModel orderAtIndexPath:indexPath];
     
-    [cell updateWithProduct:product atIndexPath:indexPath];
+    [cell updateWithOrder:order atIndexPath:indexPath];
 }
 
 

@@ -93,7 +93,7 @@
 
 #pragma mark - Public
 
-+ (instancetype)orderWithId:(NSNumber *)identifier
++ (instancetype)orderWithId:(NSNumber *)identifier create:(BOOL)create
 {
     Orders * order = nil;
     
@@ -105,7 +105,7 @@
     {
         order = (Orders *)[context objectWithID:objectID];
     }
-    else
+    else if (create)
     {
         order = [NSEntityDescription insertNewObjectForEntityForName:[[self class] entityName]
                                               inManagedObjectContext:context];
@@ -126,12 +126,13 @@
     NSString * ktype = [dict objectForKey:@"ktype"];
     NSString * name = [dict objectForKey:@"name"];
     NSString * no = [dict objectForKey:@"no"];
-    NSNumber * pid = [dict objectForKey:@"pid"];
+    NSNumber * pid = [dict objectForKey:@"oid"];
     NSString * sf = [dict objectForKey:@"sf"];
     NSString * size = [dict objectForKey:@"size"];
     NSNumber * state = [dict objectForKey:@"state"];
     NSNumber * tb = [dict objectForKey:@"tb"];
     NSString * tel = [dict objectForKey:@"tel"];
+    NSString * tno = [dict objectForKey:@"tno"];
 
     NSNumber * pay = [dict objectForKey:@"pay"];
     NSNumber * count = [dict objectForKey:@"count"];
@@ -145,7 +146,7 @@
 
     if (identifier)
     {
-        Orders * order = [Orders orderWithId:identifier];
+        Orders * order = [Orders orderWithId:identifier create:YES];
         
         order.identifier = CNil(identifier);
         order.address = CNil(address);
@@ -160,9 +161,10 @@
         order.pid = CNil(pid);
         order.sf = CNil(sf);
         order.size = CNil(size);
-        order.state = CNil(state);
+        order.state = CNil(state)? CNil(state) : @0;
         order.tb = CNil(tb);
         order.tel = CNil(tel);
+        order.tno = CNil(tno);
         
         order.pay = CNil(pay);
         order.count = CNil(count);
@@ -248,6 +250,10 @@
             else if ([name isEqual:@"shopName"])
             {
                 [dict setValue:value forKey:@"dname"];
+            }
+            else if ([name isEqual:@"pid"])
+            {
+                [dict setValue:value forKey:@"oid"];
             }
             else
             {

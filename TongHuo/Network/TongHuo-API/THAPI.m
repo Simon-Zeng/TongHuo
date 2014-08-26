@@ -348,64 +348,64 @@
 // @brief sync un－deliveried products to server, and
 //        request new orders from server
 //
-//fh =     (
-//          {
-//              address = "\U7fe0*\U5c0f\U533a\U4e16\U7eaa\U98ce\U7f51\U5427";
-//              alipay = "<null>";
-//              color = "\U9ed1\U8272";
-//              count = 1;
-//              createtime = 20140612;
-//              cs = "\U5546\U6d1b\U5e02";
-//              did = 1010;
-//              dname = tmuffamad;
-//              dq = "\U5c71\U9633\U53bf";
-//              email = "<null>";
-//              has = 0;
-//              id = 477444;
-//              kno = "<null>";
-//              ktype = "<null>";
-//              name = "\U6768**";
-//              note = "null@//null";
-//              oid = 406974;
-//              pay = 0;
-//              sf = "\U9655\U897f\U7701";
-//              size = 39;
-//              tel = "1839292****";
-//              tno = 690566813758511;
-//              type = 0;
-//              uid = 18725;
-//          }
-//          );
-//pro =     (
-//           {
-//               auth = 0;
-//               buyer = "\U72ec\U5bb6\U8bb0\U5fc6406520";
-//               cid = 0;
-//               color = "\U9ed1\U8272";
-//               count = 1;
-//               courier = 690566813758511;
-//               createtime = 20140612;
-//               ctime = 1402476561000;
-//               did = 1010;
-//               dname = tmuffamad;
-//               id = 406974;
-//               isdf = 0;
-//               no = "\U8fbe\U7075&DL-13";
-//               numid = 37341771372;
-//               orderid = 690566813758511;
-//               pid = 0;
-//               pimage = "http://img02.taobaocdn.com/bao/uploaded/i2/T1UgR_FyFbXXXXXXXX_!!0-item_pic.jpg";
-//               price1 = 53;
-//               price2 = 0;
-//               ptitle = "\U51c9\U978b\U59732014\U590f\U5b63\U65b0\U6b3e\U95ea\U4eae\U725b\U76ae\U62fc\U8272\U9732\U8dbe\U6f06\U76ae\U5e73\U8ddf\U7b80\U7ea6 \U7693\U96c5\U5973\U978b\U5305\U90ae";
-//               size = 39;
-//               state = 0;
-//               tel = "1839292****";
-//               uid = 18725;
-//           }
-//           );
-//sj =     (
-//);
+//{"pro":[
+//    {
+//        "uid":4830,
+//        "count":1,
+//        "dname":"新宇悦尚",
+//        "no":"大西622_#6332",
+//        "tel":"1868675****",
+//        "state":0,
+//        "courier":"778219458399339",
+//        "did":2493,
+//        "pid":0,
+//        "ctime":1408439495000,
+//        "numid":"40289645284",
+//        "cid":0,
+//        "size":"均码",
+//        "id":758160,
+//        "createtime":20140826,
+//        "isdf":0,
+//        "ptitle":"新款几何图案穗穗装饰针织开衫 披风外套 5 色 有薄厚两款",
+//        "color":"杏色厚款",
+//        "buyer":"魂兮归与君同",
+//        "pimage":"http://img01.taobaocdn.com/bao/uploaded/i1/T1EcyxFxNdXXXXXXXX_!!0-item_pic.jpg",
+//        "orderid":"778219458399339",
+//        "auth":0,
+//        "price2":0,
+//        "price1":77}
+//        ],
+//    "sj":[],
+//    "fh":[
+//    {
+//        "uid":4830,
+//        "count":1,
+//        "dname":"新宇悦尚",
+//        "tel":"1868675****",
+//        "did":2493,
+//        "sf":"黑龙江省",
+//        "type":0,
+//        "has":0,
+//        "size":"均码",
+//        "cs":"哈尔滨市",
+//        "id":828614,
+//        "createtime":20140826,
+//        "alipay":null,
+//        "color":"杏色厚款",
+//        "email":null,
+//        "address":"复华**街**小区C7**单元403",
+//        "oid":758160,
+//        "name":"王**",
+//        "pay":0,
+//        "tno":"778219458399339",
+//        "ktype":null,
+//        "kno":null,
+//        "dq":"南岗区",
+//        "note":"null@//null"
+//    }
+//          ]
+//}
+//
 // @param products Array of Product
 - (RACSignal *)postAndGetOrders:(NSArray *)products
 {

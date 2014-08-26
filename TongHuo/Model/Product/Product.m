@@ -2,32 +2,29 @@
 //  Product.m
 //  TongHuo
 //
-//  Created by zeng songgen on 14-6-11.
+//  Created by zeng songgen on 14-8-26.
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
 #import "Product.h"
+#import "Orders.h"
 
 
 @implementation Product
 
-@dynamic color;
-@dynamic count;
-@dynamic createtime;
-@dynamic dates;
-@dynamic identifier;
-@dynamic image;
-@dynamic no;
-@dynamic size;
-@dynamic state;
 @dynamic auth;
 @dynamic buyer;
 @dynamic cid;
+@dynamic color;
+@dynamic count;
 @dynamic courier;
+@dynamic createtime;
 @dynamic ctime;
-@dynamic shopId;
-@dynamic shopName;
+@dynamic dates;
+@dynamic identifier;
+@dynamic image;
 @dynamic isdf;
+@dynamic no;
 @dynamic numid;
 @dynamic orderid;
 @dynamic pid;
@@ -35,7 +32,12 @@
 @dynamic price1;
 @dynamic price2;
 @dynamic ptitle;
+@dynamic shopId;
+@dynamic shopName;
+@dynamic size;
+@dynamic state;
 @dynamic tel;
 @dynamic uid;
+@dynamic orders;
 
 @end

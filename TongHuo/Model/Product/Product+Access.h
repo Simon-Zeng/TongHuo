@@ -10,7 +10,7 @@
 
 @interface Product (Access)
 
-+ (instancetype)productWithCourier:(NSString *)courier;
++ (instancetype)productWithCourier:(NSString *)courier create:(BOOL)create;
 
 + (instancetype)objectFromDictionary:(NSDictionary *)dict;
 

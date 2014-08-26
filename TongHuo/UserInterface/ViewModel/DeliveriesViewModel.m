@@ -10,6 +10,7 @@
 
 #import "Orders+Access.h"
 #import "Product+Access.h"
+#import "ModelService.h"
 
 @interface DeliveriesViewModel ()
 
@@ -82,22 +83,7 @@
             return [request subscribeNext:^(id x) {
                 NSDictionary * response = x;
                 
-                if (response && [response isKindOfClass:[NSDictionary class]])
-                {
-                    NSArray * ordersInfo = [response objectForKey:@"fh"];
-                    NSArray * productsInfo = [response objectForKey:@"pro"];
-                    
-                    for (NSDictionary * aDict1 in ordersInfo)
-                    {
-                        [Orders objectFromDictionary:aDict1];
-                    }
-                    
-                    for (NSDictionary * aDict2 in productsInfo)
-                    {
-                        [Product objectFromDictionary:aDict2];
-                    }
-                }
-                [[THCoreDataStack defaultStack] saveContext];
+                [ModelService parseAndSaveOrders:response];
                 
                 [subscriber sendNext:nil];
                 [subscriber sendCompleted];
@@ -128,7 +114,7 @@
         {
             NSArray * changedOrders = [Orders getAllOrdersWithCriteria:(@{
                                                                           @"uid": uid,
-                                                                          @"state": @3,
+                                                                          @"state": @1,
                                                                           @"tb": @0
                                                                           })];
             
@@ -154,7 +140,7 @@
                             {
                                 NSNumber * identifier = @(oid.integerValue);
                                 
-                                Orders * order = [Orders orderWithId:identifier];
+                                Orders * order = [Orders orderWithId:identifier create:NO];
                                 
                                 order.tb = @1;
                             }
@@ -218,7 +204,7 @@
 
 #pragma mark - Private Methods
 
--(Product *)productAtIndexPath:(NSIndexPath *)indexPath {
+-(Orders *)orderAtIndexPath:(NSIndexPath *)indexPath {
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
@@ -226,7 +212,7 @@
 
 - (NSFetchRequest *)fetchRequest
 {
-    NSString * entityName = [Product entityName];
+    NSString * entityName = [Orders entityName];
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
@@ -261,12 +247,18 @@
     if (self.state)
     {
         [criteria setObject:self.state forKey:@"state"];
+        [criteria setObject:@(2)
+                     forKey:@"product.state"];
     }
     if (s && s.length > 0)
     {
         NSArray * r = @[s, @"CONTAINS[cd]"];
-        [criteria setObject:r forKey:@"name"];
+        [criteria setObject:r forKey:@"no"];
     }
+    NSTimeInterval time = [ModelService timeForQuery];
+    
+    NSArray * rt = @[@((long long)time), @" <= "];
+    [criteria setObject:rt forKey:@"createtime"];
     
     [self updateFetchRequestWithCriteria:criteria];
 }

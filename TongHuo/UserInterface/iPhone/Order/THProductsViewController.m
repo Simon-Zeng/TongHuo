@@ -12,6 +12,9 @@
 #import "THTableViewProductCell.h"
 #import "THConfigration.h"
 
+#import "PhonesViewModel.h"
+#import "THPhonesViewController.h"
+
 @interface THProductsViewController ()<UITableViewDataSource, UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 
 @property (nonatomic, strong) UITableView * tableView;
@@ -146,6 +149,19 @@
 {
     NSNumber * index = @(control.selectedSegmentIndex);
     
+    if (index.longLongValue == 1)
+    {
+        self.navigationController.navigationItem.rightBarButtonItem = nil;
+    }
+    else
+    {
+        UIBarButtonItem * rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"同步订单", nil)
+                                                                                style:UIBarButtonItemStylePlain
+                                                                               target:self
+                                                                               action:@selector(synchronizeOrders:)];
+        self.navigationItem.rightBarButtonItem = rightBarButtonItem;
+    }
+    
     self.viewModel.state = index;
 }
 
@@ -198,7 +214,16 @@
 //}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    Product * product = [self.viewModel productAtIndexPath:indexPath];
     
+    PhonesViewModel * viewModel = [[PhonesViewModel alloc] initWithModel:self.viewModel.model];
+    viewModel.product = product;
+    
+    THPhonesViewController * phonesController = [[THPhonesViewController alloc] initWithNibName:nil bundle:nil];
+    phonesController.viewModel = viewModel;
+    
+    [self.navigationController pushViewController:phonesController
+                                         animated:YES];
 }
 
 #pragma mark

@@ -166,10 +166,10 @@
             NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
             
             [mainContext performBlock:^{
-                Product * product = self.viewModel.product;
-                Orders * order = [Orders orderWithId:product.pid];
-                
-                product.state = @3;
+                Orders * order = self.viewModel.order;
+//                Product * product = [Product productWithCourier:order.tno create:NO];
+//                
+//                product.state = @3;
                 
                 order.kno = code;
                 order.ktype = company;

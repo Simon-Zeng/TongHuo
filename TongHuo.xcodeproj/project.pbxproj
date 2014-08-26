@@ -40,8 +40,12 @@
 		531824851938D57500AA1564 /* THShopsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531824841938D57500AA1564 /* THShopsViewController.m */; };
 		531824881938D58100AA1564 /* THGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531824871938D58100AA1564 /* THGoodsViewController.m */; };
 		5318248B1938D5AA00AA1564 /* THUploadGoodsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318248A1938D5AA00AA1564 /* THUploadGoodsViewController.m */; };
-		531DB3011948A21B00D12FE1 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 531DB3001948A21B00D12FE1 /* Product.m */; };
-		531DB3041948A24500D12FE1 /* Orders.m in Sources */ = {isa = PBXBuildFile; fileRef = 531DB3031948A24500D12FE1 /* Orders.m */; };
+		531D508C19ACB8440039F389 /* Orders.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D508B19ACB8440039F389 /* Orders.m */; };
+		531D508F19ACB87D0039F389 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D508E19ACB87D0039F389 /* Product.m */; };
+		531D509219ACBA800039F389 /* ModelService.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D509119ACBA800039F389 /* ModelService.m */; };
+		531D509519ACBF030039F389 /* THPhonesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D509419ACBF030039F389 /* THPhonesViewController.m */; };
+		531D509819ACBFFB0039F389 /* PhonesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D509719ACBFFB0039F389 /* PhonesViewModel.m */; };
+		531D509B19ACC2910039F389 /* THTableViewPhoneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D509A19ACC2910039F389 /* THTableViewPhoneCell.m */; };
 		531DB3081948BD5000D12FE1 /* THUISwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 531DB3071948BD5000D12FE1 /* THUISwitch.m */; };
 		5320BBAD194F403D005E1DBB /* UIImage+StackBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320BBA9194F403D005E1DBB /* UIImage+StackBlur.m */; };
 		5320BBAE194F403D005E1DBB /* THZoomPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320BBAB194F403D005E1DBB /* THZoomPopup.m */; };
@@ -162,10 +166,18 @@
 		531824871938D58100AA1564 /* THGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THGoodsViewController.m; sourceTree = "<group>"; };
 		531824891938D5AA00AA1564 /* THUploadGoodsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THUploadGoodsViewController.h; sourceTree = "<group>"; };
 		5318248A1938D5AA00AA1564 /* THUploadGoodsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THUploadGoodsViewController.m; sourceTree = "<group>"; };
-		531DB2FF1948A21B00D12FE1 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
-		531DB3001948A21B00D12FE1 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
-		531DB3021948A24500D12FE1 /* Orders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orders.h; sourceTree = "<group>"; };
-		531DB3031948A24500D12FE1 /* Orders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Orders.m; sourceTree = "<group>"; };
+		531D508A19ACB8440039F389 /* Orders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Orders.h; sourceTree = "<group>"; };
+		531D508B19ACB8440039F389 /* Orders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Orders.m; sourceTree = "<group>"; };
+		531D508D19ACB87D0039F389 /* Product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
+		531D508E19ACB87D0039F389 /* Product.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
+		531D509019ACBA800039F389 /* ModelService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelService.h; sourceTree = "<group>"; };
+		531D509119ACBA800039F389 /* ModelService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelService.m; sourceTree = "<group>"; };
+		531D509319ACBF030039F389 /* THPhonesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THPhonesViewController.h; sourceTree = "<group>"; };
+		531D509419ACBF030039F389 /* THPhonesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THPhonesViewController.m; sourceTree = "<group>"; };
+		531D509619ACBFFB0039F389 /* PhonesViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhonesViewModel.h; sourceTree = "<group>"; };
+		531D509719ACBFFB0039F389 /* PhonesViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhonesViewModel.m; sourceTree = "<group>"; };
+		531D509919ACC2910039F389 /* THTableViewPhoneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THTableViewPhoneCell.h; sourceTree = "<group>"; };
+		531D509A19ACC2910039F389 /* THTableViewPhoneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THTableViewPhoneCell.m; sourceTree = "<group>"; };
 		531DB3051948A8FF00D12FE1 /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
 		531DB3061948BD5000D12FE1 /* THUISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THUISwitch.h; sourceTree = "<group>"; };
 		531DB3071948BD5000D12FE1 /* THUISwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THUISwitch.m; sourceTree = "<group>"; };
@@ -335,8 +347,8 @@
 		5316113C1944A5F200414567 /* Product */ = {
 			isa = PBXGroup;
 			children = (
-				531DB2FF1948A21B00D12FE1 /* Product.h */,
-				531DB3001948A21B00D12FE1 /* Product.m */,
+				531D508D19ACB87D0039F389 /* Product.h */,
+				531D508E19ACB87D0039F389 /* Product.m */,
 				531611401944A61000414567 /* Product+Access.h */,
 				531611411944A61000414567 /* Product+Access.m */,
 			);
@@ -375,12 +387,15 @@
 			path = Logout;
 			sourceTree = "<group>";
 		};
-		531824641938D3E700AA1564 /* Order */ = {
+		531824641938D3E700AA1564 /* Product */ = {
 			isa = PBXGroup;
 			children = (
 				531824741938D50900AA1564 /* THProductsViewController.h */,
 				531824751938D50900AA1564 /* THProductsViewController.m */,
+				531D509319ACBF030039F389 /* THPhonesViewController.h */,
+				531D509419ACBF030039F389 /* THPhonesViewController.m */,
 			);
+			name = Product;
 			path = Order;
 			sourceTree = "<group>";
 		};
@@ -470,6 +485,8 @@
 				532D134B193F50E700CC0399 /* THTableViewShopCell.m */,
 				532D134D193F50F900CC0399 /* THTableViewGoodCell.h */,
 				532D134E193F50F900CC0399 /* THTableViewGoodCell.m */,
+				531D509919ACC2910039F389 /* THTableViewPhoneCell.h */,
+				531D509A19ACC2910039F389 /* THTableViewPhoneCell.m */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -546,7 +563,7 @@
 				531824621938D3E700AA1564 /* Delivery */,
 				531824631938D3E700AA1564 /* Logout */,
 				5318246A1938D41400AA1564 /* Menu */,
-				531824641938D3E700AA1564 /* Order */,
+				531824641938D3E700AA1564 /* Product */,
 				531824651938D3E700AA1564 /* QRCode */,
 				531824661938D3E700AA1564 /* Shake */,
 				531824671938D3E700AA1564 /* Share */,
@@ -583,6 +600,10 @@
 				530FC1031942AEC5007B55F2 /* QRCodeViewModel.m */,
 				5349B3541950937F00E0564D /* ScanPostViewModel.h */,
 				5349B3551950937F00E0564D /* ScanPostViewModel.m */,
+				531D509019ACBA800039F389 /* ModelService.h */,
+				531D509119ACBA800039F389 /* ModelService.m */,
+				531D509619ACBFFB0039F389 /* PhonesViewModel.h */,
+				531D509719ACBFFB0039F389 /* PhonesViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -745,8 +766,8 @@
 		53AA3D6719387E1400D9C35B /* Orders */ = {
 			isa = PBXGroup;
 			children = (
-				531DB3021948A24500D12FE1 /* Orders.h */,
-				531DB3031948A24500D12FE1 /* Orders.m */,
+				531D508A19ACB8440039F389 /* Orders.h */,
+				531D508B19ACB8440039F389 /* Orders.m */,
 				537F7B721942D96A00CE1703 /* Orders+Access.h */,
 				537F7B731942D96A00CE1703 /* Orders+Access.m */,
 			);
@@ -957,9 +978,11 @@
 			files = (
 				537F7B741942D96A00CE1703 /* Orders+Access.m in Sources */,
 				532D60D11932268900537D4C /* THAPI.m in Sources */,
+				531D509B19ACC2910039F389 /* THTableViewPhoneCell.m in Sources */,
 				53122C7719532F5500BC60D4 /* THPostResultConfirmView.m in Sources */,
 				53161138194482E500414567 /* THConfigration.m in Sources */,
 				53AA3D7319387E1400D9C35B /* Account.m in Sources */,
+				531D508F19ACB87D0039F389 /* Product.m in Sources */,
 				537F7B6E1942D94700CE1703 /* Goods+Access.m in Sources */,
 				5306D005193E048C005BD52E /* MenuViewModel.m in Sources */,
 				531824731938D4F900AA1564 /* THMenuViewController.m in Sources */,
@@ -975,6 +998,8 @@
 				530FC0F81941F1F3007B55F2 /* UINavigationBar+statusBarColor.m in Sources */,
 				532DC943192ED83600C07757 /* AppDelegate.m in Sources */,
 				531824821938D56900AA1564 /* THMarketsViewController.m in Sources */,
+				531D509819ACBFFB0039F389 /* PhonesViewModel.m in Sources */,
+				531D509519ACBF030039F389 /* THPhonesViewController.m in Sources */,
 				5355047319A241BB002EDE19 /* JackpotResultView.m in Sources */,
 				531824881938D58100AA1564 /* THGoodsViewController.m in Sources */,
 				531824761938D50900AA1564 /* THProductsViewController.m in Sources */,
@@ -985,7 +1010,6 @@
 				537F7B7A1942D99C00CE1703 /* Sellers+Access.m in Sources */,
 				531611421944A61000414567 /* Product+Access.m in Sources */,
 				5318247C1938D53600AA1564 /* THJackpotViewController.m in Sources */,
-				531DB3041948A24500D12FE1 /* Orders.m in Sources */,
 				532DC93F192ED83600C07757 /* main.m in Sources */,
 				531DB3081948BD5000D12FE1 /* THUISwitch.m in Sources */,
 				532D134F193F50F900CC0399 /* THTableViewGoodCell.m in Sources */,
@@ -996,8 +1020,10 @@
 				5306D002193DFECF005BD52E /* THCoreDataStack.m in Sources */,
 				5320BBAE194F403D005E1DBB /* THZoomPopup.m in Sources */,
 				532D1343193F50B300CC0399 /* THTableViewProductCell.m in Sources */,
+				531D508C19ACB8440039F389 /* Orders.m in Sources */,
 				531824601938CAA600AA1564 /* JackpotViewModel.m in Sources */,
 				532D60C41931E0A800537D4C /* THAuthorizer.m in Sources */,
+				531D509219ACBA800039F389 /* ModelService.m in Sources */,
 				537F7B771942D98800CE1703 /* Platforms+Access.m in Sources */,
 				5318245A1938C9F500AA1564 /* GoodsViewModel.m in Sources */,
 				531824511938C98D00AA1564 /* DeliveriesViewModel.m in Sources */,
@@ -1009,7 +1035,6 @@
 				5318246D1938D4B600AA1564 /* THNavigationController.m in Sources */,
 				531824571938C9DB00AA1564 /* ShopsViewModel.m in Sources */,
 				537F7B6B1942D93500CE1703 /* Account+Access.m in Sources */,
-				531DB3011948A21B00D12FE1 /* Product.m in Sources */,
 				5349B353195092E900E0564D /* THScanPostViewController.m in Sources */,
 				5318244B1938C77F00AA1564 /* SignInViewModel.m in Sources */,
 				531824701938D4E700AA1564 /* THDeliveriesViewController.m in Sources */,
@@ -1146,7 +1171,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2b0be8b0-f99c-420b-8408-dbf7c394f27c";
+				PROVISIONING_PROFILE = "63a28a58-5634-47b3-8a6c-e3e1c43bc47b";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

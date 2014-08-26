@@ -10,7 +10,7 @@
 
 @interface Orders (Access)
 
-+ (instancetype)orderWithId:(NSNumber *)identifier;
++ (instancetype)orderWithId:(NSNumber *)identifier create:(BOOL)create;
 
 + (instancetype)objectFromDictionary:(NSDictionary *)dict;
 

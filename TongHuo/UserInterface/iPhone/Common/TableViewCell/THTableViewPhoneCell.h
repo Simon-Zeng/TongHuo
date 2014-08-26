@@ -1,8 +1,8 @@
 //
-//  THTableViewDeliveryCell.h
+//  THTableViewPhoneCell.h
 //  TongHuo
 //
-//  Created by zeng songgen on 14-6-4.
+//  Created by zeng songgen on 14-8-26.
 //  Copyright (c) 2014年 59pi. All rights reserved.
 //
 
@@ -10,10 +10,9 @@
 
 @class Orders;
 
-@interface THTableViewDeliveryCell : UITableViewCell
-
-@property (nonatomic, strong, readonly) RACSignal * scanPostSignal;
+@interface THTableViewPhoneCell : UITableViewCell
 
 - (void)updateWithOrder:(Orders *)anOrder atIndexPath:(NSIndexPath *)indexPath;
+
 
 @end
