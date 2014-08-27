@@ -71,8 +71,11 @@
     readerView.frame =CGRectMake(0, 0, viewSize.width, viewSize.height);
     readerView.torchMode = 0;
     
+    
     // the delegate receives decode results
     readerView.readerDelegate = self;
+    
+    [self.view addSubview:readerView];
     
     // ensure initial camera orientation is correctly set
     UIApplication *app = [UIApplication sharedApplication];

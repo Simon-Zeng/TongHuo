@@ -12,7 +12,7 @@
 
 - (BOOL)isPostValid:(NSString *)post
 {
-    BOOL isValid = NO;
+    BOOL isValid = ([post isKindOfClass:[NSString class]] && ([post length] > 0));
     
     return isValid;
 }

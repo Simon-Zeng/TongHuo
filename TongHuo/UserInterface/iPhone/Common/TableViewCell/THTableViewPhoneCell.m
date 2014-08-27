@@ -111,13 +111,29 @@
 
 - (void)call:(id)sender
 {
+    BOOL hasInvalidChar = NO;
+    
+    NSError * error = nil;
+    NSRegularExpression * regExpression = [[NSRegularExpression alloc] initWithPattern:@"[\\+]?\\d+"
+                                                                               options:NSRegularExpressionAnchorsMatchLines
+                                                                                 error:&error];
+    NSRange telRange = NSMakeRange(0, self.anOrder.tel.length);
+    
+    NSRange range = [regExpression rangeOfFirstMatchInString:self.anOrder.tel
+                                                     options:NSMatchingReportCompletion
+                                                       range:telRange];
+    if (telRange.location != range.location ||
+        telRange.length != range.length)
+    {
+        hasInvalidChar = YES;
+    }
+    
     NSString * tel = [NSString stringWithFormat:@"tel://%@", self.anOrder.tel];
     
     NSURL * url = [NSURL URLWithString:tel];
     
-    if ([[UIApplication sharedApplication] canOpenURL:url])
+    if (!hasInvalidChar && [[UIApplication sharedApplication] canOpenURL:url])
     {
-        
         [[UIApplication sharedApplication] openURL:url];
     }
     else
