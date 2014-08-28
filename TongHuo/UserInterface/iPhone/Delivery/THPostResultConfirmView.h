@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class Orders;
+
 typedef void (^DidGetPostResultBlock) (NSString * company, NSString * code);
 
 @interface THPostResultConfirmView : UIView
 
 @property (nonatomic, strong) NSString * postCode;
+@property (nonatomic, strong) Orders * anOrder;
 @property (nonatomic, copy) DidGetPostResultBlock resultBlock;
 
 @end

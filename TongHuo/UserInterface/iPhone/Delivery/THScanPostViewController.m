@@ -159,7 +159,7 @@
     }
     else
     {
-        THPostResultConfirmView * confirmView = [[THPostResultConfirmView alloc] initWithFrame:CGRectMake(20, 84, 280, 200)];
+        THPostResultConfirmView * confirmView = [[THPostResultConfirmView alloc] initWithFrame:CGRectMake(20, 84, 280, 240)];
         confirmView.postCode = resultString;
         
         THZoomPopup * popup = [[THZoomPopup alloc] initWithMainview:self.view andStartRect:self.view.bounds];

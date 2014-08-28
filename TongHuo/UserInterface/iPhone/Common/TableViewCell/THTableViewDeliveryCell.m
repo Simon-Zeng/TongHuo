@@ -21,7 +21,9 @@
 
 @property (nonatomic, strong) UIImageView * iconView;
 @property (nonatomic, strong) UILabel * titleLable;
+@property (nonatomic, strong) UILabel * stateLabel;
 @property (nonatomic, strong) UILabel * infoLabel;
+@property (nonatomic, strong) UILabel * expressLabel;
 @property (nonatomic, strong) UILabel * addressLabel;
 
 @property (nonatomic, strong) FUIButton * deliveryButton;
@@ -60,16 +62,32 @@
         
         [self.contentView addSubview:self.titleLable];
         
-        self.infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 37, 200, 18)];
+        self.stateLabel = [[UILabel alloc] initWithFrame:CGRectMake(255, 8, 60, 20)];
+        self.stateLabel.backgroundColor = [UIColor clearColor];
+        self.stateLabel.font = [UIFont boldFlatFontOfSize:16];
+        self.stateLabel.numberOfLines = 1;
+        self.stateLabel.textColor = [UIColor redColor];
+        
+        [self.contentView addSubview:self.stateLabel];
+        
+        self.infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 30, 200, 18)];
         self.infoLabel.backgroundColor = [UIColor clearColor];
         self.infoLabel.font = [UIFont boldFlatFontOfSize:14];
         self.infoLabel.numberOfLines = 1;
         self.infoLabel.textColor = [UIColor whiteColor];
         
         [self.contentView addSubview:self.infoLabel];
+        
+        self.expressLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 50, 200, 18)];
+        self.expressLabel.backgroundColor = [UIColor clearColor];
+        self.expressLabel.font = [UIFont boldFlatFontOfSize:14];
+        self.expressLabel.numberOfLines = 1;
+        self.expressLabel.textColor = [UIColor whiteColor];
+        
+        [self.contentView addSubview:self.expressLabel];
 
         
-        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, 65, 260, 45)];
+        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, 68, 260, 35)];
         self.addressLabel.backgroundColor = [UIColor clearColor];
         self.addressLabel.numberOfLines = 2;
         self.addressLabel.font = [UIFont boldFlatFontOfSize:13];
@@ -142,10 +160,24 @@
     
     if (1 == anOrder.state.longLongValue)
     {
+        if (anOrder.tb.longLongValue == 1)
+        {
+            self.stateLabel.text = NSLocalizedString(@"已同步", nil);
+            self.stateLabel.textColor = [UIColor greenColor];
+        }
+        else
+        {
+            self.stateLabel.text = NSLocalizedString(@"未同步", nil);
+            self.stateLabel.textColor = [UIColor redColor];
+        }
+        self.stateLabel.hidden = NO;
+        self.expressLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@: %@", nil), anOrder.ktype, anOrder.kno];
         self.deliveryButton.hidden = YES;
     }
     else
     {
+        self.stateLabel.hidden = YES;
+        self.expressLabel.hidden = YES;
         self.deliveryButton.hidden = NO;
     }
     

@@ -8,6 +8,7 @@
 
 #import "THPostResultConfirmView.h"
 
+#import "Orders+Access.h"
 #import "LKPopupMenuController.h"
 
 //
@@ -30,6 +31,8 @@
 
 @property (nonatomic, strong) NSArray * deliveryCompanies;
 
+@property (nonatomic, strong) UILabel * receiverBoxLabel;
+@property (nonatomic, strong) UILabel * receiverLabel;
 @property (nonatomic, strong) UITextField * companyField;
 @property (nonatomic, strong) UILabel * codeValueLabel;
 @property (nonatomic, strong) FUIButton * chooseButton;
@@ -48,7 +51,7 @@
         self.backgroundColor = [UIColor whiteColor];
         
         // Initialization code
-        _deliveryCompanies = @[@"圆通",@"申通", @"中通", @"韵达", @"顺丰"];
+        _deliveryCompanies = @[@"圆通",@"申通", @"中通", @"韵达", @"顺丰", @"邮政", @"EMS", @"其它"];
         
         UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 40)];
         titleLabel.font = [UIFont boldFlatFontOfSize:18.0];
@@ -58,22 +61,38 @@
         
         [self addSubview:titleLabel];
         
-        UILabel * companyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, 80, 40)];
-        companyLabel.font = [UIFont flatFontOfSize:15.0];
+        self.receiverBoxLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(titleLabel.frame), 80, 40)];
+        self.receiverBoxLabel.font = [UIFont flatFontOfSize:14.0];
+        self.receiverBoxLabel.backgroundColor = [UIColor clearColor];
+        self.receiverBoxLabel.textAlignment = NSTextAlignmentRight;
+        self.receiverBoxLabel.text = @"收件人:";
+        
+        [self addSubview:self.receiverBoxLabel];
+        
+        self.receiverLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, CGRectGetMaxY(titleLabel.frame), frame.size.width-90, 40)];
+        self.receiverLabel.font = [UIFont flatFontOfSize:14.0];
+        self.receiverLabel.backgroundColor = [UIColor clearColor];
+        self.receiverLabel.textAlignment = NSTextAlignmentLeft;
+        self.receiverLabel.text = nil;
+        
+        [self addSubview:self.receiverLabel];
+        
+        UILabel * companyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.receiverBoxLabel.frame), 80, 40)];
+        companyLabel.font = [UIFont flatFontOfSize:14.0];
         companyLabel.backgroundColor = [UIColor clearColor];
         companyLabel.textAlignment = NSTextAlignmentRight;
         companyLabel.text = @"快递公司:";
         
         [self addSubview:companyLabel];
         
-        self.companyField = [[UITextField alloc] initWithFrame:CGRectMake(90, 44, frame.size.width-115, 32)];
+        self.companyField = [[UITextField alloc] initWithFrame:CGRectMake(90, CGRectGetMaxY(self.receiverBoxLabel.frame) + 4, frame.size.width-130, 32)];
         self.companyField.delegate = self;
-        self.companyField.font = [UIFont flatFontOfSize:15.0];
+        self.companyField.font = [UIFont flatFontOfSize:14.0];
         self.companyField.returnKeyType = UIReturnKeyDone;
         [self addSubview:self.companyField];
         
         FUIButton * chooseButton = [FUIButton buttonWithType:UIButtonTypeCustom];
-        chooseButton.frame = CGRectMake(frame.size.width - 42, 44, 32, 32);
+        chooseButton.frame = CGRectMake(frame.size.width - 42, CGRectGetMaxY(self.receiverBoxLabel.frame) + 4, 40, 32);
         chooseButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         chooseButton.buttonColor = [UIColor colorWithRed:242.0/255
                                                    green:39.0/255
@@ -89,8 +108,8 @@
                                                          blue:210.0/255
                                                         alpha:1.0];
         chooseButton.cornerRadius = 4.0f;
-        
-        [chooseButton setTitle:NSLocalizedString(@"选择", nil)
+        chooseButton.titleLabel.font = [UIFont systemFontOfSize:13];
+        [chooseButton setTitle:NSLocalizedString(@"修改", nil)
                       forState:UIControlStateNormal];
         [chooseButton addTarget:self
                               action:@selector(chooseCompany:)
@@ -100,16 +119,16 @@
         self.chooseButton = chooseButton;
 
 
-        UILabel * codeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 80, 40)];
-        codeLabel.font = [UIFont flatFontOfSize:15.0];
+        UILabel * codeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(companyLabel.frame), 80, 40)];
+        codeLabel.font = [UIFont flatFontOfSize:14.0];
         codeLabel.backgroundColor = [UIColor clearColor];
         codeLabel.textAlignment = NSTextAlignmentRight;
         codeLabel.text = @"快递单号:";
         
         [self addSubview:codeLabel];
         
-        self.codeValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, 80, frame.size.width-80, 40)];
-        _codeValueLabel.font = [UIFont flatFontOfSize:15.0];
+        self.codeValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, CGRectGetMaxY(companyLabel.frame), frame.size.width-80, 40)];
+        _codeValueLabel.font = [UIFont flatFontOfSize:14.0];
         _codeValueLabel.backgroundColor = [UIColor clearColor];
         _codeValueLabel.textAlignment = NSTextAlignmentLeft;
         _codeValueLabel.text = @"";
@@ -117,7 +136,7 @@
         [self addSubview:_codeValueLabel];
 
         FUIButton * submitButton = [FUIButton buttonWithType:UIButtonTypeCustom];
-        submitButton.frame = CGRectMake(10, 130, frame.size.width - 20, 37);
+        submitButton.frame = CGRectMake(10, CGRectGetMaxY(codeLabel.frame) + 10, frame.size.width - 20, 37);
         submitButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         submitButton.buttonColor = [UIColor colorWithRed:242.0/255
                                                    green:39.0/255
@@ -189,13 +208,23 @@
 
             default:
             {
-                self.company = @"未知";
+                self.company = @"其它";
             }
             break;
         }
         
         self.companyField.text = self.company;
         self.codeValueLabel.text = postCode;
+    }
+}
+
+- (void)setAnOrder:(Orders *)anOrder
+{
+    if (_anOrder != anOrder)
+    {
+        _anOrder = anOrder;
+        
+        self.receiverLabel.text = anOrder.name;
     }
 }
 
