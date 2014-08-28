@@ -15,7 +15,7 @@
 
 #import "LKPopupMenuController.h"
 
-@interface THUploadGoodsViewController () <UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, LKPopupMenuControllerDelegate>
+@interface THUploadGoodsViewController () <UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, LKPopupMenuControllerDelegate, AMSmoothAlertViewDelegate>
 
 @property (nonatomic, strong) UIScrollView * contentView;
 
@@ -214,14 +214,32 @@
         
         [signal subscribeNext:^(id x) {
             NSString * responseString = x;
+            if ([x isKindOfClass:[NSData class]])
+            {
+                responseString = [[NSString alloc] initWithData:x encoding:NSUTF8StringEncoding];
+            }
+            
             NSLog(@"----- Upload response: %@", responseString);
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                @strongify(self);
-                [SVProgressHUD dismiss];
-                
-                [self.navigationController popViewControllerAnimated:YES];
-            });
+            if ([responseString rangeOfString:@"success" options:NSCaseInsensitiveSearch].length > 0)
+            {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    @strongify(self);
+                    [SVProgressHUD dismiss];
+                    
+                    AMSmoothAlertView * alertView = [[AMSmoothAlertView alloc] initDropAlertWithTitle:@"提示"
+                                                                                              andText:@"上传成功"
+                                                                                      andCancelButton:NO
+                                                                                         forAlertType:AlertFailure];
+                    alertView.delegate = self;
+                    [alertView show];
+                });
+
+            }
+            else
+            {
+                [self showUploadFailedAlertWithError:nil];
+            }
         }];
     }];
     
@@ -244,7 +262,7 @@
             message = [NSString stringWithFormat:@"上传失败，错误: %@", error];
         }
         
-        AMSmoothAlertView * alertView = [[AMSmoothAlertView alloc] initDropAlertWithTitle:@"警告"
+        AMSmoothAlertView * alertView = [[AMSmoothAlertView alloc] initDropAlertWithTitle:@"提示"
                                                                                   andText:message
                                                                           andCancelButton:NO
                                                                              forAlertType:AlertFailure];
@@ -435,9 +453,15 @@
     NSString * shopName = [self.tbOptions objectAtIndex:index];
     self.shopTextField.text = shopName;
     
-//    self.viewModel.tid = [[THAuthorizer sharedAuthorizer] authorizenCodeFor:shopName];
+    self.viewModel.tid = [[THAuthorizer sharedAuthorizer] authorizenCodeFor:shopName];
 }
 
+#pragma mark - AMSmoothAlertViewDelegate
+
+- (void)alertView:(AMSmoothAlertView *)alertView didDismissWithButton:(UIButton *)button
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 #pragma mark - UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch

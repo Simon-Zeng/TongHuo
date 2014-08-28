@@ -29,6 +29,9 @@
 + (instancetype) sharedAuthorizer;
 
 - (RACSignal *)signInWithUsername:(NSString *)username password:(NSString *)password;
+
+- (void)refreshTBAuthenticationFor:(NSNumber *)accountUserIdentifier;
+
 - (void)logout;
 
 - (NSNumber *)authorizenCodeFor:(NSString *)tbShopName;

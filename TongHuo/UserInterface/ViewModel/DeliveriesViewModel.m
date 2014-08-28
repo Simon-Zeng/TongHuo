@@ -117,8 +117,17 @@
                                                                           @"state": @1,
                                                                           @"tb": @0
                                                                           })];
+            NSMutableArray * ordersArray = [[NSMutableArray alloc] init];
             
-            RACSignal * request = [[THAPI apiCenter] postOrders:changedOrders];
+            for (Orders * anOrder in changedOrders) {
+                NSDictionary * anOrderDict = [anOrder presentAsDictionary];
+                
+                if (anOrderDict) {
+                    [ordersArray addObject:anOrderDict];
+                }
+            }
+            
+            RACSignal * request = [[THAPI apiCenter] postOrders:ordersArray];
             
             return [request subscribeNext:^(id x) {
                 NSDictionary * response = x;

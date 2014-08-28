@@ -282,7 +282,7 @@
 
 - (RACSignal *)postTBProduct:(Goods *)product withCode:(NSString *)sellerCode  toTBShop:(NSNumber *)tbShopID
 {
-    _postManager.responseSerializer = self.jsonResponseSerializer;
+    _postManager.responseSerializer = [AFCompoundResponseSerializer compoundSerializerWithResponseSerializers:nil];
     
     NSNumber * pid = product.numIid;
     NSString * title = product.title;

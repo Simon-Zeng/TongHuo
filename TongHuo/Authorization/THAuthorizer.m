@@ -36,8 +36,6 @@
 
 - (RACSignal *)performSignIn;
 
-- (void)refreshTBAuthenticationFor:(NSNumber *)accountUserIdentifier;
-
 @end
 
 @implementation THAuthorizer
@@ -221,8 +219,6 @@
             self.userIdentifier = currentAccount.identifier;
             
             [self saveAuthentication];
-            
-            [self refreshTBAuthenticationFor:currentAccount.identifier];
             
             [[THCoreDataStack defaultStack] saveContext];
 

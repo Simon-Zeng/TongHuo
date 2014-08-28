@@ -12,6 +12,7 @@
 
 #import "AppDelegate.h"
 #import "Account+Access.h"
+#import "THAuthorizer.h"
 
 #import "MenuViewModel.h"
 #import "THTableViewMenuCell.h"
@@ -123,6 +124,17 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.titleLabel.text = [NSString stringWithFormat:@"欢迎: %@", loginName];
             });
+        }
+    }];
+    
+    THAuthorizer * authorizer = [THAuthorizer sharedAuthorizer];
+    
+    @weakify(authorizer);
+    [authorizer.updateSignal subscribeNext:^(id x) {
+        @strongify(authorizer);
+        if (x)
+        {
+            [authorizer refreshTBAuthenticationFor:authorizer.userIdentifier];
         }
     }];
     

@@ -179,7 +179,7 @@
     NSString * kno = [dict objectForKey:@"kno"];
     NSString * ktype = [dict objectForKey:@"ktype"];
     NSString * name = [dict objectForKey:@"name"];
-    NSString * no = [dict objectForKey:@"no"];
+//    NSString * no = [dict objectForKey:@"no"];
     NSNumber * pid = [dict objectForKey:@"oid"];
     NSString * sf = [dict objectForKey:@"sf"];
     NSString * size = [dict objectForKey:@"size"];
@@ -222,12 +222,12 @@
         order.shopId = CNil(shopId);
         order.kno = order.kno? order.kno : CNil(kno);
         order.ktype = order.ktype? order.ktype : CNil(ktype);
-        order.no = CNil(no);
+        order.no = CNil(tno);
         order.pid = CNil(pid);
         order.sf = CNil(sf);
         order.size = CNil(size);
-        order.state = order.state? order.state : @0;
-        order.tb = order.tb? order.tb : CNil(tb);
+        order.state = order.state? order.state : (CNil(state)? CNil(state) : @0);
+        order.tb = order.tb? order.tb : (CNil(tb)? CNil(tb): @0);
         order.tel = CNil(tel);
         order.tno = CNil(tno);
         
@@ -288,7 +288,7 @@
         
         for (NSString * key in criteria)
         {
-            id value = [criteria objectForKey:@"value"];
+            id value = [criteria objectForKey:key];
             
             NSPredicate * precidate = [NSPredicate predicateWithFormat:@"%K = %@", key, value];
             
@@ -347,7 +347,12 @@
             {
                 [dict setValue:value forKey:@"oid"];
             }
-            else
+            else if ([name isEqual:@"tno"])
+            {
+                [dict setValue:value forKey:@"no"];
+                [dict setValue:value forKey:@"tno"];
+            }
+            else if ([value conformsToProtocol:@protocol(NSCoding)])
             {
                 [dict setValue:value forKey:name];
             }
