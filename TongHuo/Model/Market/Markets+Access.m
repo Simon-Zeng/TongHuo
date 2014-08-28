@@ -69,7 +69,14 @@
     
     if (uniqueKey && objectID)
     {
-        [savedMarkets setObject:objectID forKey:uniqueKey];
+        if (aMarket.isInserted)
+        {
+            [savedMarkets setObject:objectID forKey:uniqueKey];
+        }
+        else if (aMarket.isDeleted)
+        {
+            [savedMarkets removeObjectForKey:uniqueKey];
+        }
     }
 }
 

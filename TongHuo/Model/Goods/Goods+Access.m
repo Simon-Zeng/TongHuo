@@ -70,7 +70,14 @@
     
     if (uniqueKey && objectID)
     {
-        [savedGoods setObject:objectID forKey:uniqueKey];
+        if (agood.isInserted)
+        {
+            [savedGoods setObject:objectID forKey:uniqueKey];
+        }
+        else if (agood.isDeleted)
+        {
+            [savedGoods removeObjectForKey:uniqueKey];
+        }
     }
 }
 

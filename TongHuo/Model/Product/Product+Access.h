@@ -14,6 +14,8 @@
 
 + (instancetype)objectFromDictionary:(NSDictionary *)dict;
 
++ (void)removeAllProducts;
+
 #pragma mark -
 +(NSArray *)getAllOrdersWithCriteria:(NSDictionary *)criteria;
 

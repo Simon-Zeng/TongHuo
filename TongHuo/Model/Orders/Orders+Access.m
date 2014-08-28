@@ -70,7 +70,14 @@
     
     if (uniqueKey && objectID)
     {
-        [savedOrders setObject:objectID forKey:uniqueKey];
+        if (aorder.isInserted)
+        {
+            [savedOrders setObject:objectID forKey:uniqueKey];
+        }
+        else if (aorder.isDeleted)
+        {
+            [savedOrders removeObjectForKey:uniqueKey];
+        }
     }
 }
 
@@ -114,6 +121,53 @@
     return order;
 }
 
++ (instancetype)orderWithCriteria:(NSDictionary *)criteria create:(BOOL)create
+{
+    NSArray * result = nil;
+    
+    NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    NSMutableArray * precidates = [[NSMutableArray alloc] init];
+    
+    for (NSString * key in criteria)
+    {
+        id value = [criteria objectForKey:@"value"];
+        
+        NSPredicate * precidate = [NSPredicate predicateWithFormat:@"%K = %@", key, value];
+        
+        [precidates addObject:precidate];
+    }
+    
+    if (precidates.count > 0)
+    {
+        NSCompoundPredicate * compoundPrecidate = [[NSCompoundPredicate alloc] initWithType:NSAndPredicateType
+                                                                              subpredicates:precidates];
+        
+        request.predicate = compoundPrecidate;
+    }
+    
+    request.fetchBatchSize = 1;
+    //    request.propertiesToFetch = @[@"id"];
+    
+    request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
+                                 inManagedObjectContext:context];
+    
+    NSError * executeFetchError = nil;
+    result = [context executeFetchRequest:request error:&executeFetchError];
+    if (executeFetchError) {
+        NSLog(@"[%@, %@] error looking Orders with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
+    }
+    if (result.count ==0 && create){
+        Orders * anOrder = [NSEntityDescription insertNewObjectForEntityForName:[[self class] entityName]
+                                                         inManagedObjectContext:context];
+        result = @[anOrder];
+    }
+    
+    return [result firstObject];
+}
+
 + (instancetype)objectFromDictionary:(NSDictionary *)dict
 {
     NSNumber * identifier = [dict objectForKey:@"id"];
@@ -146,7 +200,18 @@
 
     if (identifier)
     {
-        Orders * order = [Orders orderWithId:identifier create:YES];
+        Orders * order = [Orders orderWithId:identifier create:NO];
+        
+        // Remove records with same name+cs+tel
+        if (!order && name && cs && tel)
+        {
+            order = [Orders orderWithCriteria:(@{
+                                                 @"name": name,
+                                                 @"cs": cs,
+                                                 @"tel": tel
+                                                 })
+                                       create:YES];
+        }
         
         order.identifier = CNil(identifier);
         order.address = CNil(address);
@@ -180,6 +245,33 @@
     }
     
     return nil;
+}
+
++ (void)removeAllOrders
+{
+    NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
+    
+    
+    [context performBlockAndWait:^{
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        request.returnsObjectsAsFaults = YES;
+        request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
+                                     inManagedObjectContext:context];
+        
+        NSError * executeFetchError = nil;
+        NSArray * result = [context executeFetchRequest:request error:&executeFetchError];
+        if (executeFetchError) {
+            NSLog(@"[%@, %@] error looking Orders with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
+        }
+        else
+        {
+            for (NSManagedObject * anObject in result)
+            {
+                [context deleteObject:anObject];
+            }
+        }
+    }];
 }
 
 #pragma mark -

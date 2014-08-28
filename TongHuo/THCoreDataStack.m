@@ -16,6 +16,8 @@
 
 @property (readwrite, strong, nonatomic) NSManagedObjectContext * masterManagedObjectContext;
 
+@property (nonatomic, strong) NSMutableArray * threadManagedObjectContexts;
+
 @end
 
 @implementation THCoreDataStack
@@ -58,6 +60,8 @@
                                   name:NSManagedObjectContextDidSaveNotification
                                 object:nil];
         
+//        self.threadManagedObjectContexts = [[NSMutableArray alloc] initWithCapacity:0];
+        
         // Init main NSManagedObjectContext to avoid a dead lock due to call threaded context
         [self managedObjectContext];
     }
@@ -68,6 +72,8 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    self.threadManagedObjectContexts = nil;
 }
 
 -(void)saveContext {
@@ -176,6 +182,8 @@
                     
                     
                     [[[NSThread currentThread] threadDictionary] setObject:context forKey:@"managedObjectContext"];
+                    
+                    [self.threadManagedObjectContexts addObject:context];
                 }
             }
         }
@@ -260,24 +268,22 @@
 #pragma mark - Notification
 - (void)managedObjectContextDidSaveNotification:(NSNotification *)note
 {
-    if (note.object != self.masterManagedObjectContext)
-    {
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//            @autoreleasepool {
-//                NSError *error = nil;
-//                NSManagedObjectContext * managedObjectContext = [self masterManagedObjectContext];
-//                
-//                if (managedObjectContext != nil) {
-//                    if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-//                        // Replace this implementation with code to handle the error appropriately.
-//                        // abort() causes the application[ to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-//                        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//                        abort();
-//                    }
-//                }
-//            }
-//        });
-    }
+//    NSManagedObjectContext * ctx = note.object;
+//    
+//    if (ctx != self.managedObjectContext)
+//    {
+//        [self.managedObjectContext mergeChangesFromContextDidSaveNotification:note];
+//    }
+//    
+//    if (ctx != self.masterManagedObjectContext)
+//    {
+//        [self.masterManagedObjectContext mergeChangesFromContextDidSaveNotification:note];
+//    }
+//
+//    for (NSManagedObjectContext * threadCtx in self.threadManagedObjectContexts)
+//    {
+//        [threadCtx mergeChangesFromContextDidSaveNotification:note];
+//    }
 }
 
 @end

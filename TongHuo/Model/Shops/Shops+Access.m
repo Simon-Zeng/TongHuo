@@ -68,7 +68,14 @@
     
     if (uniqueKey && objectID)
     {
-        [savedShops setObject:objectID forKey:uniqueKey];
+        if (ashop.isInserted)
+        {
+            [savedShops setObject:objectID forKey:uniqueKey];
+        }
+        else if (ashop.isDeleted)
+        {
+            [savedShops removeObjectForKey:uniqueKey];
+        }
     }
 }
 

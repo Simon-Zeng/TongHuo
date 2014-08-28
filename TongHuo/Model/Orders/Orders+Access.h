@@ -12,8 +12,11 @@
 
 + (instancetype)orderWithId:(NSNumber *)identifier create:(BOOL)create;
 
++ (instancetype)orderWithCriteria:(NSDictionary *)criteria create:(BOOL)create;
+
 + (instancetype)objectFromDictionary:(NSDictionary *)dict;
 
++ (void)removeAllOrders;
 
 #pragma mark -
 +(NSArray *)getAllOrdersWithCriteria:(NSDictionary *)criteria;

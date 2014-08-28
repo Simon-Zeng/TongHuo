@@ -70,7 +70,14 @@
     
     if (uniqueKey && objectID)
     {
-        [savedSellers setObject:objectID forKey:uniqueKey];
+        if (aseller.isInserted)
+        {
+            [savedSellers setObject:objectID forKey:uniqueKey];
+        }
+        else if (aseller.isDeleted)
+        {
+            [savedSellers removeObjectForKey:uniqueKey];
+        }
     }
 }
 

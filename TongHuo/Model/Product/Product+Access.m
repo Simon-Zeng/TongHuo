@@ -70,7 +70,14 @@
     
     if (uniqueKey && objectID)
     {
-        [savedProduct setObject:objectID forKey:uniqueKey];
+        if (aProduct.isInserted)
+        {
+            [savedProduct setObject:objectID forKey:uniqueKey];
+        }
+        else if (aProduct.isDeleted)
+        {
+            [savedProduct removeObjectForKey:uniqueKey];
+        }
     }
 }
 
@@ -188,6 +195,32 @@
     }
     
     return nil;
+}
+
++ (void)removeAllProducts
+{
+    NSManagedObjectContext * context = [THCoreDataStack defaultStack].threadManagedObjectContext;
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    request.returnsObjectsAsFaults = YES;
+    request.entity = [NSEntityDescription entityForName:[[self class] entityName] // Here we must use [self class]
+                                 inManagedObjectContext:context];
+    
+    NSError * executeFetchError = nil;
+    NSArray * result = [context executeFetchRequest:request error:&executeFetchError];
+    if (executeFetchError) {
+        NSLog(@"[%@, %@] error looking Orders with error: %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd), [executeFetchError localizedDescription]);
+    }
+    else
+    {
+        for (NSManagedObject * anObject in result)
+        {
+            [context deleteObject:anObject];
+        }
+    }
+    
+    [[THCoreDataStack defaultStack] saveContext];
 }
 
 #pragma mark -

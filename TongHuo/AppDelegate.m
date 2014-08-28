@@ -11,6 +11,7 @@
 #import "THCoreDataStack.h"
 #import "THNavigationController.h"
 #import "THAuthorizer.h"
+#import "THConfigration.h"
 
 // View Controllers
 #import "THMenuViewController.h"
@@ -220,6 +221,12 @@
     [[UIApplication sharedApplication] cancelAllLocalNotifications];
     
     [[THAuthorizer sharedAuthorizer] logout];
+    [Product removeAllProducts];
+    
+    THConfigration * configration = [THConfigration sharedConfigration];
+    configration.hasOrdersToSync = YES;
+    configration.hasProductsToSync = YES;
+
     
     THSignInViewController *signInViewController = [[THSignInViewController alloc] init];
     

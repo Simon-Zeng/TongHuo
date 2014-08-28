@@ -102,23 +102,6 @@
     
     @weakify(self);
     
-    THConfigration * configration = [THConfigration sharedConfigration];
-    BOOL needToSync = configration.hasOrdersToSync;
-    if (needToSync && [THAuthorizer sharedAuthorizer].isLoggedIn)
-    {
-        [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
-                             maskType:SVProgressHUDMaskTypeGradient];
-        
-        [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
-            [SVProgressHUD dismiss];
-            configration.hasOrdersToSync = NO;
-        } error:^(NSError *error) {
-            [SVProgressHUD dismiss];
-            NSLog(@"---- Refresh error: %@", error);
-        }];
-    }
-    
-    
     [self.viewModel.updatedContentSignal subscribeNext:^(id x) {
         @strongify(self);
         NSLog(@"---- %@ reloadData", NSStringFromClass([self class]));
@@ -140,6 +123,22 @@
     if ([THAuthorizer sharedAuthorizer].isLoggedIn)
     {
         self.viewModel.active = YES;
+
+        THConfigration * configration = [THConfigration sharedConfigration];
+        BOOL needToSync = configration.hasOrdersToSync;
+        if (needToSync)
+        {
+            [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
+                                 maskType:SVProgressHUDMaskTypeGradient];
+            
+            [self.viewModel.refreshSignal subscribeNext:^(NSArray * x) {
+                [SVProgressHUD dismiss];
+                configration.hasOrdersToSync = NO;
+            } error:^(NSError *error) {
+                [SVProgressHUD dismiss];
+                NSLog(@"---- Refresh error: %@", error);
+            }];
+        }
     }
     
     self.stateControl.selectedSegmentIndex = 0;
