@@ -161,27 +161,40 @@
     {
         THPostResultConfirmView * confirmView = [[THPostResultConfirmView alloc] initWithFrame:CGRectMake(20, 84, 280, 240)];
         confirmView.postCode = resultString;
+        confirmView.anOrder = self.viewModel.order;
         
         THZoomPopup * popup = [[THZoomPopup alloc] initWithMainview:self.view andStartRect:self.view.bounds];
         popup.showCloseButton = NO;
         
+        @weakify(self);
         [confirmView setResultBlock:^(NSString * company, NSString * code){
-            NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
+            @strongify(self);
             
-            [mainContext performBlock:^{
-                Orders * order = self.viewModel.order;
-//                Product * product = [Product productWithCourier:order.tno create:NO];
-//                
-//                product.state = @3;
+            if (company && code)
+            {
+                NSManagedObjectContext * mainContext = [THCoreDataStack defaultStack].managedObjectContext;
                 
-                order.kno = code;
-                order.ktype = company;
-                order.state = @1;
+                [mainContext performBlock:^{
+                    Orders * order = self.viewModel.order;
+                    
+                    order.kno = code;
+                    order.ktype = company;
+                    order.state = @1;
+                }];
                 
                 [[THCoreDataStack defaultStack] saveContext];
-            }];
+            }
+            else
+            {
+                [view start];
+            }
             
             [popup closePopup];
+            
+            if (company && code)
+            {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
         }];
         
         [popup showPopup:confirmView];

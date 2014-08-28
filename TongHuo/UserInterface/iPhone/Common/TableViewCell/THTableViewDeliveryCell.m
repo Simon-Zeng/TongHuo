@@ -120,14 +120,22 @@
         self.deliveryButton.titleLabel.font = [UIFont flatFontOfSize:14];
         [self.contentView addSubview:self.deliveryButton];
         
-        [self.deliveryButton addTarget:self
-                                action:@selector(deliveryOrder:)
-                      forControlEvents:UIControlEventTouchUpInside];
-        
         self.contentView.backgroundColor = [UIColor clearColor];
         self.contentView.superview.backgroundColor = [UIColor clearColor]; // ScrollView is added in iOS7
         
         _scanPostSignal = [RACSubject subject];
+        
+        @weakify(self);
+        self.deliveryButton.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+            return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+                @strongify(self);
+                [(RACSubject *)self.scanPostSignal sendNext:self.anOrder];
+                
+                [subscriber sendCompleted];
+                
+                return nil;
+            }];
+        }];
 
     }
     return self;
@@ -170,8 +178,11 @@
             self.stateLabel.text = NSLocalizedString(@"未同步", nil);
             self.stateLabel.textColor = [UIColor redColor];
         }
-        self.stateLabel.hidden = NO;
+        
         self.expressLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@: %@", nil), anOrder.ktype, anOrder.kno];
+        
+        self.stateLabel.hidden = NO;
+        self.expressLabel.hidden = NO;
         self.deliveryButton.hidden = YES;
     }
     else
@@ -190,6 +201,8 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         sender.enabled = YES;
     });
+    
+    NSLog(@"Button clicked");
     
     [(RACSubject *)_scanPostSignal sendNext:self.anOrder];
 }

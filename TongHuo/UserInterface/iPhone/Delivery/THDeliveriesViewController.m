@@ -204,15 +204,20 @@
     @weakify(self);
     [cell.scanPostSignal subscribeNext:^(Orders * anOrder) {
         @strongify(self);
+        NSLog(@"Scan post for %@", anOrder);
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            ScanPostViewModel * scanpostViewModel = [[ScanPostViewModel alloc] initWithModel:self.viewModel.model];
-            scanpostViewModel.order = anOrder;
-            
-            THScanPostViewController * scanpostViewController = [[THScanPostViewController alloc] init];
-            scanpostViewController.viewModel = scanpostViewModel;
-            
-            [self.navigationController pushViewController:scanpostViewController
-                                                 animated:YES];
+            if (self.isAppeared)
+            {
+                ScanPostViewModel * scanpostViewModel = [[ScanPostViewModel alloc] initWithModel:self.viewModel.model];
+                scanpostViewModel.order = anOrder;
+                
+                THScanPostViewController * scanpostViewController = [[THScanPostViewController alloc] init];
+                scanpostViewController.viewModel = scanpostViewModel;
+                
+                [self.navigationController pushViewController:scanpostViewController
+                                                     animated:YES];
+            }
         });
     }];
     

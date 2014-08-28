@@ -220,14 +220,14 @@
         order.createtime = CNil(createtime);
         order.cs = CNil(cs);
         order.shopId = CNil(shopId);
-        order.kno = CNil(kno);
-        order.ktype = CNil(ktype);
+        order.kno = order.kno? order.kno : CNil(kno);
+        order.ktype = order.ktype? order.ktype : CNil(ktype);
         order.no = CNil(no);
         order.pid = CNil(pid);
         order.sf = CNil(sf);
         order.size = CNil(size);
-        order.state = CNil(state)? CNil(state) : @0;
-        order.tb = CNil(tb);
+        order.state = order.state? order.state : @0;
+        order.tb = order.tb? order.tb : CNil(tb);
         order.tel = CNil(tel);
         order.tno = CNil(tno);
         

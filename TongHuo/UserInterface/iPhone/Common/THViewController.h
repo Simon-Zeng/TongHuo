@@ -10,4 +10,6 @@
 
 @interface THViewController : UIViewController
 
+@property (nonatomic, assign) BOOL isAppeared;
+
 @end

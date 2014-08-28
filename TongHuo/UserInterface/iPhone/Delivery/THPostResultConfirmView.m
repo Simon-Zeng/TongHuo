@@ -37,6 +37,7 @@
 @property (nonatomic, strong) UILabel * codeValueLabel;
 @property (nonatomic, strong) FUIButton * chooseButton;
 @property (nonatomic, strong) FUIButton * submitButton;
+@property (nonatomic, strong) FUIButton * cancelButton;
 
 @property (nonatomic, strong) LKPopupMenuController * popupMenu;
 
@@ -92,7 +93,7 @@
         [self addSubview:self.companyField];
         
         FUIButton * chooseButton = [FUIButton buttonWithType:UIButtonTypeCustom];
-        chooseButton.frame = CGRectMake(frame.size.width - 42, CGRectGetMaxY(self.receiverBoxLabel.frame) + 4, 40, 32);
+        chooseButton.frame = CGRectMake(frame.size.width - 52, CGRectGetMaxY(self.receiverBoxLabel.frame) + 4, 40, 32);
         chooseButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         chooseButton.buttonColor = [UIColor colorWithRed:242.0/255
                                                    green:39.0/255
@@ -136,7 +137,7 @@
         [self addSubview:_codeValueLabel];
 
         FUIButton * submitButton = [FUIButton buttonWithType:UIButtonTypeCustom];
-        submitButton.frame = CGRectMake(10, CGRectGetMaxY(codeLabel.frame) + 10, frame.size.width - 20, 37);
+        submitButton.frame = CGRectMake(12, CGRectGetMaxY(codeLabel.frame) + 10, (frame.size.width - 30)/2, 37);
         submitButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         submitButton.buttonColor = [UIColor colorWithRed:242.0/255
                                                    green:39.0/255
@@ -153,7 +154,7 @@
                                                         alpha:1.0];
         submitButton.cornerRadius = 4.0f;
         
-        [submitButton setTitle:NSLocalizedString(@"确    认", nil)
+        [submitButton setTitle:NSLocalizedString(@"确   认", nil)
                       forState:UIControlStateNormal];
         [submitButton addTarget:self
                          action:@selector(confirmPostCode:)
@@ -161,6 +162,33 @@
         [self addSubview:submitButton];
         
         self.submitButton = submitButton;
+        
+        FUIButton * cancelButton = [FUIButton buttonWithType:UIButtonTypeCustom];
+        cancelButton.frame = CGRectMake(CGRectGetMaxX(submitButton.frame)+6, CGRectGetMaxY(codeLabel.frame) + 10, (frame.size.width - 30)/2, 37);
+        cancelButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        cancelButton.buttonColor = [UIColor colorWithRed:242.0/255
+                                                   green:39.0/255
+                                                    blue:131.0/255
+                                                   alpha:1.0];
+        cancelButton.shadowColor = [UIColor colorWithRed:175.0/255
+                                                   green:179.0/255
+                                                    blue:190.0/255
+                                                   alpha:1.0];
+        cancelButton.shadowHeight = 2.0f;
+        cancelButton.highlightedColor = [UIColor colorWithRed:204.0/255
+                                                        green:205.0/255
+                                                         blue:210.0/255
+                                                        alpha:1.0];
+        cancelButton.cornerRadius = 4.0f;
+        
+        [cancelButton setTitle:NSLocalizedString(@"重新扫描", nil)
+                      forState:UIControlStateNormal];
+        [cancelButton addTarget:self
+                         action:@selector(confirmPostCode:)
+               forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:cancelButton];
+        
+        self.cancelButton = cancelButton;
     }
     return self;
 }
@@ -224,7 +252,7 @@
     {
         _anOrder = anOrder;
         
-        self.receiverLabel.text = anOrder.name;
+        self.receiverLabel.text = [NSString stringWithFormat:@"%@ (%@)", anOrder.name, anOrder.cs];
     }
 }
 
@@ -244,11 +272,15 @@
 
 - (void)confirmPostCode:(id)sender
 {
-    if (sender == self.submitButton)
+    if (self.resultBlock)
     {
-        if (self.resultBlock)
+        if (sender == self.submitButton)
         {
             self.resultBlock(self.company, self.postCode);
+        }
+        else
+        {
+            self.resultBlock(nil, nil);
         }
     }
 }
