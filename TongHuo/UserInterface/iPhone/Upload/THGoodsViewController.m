@@ -23,6 +23,8 @@
 
 @property (nonatomic, strong) UITableView * tableView;
 
+@property (nonatomic, strong) NSNumber * shopIdentifier;
+
 @end
 
 @implementation THGoodsViewController
@@ -58,6 +60,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     self.title = self.viewModel.shop.name;
+    self.shopIdentifier = self.viewModel.shop.identifier;
     
     [self.tableView registerClass:[THTableViewGoodCell class]
            forCellReuseIdentifier:@"Cell"];
@@ -173,7 +176,7 @@
 - (void)share:(UIButton *)sender
 {
     // Share
-    NSString * shareMessage = [NSString stringWithFormat:NSLocalizedString(@"全国最大的在线服装批发市场，59批发，http://www.59pi.com/shop/%@.html", nil), self.viewModel.shop.identifier];
+    NSString * shareMessage = [NSString stringWithFormat:NSLocalizedString(@"全国最大的在线服装批发市场，59批发，http://www.59pi.com/shop/%@.html", nil), self.shopIdentifier];
     NSArray * shareNames = [NSArray arrayWithObjects:UMShareToWechatSession,UMShareToSina,UMShareToEmail,UMShareToSms,nil];
     [UMSocialSnsService presentSnsIconSheetView:self.parentViewController
                                          appKey:kUMengAppKey
