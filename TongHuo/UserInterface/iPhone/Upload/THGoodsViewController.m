@@ -16,6 +16,9 @@
 
 #import "THUploadGoodsViewController.h"
 
+#import "UMSocialSnsPlatformManager.h"
+#import "UMSocialSnsService.h"
+
 @interface THGoodsViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView * tableView;
@@ -58,6 +61,12 @@
     
     [self.tableView registerClass:[THTableViewGoodCell class]
            forCellReuseIdentifier:@"Cell"];
+    
+    UIBarButtonItem * rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ShareButton"]
+                                                                            style:UIBarButtonItemStylePlain
+                                                                           target:self
+                                                                           action:@selector(share:)];
+    self.navigationItem.rightBarButtonItem = rightBarButtonItem;
     
     @weakify(self);
     [SVProgressHUD showWithStatus:NSLocalizedString(@"加载中...", nil)
@@ -161,5 +170,17 @@
     [cell updateWithGood:good atIndexPath:indexPath];
 }
 
+- (void)share:(UIButton *)sender
+{
+    // Share
+    NSString * shareMessage = [NSString stringWithFormat:NSLocalizedString(@"全国最大的在线服装批发市场，59批发，http://www.59pi.com/shop/%@.html", nil), self.viewModel.shop.identifier];
+    NSArray * shareNames = [NSArray arrayWithObjects:UMShareToWechatSession,UMShareToSina,UMShareToEmail,UMShareToSms,nil];
+    [UMSocialSnsService presentSnsIconSheetView:self.parentViewController
+                                         appKey:kUMengAppKey
+                                      shareText:shareMessage
+                                     shareImage:[UIImage imageNamed:@"icon.png"]
+                                shareToSnsNames:shareNames
+                                       delegate:nil];
+}
 
 @end

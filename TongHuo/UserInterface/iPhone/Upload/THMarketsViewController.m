@@ -54,7 +54,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.title = NSLocalizedString(@"档口", nil);
+    self.title = NSLocalizedString(@"市场", nil);
     
     UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     searchBar.showsCancelButton = NO;

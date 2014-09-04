@@ -164,8 +164,13 @@
 //    [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"identifier" ascending:YES];
-    NSArray *sortDescriptors = @[sortDescriptor];
+    NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc] initWithKey:@"name"
+                                                                    ascending:YES
+                                                                     selector:@selector(localizedStandardCompare:)];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"address"
+                                                                    ascending:YES
+                                                                     selector:@selector(localizedStandardCompare:)];
+    NSArray *sortDescriptors = @[sortDescriptor1, sortDescriptor2];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
@@ -185,8 +190,24 @@
     
     if (s && s.length > 0)
     {
-        NSArray * r = @[s, @"CONTAINS[cd]"];
-        [criteria setObject:r forKey:@"name"];
+        NSMutableDictionary * subOr1 = [[NSMutableDictionary alloc] init];
+        
+        NSArray * r1 = @[s, @"CONTAINS[cd]"];
+        [subOr1 setObject:r1 forKey:@"name"];
+        
+        
+        NSMutableDictionary * subOr2 = [[NSMutableDictionary alloc] init];
+
+        NSArray * r2 = @[s, @"CONTAINS[cd]"];
+        [subOr2 setObject:r2 forKey:@"address"];
+
+        
+        NSMutableSet * or = [[NSMutableSet alloc] init];
+        
+        [or addObject:subOr1];
+        [or addObject:subOr2];
+        
+        [criteria setObject:or forKey:@"SearchOr"];
     }
     
     [self updateFetchRequestWithCriteria:criteria];

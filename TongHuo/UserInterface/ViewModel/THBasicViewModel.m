@@ -88,29 +88,9 @@
         
         for (NSString * key in criteria)
         {
-            NSPredicate * predicate = nil;
-            
             id value = [criteria objectForKey:key];
             
-            if ([value isKindOfClass:[NSArray class]])
-            {
-                id realValue = [value firstObject];
-                NSString * relation = [value lastObject];
-                
-                if (realValue == relation) // default = used
-                {
-                    predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, realValue];
-                }
-                else
-                {
-                    NSString * format = [NSString stringWithFormat:@"%%K %@ %%@", relation];
-                    predicate = [NSPredicate predicateWithFormat:format, key, realValue];
-                }
-            }
-            else
-            {
-                predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, value];
-            }
+            NSCompoundPredicate * predicate = [self parseQueryCriteria:value forKey:key];
             
             [predicates addObject:predicate];
         }
@@ -122,6 +102,62 @@
 #endif
         fetchRequest.predicate = compoundPredicate;
     }
+}
+
+- (NSCompoundPredicate *)parseQueryCriteria:(id)criteria forKey:(NSString *)key
+{
+    NSCompoundPredicateType type = NSAndPredicateType;
+    
+    NSMutableArray * predicates = [[NSMutableArray alloc] init];
+    
+    if ([criteria isKindOfClass:[NSSet class]]) // OR
+    {
+        type = NSOrPredicateType;
+        
+        for (id subOrValue in criteria)
+        {
+            [predicates addObject:[self parseQueryCriteria:subOrValue forKey:key]];
+        }
+    }
+    else if ([criteria isKindOfClass:[NSDictionary class]]) // AND
+    {
+        
+        for (NSString * subkey in criteria)
+        {
+            id subAndValue = [criteria objectForKey:subkey];
+            
+            [predicates addObject:[self parseQueryCriteria:subAndValue forKey:subkey]];
+        }
+    }
+    else if ([criteria isKindOfClass:[NSArray class]])
+    {
+        id realValue = [criteria firstObject];
+        NSString * relation = [criteria lastObject];
+        
+        NSPredicate * predicate = nil;
+        
+        if (realValue == relation) // default = used
+        {
+            predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, realValue];
+        }
+        else
+        {
+            NSString * format = [NSString stringWithFormat:@"%%K %@ %%@", relation];
+            predicate = [NSPredicate predicateWithFormat:format, key, realValue];
+        }
+        
+        [predicates addObject:predicate];
+    }
+    else
+    {
+        NSPredicate * predicate = [NSPredicate predicateWithFormat:@"%K = %@", key, criteria];
+        [predicates addObject:predicate];
+    }
+
+    NSCompoundPredicate * compoundPredicate = [[NSCompoundPredicate alloc] initWithType:type
+                                                                          subpredicates:predicates];
+
+    return compoundPredicate;
 }
 
 #pragma mark - THBasicViewModelCoreDataProtocol
