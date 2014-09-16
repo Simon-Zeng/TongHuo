@@ -39,7 +39,7 @@
     [self.view addSubview:self.shakeView];
     [self.view addSubview:self.resultView];
     
-    [self.resultView updateJackpotResultWithTotal:self.viewModel.total last:nil];
+    [self.resultView updateJackpotResultWithTotal:self.viewModel.total last:nil message:nil];
     
     @weakify(self);
     [self.viewModel.shakeCommand.executionSignals subscribeNext:^(RACSignal * signal) {
@@ -59,7 +59,7 @@
                 
                 NSArray * jackpots = [responseString componentsSeparatedByString:@"-"];
                 
-                if (2 == jackpots.count)
+                if (jackpots.count >=2)
                 {
                     [self showJackpotResult:jackpots];
                 }
@@ -142,12 +142,19 @@
         NSDecimalNumber * total = [NSDecimalNumber decimalNumberWithString:result[0]];
         NSDecimalNumber * last = [NSDecimalNumber decimalNumberWithString:result[1]];
         
+        NSString * format = [NSString stringWithFormat:NSLocalizedString(@"您有%@个快递单需领取，请到天河女人街D322领取.", nil), total];
+        
+        if (result.count == 3)
+        {
+            format = [result objectAtIndex:2];
+        }
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [SVProgressHUD dismiss];
-            
+
             self.viewModel.total = total;
-            [self.resultView updateJackpotResultWithTotal:total last:last];
+            [self.resultView updateJackpotResultWithTotal:total last:last message:format];
             
             NSString * title = nil;
             NSString * message = nil;

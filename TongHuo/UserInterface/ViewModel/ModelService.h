@@ -10,6 +10,8 @@
 
 @interface ModelService : NSObject
 
++ (NSUInteger)currentYYYYMMDD;
+
 + (NSTimeInterval)timeForQuery;
 
 + (void)parseAndSaveOrders:(NSDictionary *)response;

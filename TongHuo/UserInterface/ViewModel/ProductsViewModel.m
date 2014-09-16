@@ -196,7 +196,7 @@
 //    [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createtime" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"identifier" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -227,9 +227,9 @@
         [criteria setObject:r forKey:@"no"];
     }
     
-    NSTimeInterval time = [ModelService timeForQuery];
+    NSUInteger time = [ModelService currentYYYYMMDD];
     
-    NSArray * rt = @[@((long long)time), @" <= "];
+    NSArray * rt = @[@((long long)time), @" == "];
     [criteria setObject:rt forKey:@"createtime"];
     
     [self updateFetchRequestWithCriteria:criteria];

@@ -22,6 +22,7 @@
 #import "MenuViewModel.h"
 #import "SignInViewModel.h"
 #import "ProductsViewModel.h"
+#import "ModelService.h"
 
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
@@ -192,12 +193,14 @@
                         
                         for (NSDictionary * aDict1 in ordersInfo)
                         {
-                            [Orders objectFromDictionary:aDict1];
+                            Orders * anOrder = [Orders objectFromDictionary:aDict1];
+                            anOrder.createtime = @([ModelService currentYYYYMMDD]);
                         }
                         
                         for (NSDictionary * aDict2 in productsInfo)
                         {
-                            [Product objectFromDictionary:aDict2];
+                            Product * aProduct = [Product objectFromDictionary:aDict2];
+                            aProduct.createtime = @([ModelService currentYYYYMMDD]);
                         }
                     }
                     
@@ -235,6 +238,10 @@
 
 - (void)scheduleOrdersUpdate
 {
+
+#if DEBUG
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+#endif
     NSArray * scheduledNotifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
     
     if (scheduledNotifications.count == 0)

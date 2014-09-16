@@ -10,6 +10,6 @@
 
 @interface JackpotResultView : UIView
 
-- (void)updateJackpotResultWithTotal:(NSNumber *)total last:(NSNumber *)last;
+- (void)updateJackpotResultWithTotal:(NSNumber *)total last:(NSNumber *)last message:(NSString *)format;
 
 @end

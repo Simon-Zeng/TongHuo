@@ -44,25 +44,50 @@
     return self;
 }
 
-- (void)updateJackpotResultWithTotal:(NSNumber *)total last:(NSNumber *)last
+- (void)updateJackpotResultWithTotal:(NSNumber *)total last:(NSNumber *)last message:(NSString *)format
 {
-    if (total) {
-        self.totalLabel.hidden = NO;
-        self.totalLabel.text = [NSString stringWithFormat:NSLocalizedString(@"您有%@个快递单需领取，请到天河女人街D322领取.", nil), total];
-    }
-    else
+    NSMutableString * message = [[NSMutableString alloc] init];
+    
+    if (format)
     {
-        self.totalLabel.hidden = YES;
+        [message appendString:format];
     }
     
-    if (last) {
-        self.lastJackpotLabel.hidden = NO;
-        self.lastJackpotLabel.text = [NSString stringWithFormat:NSLocalizedString(@"本次摇中%@个", nil), last];
-    }
-    else
+    if(total)
     {
-        self.lastJackpotLabel.hidden = YES;
+        [message replaceOccurrencesOfString:@"{0}"
+                                 withString:[total stringValue]
+                                    options:NSCaseInsensitiveSearch
+                                      range:NSMakeRange(0, message.length)];
     }
+    if(last)
+    {
+        [message replaceOccurrencesOfString:@"{1}"
+                                 withString:[last stringValue]
+                                    options:NSCaseInsensitiveSearch
+                                      range:NSMakeRange(0, message.length)];
+    }
+
+    self.totalLabel.text = message;
+    self.lastJackpotLabel.hidden = YES;
+    
+//    if (total) {
+//        self.totalLabel.hidden = NO;
+//        self.totalLabel.text = [NSString stringWithFormat:NSLocalizedString(@"您有%@个快递单需领取，请到天河女人街D322领取.", nil), total];
+//    }
+//    else
+//    {
+//        self.totalLabel.hidden = YES;
+//    }
+//    
+//    if (last) {
+//        self.lastJackpotLabel.hidden = NO;
+//        self.lastJackpotLabel.text = [NSString stringWithFormat:NSLocalizedString(@"本次摇中%@个", nil), last];
+//    }
+//    else
+//    {
+//        self.lastJackpotLabel.hidden = YES;
+//    }
 
 }
 

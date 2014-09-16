@@ -13,6 +13,22 @@
 
 @implementation ModelService
 
++ (NSUInteger)currentYYYYMMDD
+{
+    NSCalendar * calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents * components = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+                                                fromDate:[NSDate date]];
+    if (components.hour >=13)
+    {
+        [components setDay:components.day+1];
+    }
+    
+    NSUInteger number = components.year * 10000 + components.month * 100 + components.day;
+    
+    return number;
+}
+
 + (NSTimeInterval)timeForQuery
 {
     NSCalendar * calendar = [NSCalendar currentCalendar];
@@ -42,6 +58,7 @@
         for (NSDictionary * aDict1 in ordersInfo)
         {
             Orders * anOrder = [Orders objectFromDictionary:aDict1];
+            anOrder.createtime = @([ModelService currentYYYYMMDD]);
             
             [newOrders addObject:anOrder];
         }
@@ -49,6 +66,8 @@
         for (NSDictionary * aDict2 in productsInfo)
         {
             Product * aProduct = [Product objectFromDictionary:aDict2];
+            aProduct.createtime = @([ModelService currentYYYYMMDD]);
+
             [productMap setObject:aProduct forKey:aProduct.courier];
         }
 
