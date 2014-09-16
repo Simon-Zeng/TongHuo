@@ -186,25 +186,7 @@
                 [request subscribeNext:^(id x) {
                     NSDictionary * response = x;
                     
-                    if (response && [response isKindOfClass:[NSDictionary class]])
-                    {
-                        NSArray * ordersInfo = [response objectForKey:@"fh"];
-                        NSArray * productsInfo = [response objectForKey:@"pro"];
-                        
-                        for (NSDictionary * aDict1 in ordersInfo)
-                        {
-                            Orders * anOrder = [Orders objectFromDictionary:aDict1];
-                            anOrder.createtime = @([ModelService currentYYYYMMDD]);
-                        }
-                        
-                        for (NSDictionary * aDict2 in productsInfo)
-                        {
-                            Product * aProduct = [Product objectFromDictionary:aDict2];
-                            aProduct.createtime = @([ModelService currentYYYYMMDD]);
-                        }
-                    }
-                    
-                    [[THCoreDataStack defaultStack] saveContext];
+                    [ModelService parseAndSaveOrders:response];
                     
                     [subscriber sendNext:nil];
                     [subscriber sendCompleted];
