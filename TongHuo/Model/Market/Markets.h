@@ -11,7 +11,9 @@
 
 @class Goods, Shops;
 
-@interface Markets : NSManagedObject
+#import "THBaseObject.h"
+
+@interface Markets : THBaseObject
 
 @property (nonatomic, retain) NSString * address;
 @property (nonatomic, retain) NSNumber * cityId;

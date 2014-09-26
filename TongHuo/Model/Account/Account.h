@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
-@interface Account : NSManagedObject
+#import "THBaseObject.h"
+
+@interface Account : THBaseObject
 
 @property (nonatomic, retain) NSString * email;
 @property (nonatomic, retain) NSString * name;

@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@interface Sellers : NSManagedObject
+#import "THBaseObject.h"
+
+@interface Sellers : THBaseObject
 
 @property (nonatomic, retain) NSString * code;
 @property (nonatomic, retain) NSNumber * productId;

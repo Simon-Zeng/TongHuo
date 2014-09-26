@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
-@interface Platforms : NSManagedObject
+#import "THBaseObject.h"
+
+@interface Platforms : THBaseObject
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * identifier;

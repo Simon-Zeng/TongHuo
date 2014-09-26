@@ -46,6 +46,7 @@
 		531D509519ACBF030039F389 /* THPhonesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D509419ACBF030039F389 /* THPhonesViewController.m */; };
 		531D509819ACBFFB0039F389 /* PhonesViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D509719ACBFFB0039F389 /* PhonesViewModel.m */; };
 		531D509B19ACC2910039F389 /* THTableViewPhoneCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D509A19ACC2910039F389 /* THTableViewPhoneCell.m */; };
+		531D5A1119D5990B00DD3D0F /* THBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D5A1019D5990B00DD3D0F /* THBaseObject.m */; };
 		531DB3081948BD5000D12FE1 /* THUISwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 531DB3071948BD5000D12FE1 /* THUISwitch.m */; };
 		5320BBAD194F403D005E1DBB /* UIImage+StackBlur.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320BBA9194F403D005E1DBB /* UIImage+StackBlur.m */; };
 		5320BBAE194F403D005E1DBB /* THZoomPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5320BBAB194F403D005E1DBB /* THZoomPopup.m */; };
@@ -58,7 +59,6 @@
 		532D134F193F50F900CC0399 /* THTableViewGoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D134E193F50F900CC0399 /* THTableViewGoodCell.m */; };
 		532D1352193F640600CC0399 /* THViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D1351193F640600CC0399 /* THViewController.m */; };
 		532D60B71931DF2200537D4C /* THNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D60B61931DF2200537D4C /* THNetwork.m */; };
-		532D60B91931DF7600537D4C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 532D60B81931DF7600537D4C /* Config.xcconfig */; };
 		532D60BB1931DFD200537D4C /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 532D60BA1931DFD200537D4C /* Settings.plist */; };
 		532D60BE1931DFF900537D4C /* THSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D60BD1931DFF900537D4C /* THSettings.m */; };
 		532D60C41931E0A800537D4C /* THAuthorizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D60C31931E0A800537D4C /* THAuthorizer.m */; };
@@ -178,6 +178,8 @@
 		531D509719ACBFFB0039F389 /* PhonesViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhonesViewModel.m; sourceTree = "<group>"; };
 		531D509919ACC2910039F389 /* THTableViewPhoneCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THTableViewPhoneCell.h; sourceTree = "<group>"; };
 		531D509A19ACC2910039F389 /* THTableViewPhoneCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THTableViewPhoneCell.m; sourceTree = "<group>"; };
+		531D5A0F19D5990B00DD3D0F /* THBaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THBaseObject.h; sourceTree = "<group>"; };
+		531D5A1019D5990B00DD3D0F /* THBaseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THBaseObject.m; sourceTree = "<group>"; };
 		531DB3051948A8FF00D12FE1 /* Macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macro.h; sourceTree = "<group>"; };
 		531DB3061948BD5000D12FE1 /* THUISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THUISwitch.h; sourceTree = "<group>"; };
 		531DB3071948BD5000D12FE1 /* THUISwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THUISwitch.m; sourceTree = "<group>"; };
@@ -525,6 +527,8 @@
 				5316113C1944A5F200414567 /* Product */,
 				53AA3D6D19387E1400D9C35B /* Sellers */,
 				53AA3D7019387E1400D9C35B /* Shops */,
+				531D5A0F19D5990B00DD3D0F /* THBaseObject.h */,
+				531D5A1019D5990B00DD3D0F /* THBaseObject.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -855,7 +859,7 @@
 		532DC927192ED83600C07757 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = 59pi;
 				TargetAttributes = {
 					532DC92E192ED83600C07757 = {
@@ -891,7 +895,6 @@
 			files = (
 				532DC93D192ED83600C07757 /* InfoPlist.strings in Resources */,
 				532D60BB1931DFD200537D4C /* Settings.plist in Resources */,
-				532D60B91931DF7600537D4C /* Config.xcconfig in Resources */,
 				5320BBAF194F403D005E1DBB /* zoomPopupClose@2x.png in Resources */,
 				530FC0FC19421266007B55F2 /* shake.wav in Resources */,
 				532DC945192ED83600C07757 /* Images.xcassets in Resources */,
@@ -986,6 +989,7 @@
 				537F7B6E1942D94700CE1703 /* Goods+Access.m in Sources */,
 				5306D005193E048C005BD52E /* MenuViewModel.m in Sources */,
 				531824731938D4F900AA1564 /* THMenuViewController.m in Sources */,
+				531D5A1119D5990B00DD3D0F /* THBaseObject.m in Sources */,
 				537F7B7D1942D9AC00CE1703 /* Shops+Access.m in Sources */,
 				5349B3561950937F00E0564D /* ScanPostViewModel.m in Sources */,
 				5318245D1938CA1500AA1564 /* UploadViewModel.m in Sources */,
@@ -1117,7 +1121,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -1149,7 +1153,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1168,7 +1172,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
 				INFOPLIST_FILE = "TongHuo/TongHuo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "c0f55c1e-3af5-4b97-af43-76f4543984d5";
@@ -1189,7 +1193,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TongHuo/TongHuo-Prefix.pch";
 				INFOPLIST_FILE = "TongHuo/TongHuo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5b2c5e6d-9e61-422e-8a91-7c188693aa31";

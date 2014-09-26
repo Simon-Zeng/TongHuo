@@ -11,7 +11,9 @@
 
 @class Markets, Shops;
 
-@interface Goods : NSManagedObject
+#import "THBaseObject.h"
+
+@interface Goods : THBaseObject
 
 @property (nonatomic, retain) NSNumber * addTime;
 @property (nonatomic, retain) NSNumber * categoryId;

@@ -11,7 +11,9 @@
 
 @class Orders;
 
-@interface Product : NSManagedObject
+#import "THBaseObject.h"
+
+@interface Product : THBaseObject
 
 @property (nonatomic, retain) NSString * color;
 @property (nonatomic, retain) NSNumber * count;

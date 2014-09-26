@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreData/CoreData.h>
 
 @class Product;
 
-@interface Orders : NSManagedObject
+#import "THBaseObject.h"
+
+@interface Orders : THBaseObject
 
 @property (nonatomic, retain) NSString * address;
 @property (nonatomic, retain) NSString * color;
