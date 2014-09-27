@@ -52,7 +52,7 @@
     [UMSocialData setAppKey:kUMengAppKey];
 
     //设置微信AppId，和分享url
-    [UMSocialWechatHandler setWXAppId:kWeChatAppID appSecret:nil url:kWeChatCallBackURL];
+    [UMSocialWechatHandler setWXAppId:kWeChatAppID appSecret:kWeChatSecret url:kWeChatCallBackURL];
     
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavigationBackground"]
                                        forBarMetrics:UIBarMetricsDefault];
@@ -71,6 +71,14 @@
     
     [[UITextField appearance] setTintColor:cursorColor];
     [[UITextView appearance] setTintColor:cursorColor];
+    
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
+                                                                                             |UIRemoteNotificationTypeSound
+                                                                                             |UIRemoteNotificationTypeAlert)
+                                                                                 categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }
     
     // Setup window
     self.window.tintColor = [UIColor whiteColor];

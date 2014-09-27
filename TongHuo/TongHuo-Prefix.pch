@@ -43,6 +43,11 @@
 
 #define kUMengAppKey @"53526bc156240b09ef0853af"
 
+
+//AppID：wx793ae5a616200019
+//AppSecret：2e37d11a241264d336626ecb00eec2fd
+
 #define kWeChatAppID @"wx793ae5a616200019"
+#define kWeChatSecret @"2e37d11a241264d336626ecb00eec2fd"
 #define kWeChatCallBackURL @"http://www.59pi.com/"
 
